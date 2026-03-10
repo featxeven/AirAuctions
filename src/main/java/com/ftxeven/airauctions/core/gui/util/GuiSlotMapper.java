@@ -173,6 +173,7 @@ public final class GuiSlotMapper {
                     .glow(template.glow())
                     .flags(template.flags())
                     .hideTooltip(template.hideTooltip())
+                    .tooltipStyle(template.tooltipStyle())
                     .itemModel(template.itemModel());
 
             if (template.headOwner() != null) {
@@ -235,6 +236,7 @@ public final class GuiSlotMapper {
                     .glow(template.glow())
                     .flags(template.flags())
                     .hideTooltip(template.hideTooltip())
+                    .tooltipStyle(template.tooltipStyle())
                     .itemModel(template.itemModel());
 
             if (template.headOwner() != null) {

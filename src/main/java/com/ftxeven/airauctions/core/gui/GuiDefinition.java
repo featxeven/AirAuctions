@@ -149,8 +149,14 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
                 builder.lore(lore);
             }
 
-            builder.customModelData(activeData).damage(damage).enchants(enchants).glow(glow)
-                    .flags(flags).hideTooltip(hideTooltip).itemModel(itemModel);
+            builder.customModelData(activeData)
+                    .damage(damage)
+                    .enchants(enchants)
+                    .glow(glow)
+                    .flags(flags)
+                    .hideTooltip(hideTooltip)
+                    .tooltipStyle(tooltipStyle)
+                    .itemModel(itemModel);
 
             if (this.headOwner() != null) {
                 String resolvedOwner = PlaceholderUtil.apply(viewer, this.headOwner(), ph);

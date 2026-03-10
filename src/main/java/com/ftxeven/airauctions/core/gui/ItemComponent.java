@@ -18,13 +18,16 @@ import java.util.*;
 public final class ItemComponent {
     private static final boolean HAS_HIDE_TOOLTIP;
     private static final boolean HAS_ITEM_MODEL;
+    private static final boolean HAS_TOOLTIP_STYLE;
 
     static {
-        boolean tooltip = false, model = false;
+        boolean tooltip = false, model = false, style = false;
         try { ItemMeta.class.getMethod("setHideTooltip", boolean.class); tooltip = true; } catch (Throwable ignored) {}
         try { ItemMeta.class.getMethod("setItemModel", NamespacedKey.class); model = true; } catch (Throwable ignored) {}
+        try { ItemMeta.class.getMethod("setTooltipStyle", NamespacedKey.class); style = true; } catch (Throwable ignored) {}
         HAS_HIDE_TOOLTIP = tooltip;
         HAS_ITEM_MODEL = model;
+        HAS_TOOLTIP_STYLE = style;
     }
 
     private final ItemStack item;
@@ -124,6 +127,14 @@ public final class ItemComponent {
 
     public ItemComponent hideTooltip(boolean hide) {
         if (HAS_HIDE_TOOLTIP && meta != null) meta.setHideTooltip(hide);
+        return this;
+    }
+
+    public ItemComponent tooltipStyle(String style) {
+        if (HAS_TOOLTIP_STYLE && meta != null && style != null) {
+            NamespacedKey key = NamespacedKey.fromString(style);
+            if (key != null) meta.setTooltipStyle(key);
+        }
         return this;
     }
 
