@@ -26,6 +26,10 @@ time-format:
 # E, dd MMM     -> Sun, 08 Mar
 date-format: "dd/MM/yy"
 
+# - true:  Reopens the GUI when using filter or sort buttons
+# - false: Updates only auction slots
+force-update-gui: true
+
 # ----------------------------------
 # AUCTIONS
 # ----------------------------------

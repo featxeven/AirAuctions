@@ -37,6 +37,7 @@ public final class ConfigManager {
     public String timeFormatMode() { return s("time-format.mode", "CUSTOM").toUpperCase(); }
     public int timeFormatGranularity() { return i("time-format.granularity", 2); }
     public String getDateFormat() { return s("date-format", "dd/MM/yy"); }
+    public boolean forceUpdateGui() { return b("force-update-gui"); }
 
     // Economy Settings
     public String economyDefaultProvider() { return s("economy.default-currency", "vault"); }

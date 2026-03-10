@@ -4,7 +4,11 @@ import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.core.gui.GuiDefinition;
 import com.ftxeven.airauctions.core.gui.GuiDefinition.GuiItem;
 import com.ftxeven.airauctions.core.gui.PageableHolder;
+import com.ftxeven.airauctions.core.manager.main.AuctionHouseManager;
+import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
 import com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager;
+import com.ftxeven.airauctions.core.manager.player.PlayerListingsManager;
+import com.ftxeven.airauctions.core.manager.target.TargetListingsManager;
 import com.ftxeven.airauctions.core.model.AuctionListing;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
@@ -26,6 +30,15 @@ public final class GuiListingUtil {
             GuiDefinition def, List<Integer> auctionSlots, GuiItem template,
             Supplier<List<AuctionListing>> dataSupplier, BiConsumer<Player, Map<String, String>> reopenLogic
     ) {
+        refresh(plugin, viewer, holder, inv, def, auctionSlots, template, null, Integer.MAX_VALUE, dataSupplier, reopenLogic);
+    }
+
+    public static void refresh(
+            AirAuctions plugin, Player viewer, PageableHolder holder, Inventory inv,
+            GuiDefinition def, List<Integer> auctionSlots, GuiItem template,
+            GuiItem availableTemplate, int limit,
+            Supplier<List<AuctionListing>> dataSupplier, BiConsumer<Player, Map<String, String>> reopenLogic
+    ) {
         List<AuctionListing> auctions = dataSupplier.get();
         int slotSize = Math.max(1, auctionSlots.size());
         int newTotalPages = Math.max(1, (auctions.size() + slotSize - 1) / slotSize);
@@ -36,16 +49,29 @@ public final class GuiListingUtil {
             ctx.put("page", String.valueOf(validatedPage + 1));
             reopenLogic.accept(viewer, ctx);
         } else {
-            performSmoothUpdate(plugin, viewer, holder, inv, def, auctionSlots, auctions, template, validatedPage, newTotalPages);
+            performSmoothUpdate(plugin, viewer, holder, inv, def, auctionSlots, auctions, template, availableTemplate, limit, validatedPage, newTotalPages);
         }
     }
 
     private static void performSmoothUpdate(AirAuctions plugin, Player viewer, PageableHolder holder,
                                             Inventory inv, GuiDefinition def, List<Integer> slots,
-                                            List<AuctionListing> auctions, GuiItem template, int page, int totalPages) {
+                                            List<AuctionListing> auctions, GuiItem template,
+                                            GuiItem availableTemplate, int limit, int page, int totalPages) {
         if (holder instanceof ExpiredListingsManager.ExpiredHolder expiredHolder) {
             expiredHolder.setPage(page);
             expiredHolder.setTotalPages(totalPages);
+        } else if (holder instanceof AuctionHouseManager.Holder ahHolder) {
+            ahHolder.setPage(page);
+            ahHolder.setTotalPages(totalPages);
+        } else if (holder instanceof AuctionSearchManager.SearchHolder searchHolder) {
+            searchHolder.setPage(page);
+            searchHolder.setTotalPages(totalPages);
+        } else if (holder instanceof PlayerListingsManager.PlayerHolder playerHolder) {
+            playerHolder.setPage(page);
+            playerHolder.setTotalPages(totalPages);
+        } else if (holder instanceof TargetListingsManager.TargetHolder targetHolder) {
+            targetHolder.setPage(page);
+            targetHolder.setTotalPages(totalPages);
         }
 
         holder.displayedListings().clear();
@@ -69,7 +95,7 @@ public final class GuiListingUtil {
         ph.put("filter", holder.filter());
         ph.put("sort", holder.sort());
 
-        GuiSlotMapper.fill(plugin, inv, def, viewer, ph, auctions, slotSet, page, template, null, Integer.MAX_VALUE);
+        GuiSlotMapper.fill(plugin, inv, def, viewer, ph, auctions, slotSet, page, template, availableTemplate, limit);
         viewer.updateInventory();
     }
 

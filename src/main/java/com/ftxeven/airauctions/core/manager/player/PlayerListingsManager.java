@@ -117,7 +117,8 @@ public final class PlayerListingsManager implements GuiManager.CustomGuiManager 
 
     private void refreshWithValidation(Player viewer, PlayerHolder holder) {
         GuiListingUtil.refresh(
-                plugin, viewer, holder, viewer.getOpenInventory().getTopInventory(), definition, auctionSlotsList, auctionItemTemplate,
+                plugin, viewer, holder, viewer.getOpenInventory().getTopInventory(), definition, auctionSlotsList,
+                auctionItemTemplate, availableTemplate, holder.limit(),
                 () -> {
                     List<AuctionListing> auctions = new ArrayList<>(plugin.core().auctions().getBySeller(viewer.getUniqueId()));
                     if (!holder.filter().equals("all")) {
@@ -223,7 +224,14 @@ public final class PlayerListingsManager implements GuiManager.CustomGuiManager 
     private void cycleFilter(Player viewer, PlayerHolder holder, boolean fwd) {
         List<String> opts = plugin.filters().getOrderedCategoryKeys();
         String next = GuiListingUtil.cycle(opts, holder.filter(), fwd);
-        openMenu(viewer, next, holder.page() + 1, holder.sort());
+
+        if (plugin.config().forceUpdateGui()) {
+            openMenu(viewer, next, 1, holder.sort());
+        } else {
+            holder.setFilter(next);
+            holder.setPage(0);
+            refreshWithValidation(viewer, holder);
+        }
     }
 
     private void cycleSort(Player viewer, PlayerHolder holder, boolean fwd) {
@@ -231,7 +239,12 @@ public final class PlayerListingsManager implements GuiManager.CustomGuiManager 
                 ? plugin.config().getNextSortingKey(holder.sort())
                 : plugin.config().getPreviousSortingKey(holder.sort());
 
-        openMenu(viewer, holder.filter(), holder.page() + 1, next);
+        if (plugin.config().forceUpdateGui()) {
+            openMenu(viewer, holder.filter(), holder.page() + 1, next);
+        } else {
+            holder.setSort(next);
+            refreshWithValidation(viewer, holder);
+        }
     }
 
     private void loadItems(ConfigurationSection sec, Map<String, GuiItem> items) {
@@ -250,8 +263,9 @@ public final class PlayerListingsManager implements GuiManager.CustomGuiManager 
     @Override public boolean owns(Inventory inv) { return inv != null && inv.getHolder() instanceof PlayerHolder; }
 
     public static final class PlayerHolder implements PageableHolder {
-        private final int page, totalPages, limit;
-        private final String filter, sort;
+        private int page, totalPages;
+        private String filter, sort;
+        private final int limit;
         private final Map<Integer, Integer> displayedListings;
         private Inventory inventory;
 
@@ -263,6 +277,11 @@ public final class PlayerListingsManager implements GuiManager.CustomGuiManager 
             this.displayedListings = displayedListings;
             this.limit = limit;
         }
+
+        public void setPage(int page) { this.page = page; }
+        public void setTotalPages(int totalPages) { this.totalPages = totalPages; }
+        public void setFilter(String filter) { this.filter = filter; }
+        public void setSort(String sort) { this.sort = sort; }
 
         @Override public int page() { return page; }
         @Override public int totalPages() { return totalPages; }
@@ -280,6 +299,7 @@ public final class PlayerListingsManager implements GuiManager.CustomGuiManager 
             ctx.put("sort", sort);
             ctx.put("page", String.valueOf(page + 1));
             ctx.put("pages", String.valueOf(totalPages));
+            ctx.put("limit", String.valueOf(limit));
             return ctx;
         }
     }

@@ -191,7 +191,14 @@ public final class AuctionHouseManager implements GuiManager.CustomGuiManager {
     private void cycleFilter(Player viewer, Holder holder, boolean fwd) {
         List<String> opts = plugin.filters().getOrderedCategoryKeys();
         String next = GuiListingUtil.cycle(opts, holder.filter(), fwd);
-        openMenu(viewer, next, holder.page() + 1, holder.sort());
+
+        if (plugin.config().forceUpdateGui()) {
+            openMenu(viewer, next, 1, holder.sort());
+        } else {
+            holder.setFilter(next);
+            holder.setPage(0);
+            refreshWithValidation(viewer, holder);
+        }
     }
 
     private void cycleSort(Player viewer, Holder holder, boolean fwd) {
@@ -199,7 +206,12 @@ public final class AuctionHouseManager implements GuiManager.CustomGuiManager {
                 ? plugin.config().getNextSortingKey(holder.sort())
                 : plugin.config().getPreviousSortingKey(holder.sort());
 
-        openMenu(viewer, holder.filter(), holder.page() + 1, next);
+        if (plugin.config().forceUpdateGui()) {
+            openMenu(viewer, holder.filter(), holder.page() + 1, next);
+        } else {
+            holder.setSort(next);
+            refreshWithValidation(viewer, holder);
+        }
     }
 
     private void loadItems(ConfigurationSection sec, Map<String, GuiItem> items) {
@@ -247,8 +259,8 @@ public final class AuctionHouseManager implements GuiManager.CustomGuiManager {
     @Override public boolean owns(Inventory inv) { return inv != null && inv.getHolder() instanceof Holder; }
 
     public static final class Holder implements PageableHolder {
-        private final int page, totalPages;
-        private final String filter, sort;
+        private int page, totalPages;
+        private String filter, sort;
         private final Map<Integer, Integer> displayedListings;
         private Inventory inventory;
 
@@ -259,6 +271,11 @@ public final class AuctionHouseManager implements GuiManager.CustomGuiManager {
             this.sort = sort;
             this.displayedListings = displayedListings;
         }
+
+        public void setPage(int page) { this.page = page; }
+        public void setTotalPages(int totalPages) { this.totalPages = totalPages; }
+        public void setFilter(String filter) { this.filter = filter; }
+        public void setSort(String sort) { this.sort = sort; }
 
         @Override public int page() { return page; }
         @Override public int totalPages() { return totalPages; }
