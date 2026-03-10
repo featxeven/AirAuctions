@@ -49,7 +49,10 @@ public final class CoreInitializer {
             return;
         }
 
-        setupEconomy();
+        if (!setupEconomy()) {
+            plugin.getServer().getPluginManager().disablePlugin(plugin);
+            return;
+        }
 
         CoreManager core = new CoreManager(plugin);
         plugin.setCoreManager(core);
@@ -70,15 +73,17 @@ public final class CoreInitializer {
         plugin.getLogger().info("Server is running " + type);
     }
 
-    public void setupEconomy() {
+    public boolean setupEconomy() {
         EconomyManager economyManager = new EconomyManager(plugin);
         plugin.setEconomyManager(economyManager);
 
         String defaultId = plugin.config().economyDefaultProvider();
-        if (economyManager.getProvider(defaultId) == null) {
-            plugin.getLogger().severe("Default economy provider '" + defaultId + "' could not be initialized!");
-            plugin.getServer().getPluginManager().disablePlugin(plugin);
+
+        if (economyManager.getProvider(defaultId) instanceof EconomyManager.NullProvider) {
+            plugin.getLogger().severe("The default provider '" + defaultId + "' (or economy provider) is missing!");
+            return false;
         }
+        return true;
     }
 
     public void registerCommands() {

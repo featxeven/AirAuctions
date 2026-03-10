@@ -5,7 +5,9 @@ import com.ftxeven.airauctions.core.economy.providers.ExperienceProvider;
 import com.ftxeven.airauctions.core.economy.providers.PlaceholderProvider;
 import com.ftxeven.airauctions.core.economy.providers.VaultProvider;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.util.HashMap;
@@ -16,6 +18,7 @@ public final class EconomyManager {
 
     private final AirAuctions plugin;
     private final Map<String, EconomyProvider> providers = new HashMap<>();
+    private final EconomyProvider nullProvider = new NullProvider();
 
     public EconomyManager(AirAuctions plugin) {
         this.plugin = plugin;
@@ -38,9 +41,9 @@ public final class EconomyManager {
                 case "VAULT" -> {
                     RegisteredServiceProvider<Economy> rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
                     if (rsp != null) {
-                        providers.put(id, new VaultProvider(rsp.getProvider(), display, decimals, plugin.getLogger()));
+                        providers.put(id.toLowerCase(), new VaultProvider(rsp.getProvider(), display, decimals, plugin.getLogger()));
                     } else {
-                        plugin.getLogger().warning("Vault provider '" + id + "' was skipped because Vault is not installed!");
+                        plugin.getLogger().severe("Economy provider '" + id + "' requires Vault, but Vault was not found!");
                     }
                 }
                 case "PLACEHOLDER" -> {
@@ -56,11 +59,23 @@ public final class EconomyManager {
         }
     }
 
-        public EconomyProvider getProvider(String id) {
+    public EconomyProvider getProvider(String id) {
+        if (id == null) return nullProvider;
+
         EconomyProvider provider = providers.get(id.toLowerCase());
-        if (provider == null) {
-            return providers.get(plugin.config().economyDefaultProvider().toLowerCase());
-        }
-        return provider;
+        if (provider != null) return provider;
+
+        String defaultId = plugin.config().economyDefaultProvider();
+        return providers.getOrDefault(defaultId.toLowerCase(), nullProvider);
+    }
+
+    public static final class NullProvider implements EconomyProvider {
+        @Override public String getId() { return "none"; }
+        @Override public String getDisplay(String amount) { return "[Missing Economy] " + amount; }
+        @Override public boolean hasDecimals() { return false; }
+        @Override public double getBalance(Player player) { return 0; }
+        @Override public boolean has(Player player, double amount) { return false; }
+        @Override public void withdraw(Player player, double amount) {}
+        @Override public void deposit(OfflinePlayer player, double amount) {}
     }
 }
