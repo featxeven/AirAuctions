@@ -1,0 +1,193 @@
+# - true = Opens Category GUI instead of Main GUI
+# - false = Opens Main GUI instead
+enabled: true
+
+# GUI title and size
+title: "<gradient:#5efce8:#736efe><bold>Browse Categories</bold></gradient>"
+rows: 6
+
+items:
+  filler:
+    slots: [0-9, 17, 18, 26, 27, 35, 36, 44-52]
+    material: BLACK_STAINED_GLASS_PANE
+    hide-tooltip: true
+
+  cat-all:
+    slots: [13]
+    material: COMPASS
+    glow: true
+    display-name: "<#5efce8><bold>All Listings</bold></#5efce8>"
+    lore:
+      - "<dark_gray>Global Market</dark_gray>"
+      - ""
+      - "<gray>Browse every item currently</gray>"
+      - "<gray>available on the market.</gray>"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to view all</gray>"
+    actions:
+      - "[open] gui:auction_house filter:all sort:%sort%"
+      - "[sound] ui.button.click 1 1.2"
+
+  cat-combat:
+    slots: [28]
+    material: NETHERITE_SWORD
+    display-name: "<#ff5f6d><bold>Combat & Defense</bold></#ff5f6d>"
+    lore:
+      - "<dark_gray>Armory</dark_gray>"
+      - ""
+      - "<gray>Equip yourself with the</gray>"
+      - "<gray>finest blades and armor.</gray>"
+      - ""
+      - "<#ff5f6d>Click</#ff5f6d> <gray>to browse gear</gray>"
+    actions:
+      - "[open] gui:auction_house filter:combat sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  cat-tools:
+    slots: [29]
+    material: DIAMOND_PICKAXE
+    display-name: "<#5efce8><bold>Tools & Utility</bold></#5efce8>"
+    lore:
+      - "<dark_gray>Equipment</dark_gray>"
+      - ""
+      - "<gray>High-tier efficiency for</gray>"
+      - "<gray>your daily tasks.</gray>"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to browse tools</gray>"
+    actions:
+      - "[open] gui:auction_house filter:tools sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  cat-foods:
+    slots: [30]
+    material: COOKED_BEEF
+    display-name: "<#ffbd3f><bold>Food & Consumables</bold></#ffbd3f>"
+    lore:
+      - "<dark_gray>Provisions</dark_gray>"
+      - ""
+      - "<gray>Keep your hunger satisfied</gray>"
+      - "<gray>and your health peaked.</gray>"
+      - ""
+      - "<#ffbd3f>Click</#ffbd3f> <gray>to browse food</gray>"
+    actions:
+      - "[open] gui:auction_house filter:foods sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-ingredients:
+    slots: [31]
+    material: NETHER_WART
+    display-name: "<#d459ff><bold>Alchemy & Crafting</bold></#d459ff>"
+    lore:
+      - "<dark_gray>Resources</dark_gray>"
+      - ""
+      - "<gray>Raw materials for brewing</gray>"
+      - "<gray>and advanced crafting.</gray>"
+      - ""
+      - "<#d459ff>Click</#d459ff> <gray>to browse mats</gray>"
+    actions:
+      - "[open] gui:auction_house filter:ingredients sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-spawn-eggs:
+    slots: [32]
+    material: PIG_SPAWN_EGG
+    display-name: "<#85e52a><bold>Spawners & Eggs</bold></#85e52a>"
+    lore:
+      - "<dark_gray>Entities</dark_gray>"
+      - ""
+      - "<gray>Everything you need for</gray>"
+      - "<gray>farming and entity control.</gray>"
+      - ""
+      - "<#85e52a>Click</#85e52a> <gray>to browse eggs</gray>"
+    actions:
+      - "[open] gui:auction_house filter:spawn-eggs sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-functional:
+    slots: [33]
+    material: CRAFTING_TABLE
+    display-name: "<#f9f047><bold>Functional Blocks</bold></#f9f047>"
+    lore:
+      - "<dark_gray>Workstations</dark_gray>"
+      - ""
+      - "<gray>Utility blocks that serve</gray>"
+      - "<gray>a purpose in your base.</gray>"
+      - ""
+      - "<#f9f047>Click</#f9f047> <gray>to browse utility</gray>"
+    actions:
+      - "[open] gui:auction_house filter:functional-blocks sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-redstone:
+    slots: [34]
+    material: REDSTONE_BLOCK
+    display-name: "<#ff4b2b><bold>Redstone Engineering</bold></#ff4b2b>"
+    lore:
+      - "<dark_gray>Technology</dark_gray>"
+      - ""
+      - "<gray>Circuits, components, and</gray>"
+      - "<gray>mechanical automation.</gray>"
+      - ""
+      - "<#ff4b2b>Click</#ff4b2b> <gray>to browse tech</gray>"
+    actions:
+      - "[open] gui:auction_house filter:redstone-blocks sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-natural:
+    slots: [39]
+    material: GRASS_BLOCK
+    display-name: "<#a8ff78><bold>Natural Blocks</bold></#a8ff78>"
+    lore:
+      - "<dark_gray>Environment</dark_gray>"
+      - ""
+      - "<gray>Materials sourced directly</gray>"
+      - "<gray>from the wild terrain.</gray>"
+      - ""
+      - "<#a8ff78>Click</#a8ff78> <gray>to browse flora</gray>"
+    actions:
+      - "[open] gui:auction_house filter:natural-blocks sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-colored:
+    slots: [40]
+    material: CYAN_WOOL
+    display-name: "<#4facfe><bold>Colored Blocks</bold></#4facfe>"
+    lore:
+      - "<dark_gray>Decoration</dark_gray>"
+      - ""
+      - "<gray>Wool, terracotta, and glass</gray>"
+      - "<gray>in every available shade.</gray>"
+      - ""
+      - "<#4facfe>Click</#4facfe> <gray>to browse colors</gray>"
+    actions:
+      - "[open] gui:auction_house filter:colored-blocks sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  cat-building:
+    slots: [41]
+    material: BRICKS
+    display-name: "<#bdc3c7><bold>Building Materials</bold></#bdc3c7>"
+    lore:
+      - "<dark_gray>Construction</dark_gray>"
+      - ""
+      - "<gray>The foundation for your</gray>"
+      - "<gray>next architectural marvel.</gray>"
+      - ""
+      - "<#bdc3c7>Click</#bdc3c7> <gray>to browse bricks</gray>"
+    actions:
+      - "[open] gui:auction_house filter:building-blocks sort:%sort%"
+      - "[sound] ui.button.click 1 1"
+
+  close:
+    slots: [53]
+    material: BARRIER
+    display-name: "<#ff5f6d><bold>Close Menu</bold></#ff5f6d>"
+    lore:
+      - "<gray>Exit the interface.</gray>"
+    actions:
+      - "[close]"
+      - "[sound] ui.button.click 1 0.8"

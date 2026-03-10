@@ -1,0 +1,170 @@
+package com.ftxeven.airauctions.core.gui;
+
+import com.ftxeven.airauctions.AirAuctions;
+import com.ftxeven.airauctions.core.model.PlayerAuctionProfile;
+import com.ftxeven.airauctions.util.PlaceholderUtil;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.*;
+
+public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, ConfigurationSection config) {
+    private static final MiniMessage MM = MiniMessage.miniMessage();
+
+    public static List<Integer> parseSlots(List<String> raw) {
+        if (raw == null || raw.isEmpty()) return Collections.emptyList();
+        List<Integer> result = new ArrayList<>();
+        for (String s : raw) {
+            if (s == null || s.isEmpty()) continue;
+            int dash = s.indexOf('-');
+            if (dash != -1) {
+                try {
+                    int start = Integer.parseInt(s.substring(0, dash).trim());
+                    int end = Integer.parseInt(s.substring(dash + 1).trim());
+                    for (int i = start; i <= end; i++) result.add(i);
+                } catch (NumberFormatException ignored) {}
+            } else {
+                try { result.add(Integer.parseInt(s.trim())); } catch (NumberFormatException ignored) {}
+            }
+        }
+        return result;
+    }
+
+    public record GuiItem(String key, List<Integer> slots, String materialStr, String rawName, List<String> rawLore,
+                          boolean glow, String itemModel, List<String> actions, List<String> leftActions, List<String> rightActions,
+                          List<String> shiftActions, List<String> shiftLeftActions, List<String> shiftRightActions,
+                          int amount, Integer customModelData, Integer damage, Map<String, Integer> enchants,
+                          ItemFlag[] flags, String headOwner, boolean hideTooltip, String tooltipStyle,
+                          double cooldown, String cooldownMessage,
+                          TreeMap<Integer, ItemPriority> priorities) {
+
+        public static GuiItem fromSection(String key, ConfigurationSection sec) {
+            List<Integer> slots = parseSlots(sec.getStringList("slots"));
+            String matStr = sec.getString("material", "STONE");
+            String head = sec.getString("head-owner");
+
+            if (matStr.startsWith("head-")) {
+                head = matStr.substring(5);
+            }
+
+            Map<String, Integer> enchants = Collections.emptyMap();
+            ConfigurationSection enchSec = sec.getConfigurationSection("enchants");
+            if (enchSec != null) {
+                enchants = new HashMap<>();
+                for (String eK : enchSec.getKeys(false)) enchants.put(eK, enchSec.getInt(eK));
+            }
+
+            ItemFlag[] flags = sec.getStringList("item-flags").stream()
+                    .map(f -> { try { return ItemFlag.valueOf(f.toUpperCase()); } catch (Exception e) { return null; } })
+                    .filter(Objects::nonNull).toArray(ItemFlag[]::new);
+
+            TreeMap<Integer, ItemPriority> priorities = new TreeMap<>();
+            ConfigurationSection prioSec = sec.getConfigurationSection("priority");
+            if (prioSec != null) {
+                for (String pKey : prioSec.getKeys(false)) {
+                    ConfigurationSection tier = prioSec.getConfigurationSection(pKey);
+                    if (tier == null) continue;
+                    try {
+                        priorities.put(Integer.parseInt(pKey), ItemPriority.fromSection(tier));
+                    } catch (NumberFormatException ignored) {}
+                }
+            }
+
+            return new GuiItem(
+                    key, slots, matStr,
+                    sec.getString("display-name"), sec.getStringList("lore"),
+                    sec.getBoolean("glow", false), sec.getString("item-model"),
+                    sec.getStringList("actions"), sec.getStringList("left-actions"), sec.getStringList("right-actions"),
+                    sec.getStringList("shift-actions"), sec.getStringList("shift-left-actions"), sec.getStringList("shift-right-actions"),
+                    sec.getInt("amount", 1),
+                    sec.get("custom-model-data") instanceof Integer i ? i : null,
+                    sec.get("damage") instanceof Integer i ? i : null,
+                    enchants, flags, head, sec.getBoolean("hide-tooltip", false), sec.getString("tooltip-style"),
+                    sec.getDouble("cooldown", 0.0), sec.getString("cooldown-message"), priorities
+            );
+        }
+
+        public List<String> getActionsForClick(ClickType click, Player viewer, Map<String, String> ph) {
+            if (!priorities.isEmpty()) {
+                for (ItemPriority p : priorities.values()) {
+                    if (p.matches(viewer, ph) && p.actions() != null && !p.actions().isEmpty()) return p.actions();
+                }
+            }
+            return switch (click) {
+                case LEFT -> !leftActions.isEmpty() ? leftActions : actions;
+                case RIGHT -> !rightActions.isEmpty() ? rightActions : actions;
+                case SHIFT_LEFT -> !shiftLeftActions.isEmpty() ? shiftLeftActions : (!shiftActions.isEmpty() ? shiftActions : actions);
+                case SHIFT_RIGHT -> !shiftRightActions.isEmpty() ? shiftRightActions : (!shiftActions.isEmpty() ? shiftActions : actions);
+                default -> actions;
+            };
+        }
+
+        public ItemStack buildStack(Player viewer, Map<String, String> ph, AirAuctions plugin) {
+            String activeMatStr = this.materialStr;
+            int activeAmount = this.amount;
+            String activeName = this.rawName;
+            List<String> activeLore = this.rawLore;
+            Integer activeData = this.customModelData;
+
+            if (!priorities.isEmpty()) {
+                boolean match = false;
+                for (ItemPriority p : priorities.values()) {
+                    if (p.matches(viewer, ph)) {
+                        if (p.material() != null) activeMatStr = p.material();
+                        if (p.amount() != null) activeAmount = p.amount();
+                        if (p.displayName() != null) activeName = p.displayName();
+                        if (p.lore() != null && !p.lore().isEmpty()) activeLore = p.lore();
+                        if (p.customModelData() != null) activeData = p.customModelData();
+                        match = true;
+                        break;
+                    }
+                }
+                if (!match) return new ItemStack(Material.AIR);
+            }
+
+            ItemComponent builder = new ItemComponent(activeMatStr, plugin).amount(activeAmount);
+
+            if (activeName != null) {
+                builder.name(MM.deserialize("<!italic>" + PlaceholderUtil.apply(viewer, activeName, ph)));
+            }
+
+            if (activeLore != null && !activeLore.isEmpty()) {
+                List<Component> lore = new ArrayList<>(activeLore.size());
+                for (String line : activeLore) {
+                    String applied = PlaceholderUtil.apply(viewer, line, ph);
+                    if (applied.indexOf('\n') != -1) {
+                        for (String split : applied.split("\n")) {
+                            lore.add(MM.deserialize("<!italic>" + split));
+                        }
+                    } else {
+                        lore.add(MM.deserialize("<!italic>" + applied));
+                    }
+                }
+                builder.lore(lore);
+            }
+
+            builder.customModelData(activeData).damage(damage).enchants(enchants).glow(glow)
+                    .flags(flags).hideTooltip(hideTooltip).itemModel(itemModel);
+
+            if (this.headOwner() != null) {
+                String resolvedOwner = PlaceholderUtil.apply(viewer, this.headOwner(), ph);
+                PlayerAuctionProfile.SkinData fetchedSkin = null;
+                UUID ownerUuid = plugin.database().records().uuidFromName(resolvedOwner);
+
+                if (ownerUuid != null) {
+                    var profile = plugin.core().profiles().get(ownerUuid);
+                    if (profile != null) fetchedSkin = profile.getSkinData();
+                }
+                builder.skullOwner(resolvedOwner, viewer, fetchedSkin);
+            }
+
+            return builder.build();
+        }
+    }
+}

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="bug fixes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/hook/HookManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/hook/ItemHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/hook/impl/CraftEngineHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/hook/impl/ItemsAdderHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/hook/impl/NexoHook.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/StatsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/AirAuctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/AirAuctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/api/AirAuctionsExpansion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/api/AirAuctionsPAPIExpansion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/ListingsSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/ListingsSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/OpenSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/OpenSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/PlayerSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/PlayerSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/SearchSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/SearchSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/SellSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/SellSubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/config/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/config/ConfigManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/config/FilterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/config/FilterManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/CoreInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/CoreInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/CoreManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/CoreManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/economy/EconomyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/economy/EconomyManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemPriority.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemPriority.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/PageableAuctionHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/PageableHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiItemFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiItemFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiListingUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiListingUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/category/CategoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/CategoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/confirm/ConfirmListingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/confirm/ConfirmListingManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/confirm/ConfirmPurchaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/confirm/ConfirmPurchaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/confirm/ConfirmPurchaseShulkerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/confirm/ConfirmPurchaseShulkerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/expired/ExpiredListingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/player/ExpiredListingsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/history/ListingHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/player/ListingHistoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/listing/CancelListingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/player/CancelListingManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/listing/PlayerListingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/player/PlayerListingsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/listing/TargetListingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetListingsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/AuctionHouseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/AuctionHouseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/preview/PreviewShulkerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/search/AuctionSearchManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/AuctionSearchManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/model/PlayerAuctionProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/model/PlayerAuctionProfile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/AuctionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/AuctionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/FormatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/FormatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/ItemBlacklistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/ItemBlacklistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/PlayerProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/PlayerProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/database/DatabaseManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/database/DatabaseManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/database/dao/AuctionHistories.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/database/dao/AuctionHistories.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/database/dao/PlayerRecords.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/database/dao/PlayerRecords.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/MessageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/MessageUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/TimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/TimeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/data/filter.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/data/filter.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-search.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-search.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/confirm-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/confirm-listing.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/cancel-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/cancel-listing.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-expired.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-expired.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-history.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-listings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lang/messages/en_US.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lang/messages/en_US.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="39xrbvh2fMiKDLCwiTgQOZib2Rt" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.AirAuctions [clean].executor": "Run",
+    "Maven.AirAuctions [package].executor": "Run",
+    "Maven.AirAuctions [test].executor": "Run",
+    "Maven.AirAuctions [validate].executor": "Run",
+    "Maven.AirAuctions [verify].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/AirAuctions/src/main/resources/guis/purchase",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\AirAuctions\src\main\resources\guis\purchase" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\AirAuctions\src\main\resources\guis\purchase" />
+      <recent name="D:\AirAuctions\src\main\resources\guis" />
+      <recent name="D:\AirAuctions\src\main\resources\guis\target" />
+      <recent name="D:\AirAuctions\src\main\resources\guis\player" />
+      <recent name="D:\AirAuctions\src\main\resources\data" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="" />
+      <created>1771648637894</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1771648637894</updated>
+    </task>
+    <task id="LOCAL-00001" summary="innit commit">
+      <option name="closed" value="true" />
+      <created>1771729252147</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1771729252147</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added">
+      <option name="closed" value="true" />
+      <created>1771745149535</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1771745149535</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added confirm gui">
+      <option name="closed" value="true" />
+      <created>1771784944426</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1771784944426</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added more stuff">
+      <option name="closed" value="true" />
+      <created>1771792747142</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1771792747142</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added more stuff">
+      <option name="closed" value="true" />
+      <created>1771793084855</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1771793084855</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added more stuff">
+      <option name="closed" value="true" />
+      <created>1771799838761</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1771799838761</updated>
+    </task>
+    <task id="LOCAL-00007" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771803179195</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1771803179195</updated>
+    </task>
+    <task id="LOCAL-00008" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771820701319</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1771820701319</updated>
+    </task>
+    <task id="LOCAL-00009" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771824494704</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1771824494704</updated>
+    </task>
+    <task id="LOCAL-00010" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771856865725</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1771856865726</updated>
+    </task>
+    <task id="LOCAL-00011" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771860432537</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1771860432538</updated>
+    </task>
+    <task id="LOCAL-00012" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771863883549</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1771863883549</updated>
+    </task>
+    <task id="LOCAL-00013" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771868170301</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1771868170301</updated>
+    </task>
+    <task id="LOCAL-00014" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771900993537</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1771900993537</updated>
+    </task>
+    <task id="LOCAL-00015" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771962408029</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1771962408029</updated>
+    </task>
+    <task id="LOCAL-00016" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771988685219</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1771988685219</updated>
+    </task>
+    <task id="LOCAL-00017" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1771995709231</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1771995709231</updated>
+    </task>
+    <task id="LOCAL-00018" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1772029191589</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1772029191589</updated>
+    </task>
+    <task id="LOCAL-00019" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1772045812704</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1772045812704</updated>
+    </task>
+    <task id="LOCAL-00020" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1772084998849</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1772084998849</updated>
+    </task>
+    <task id="LOCAL-00021" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1772148739736</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1772148739736</updated>
+    </task>
+    <task id="LOCAL-00022" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1772210242122</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1772210242122</updated>
+    </task>
+    <task id="LOCAL-00023" summary="bug fixes">
+      <option name="closed" value="true" />
+      <created>1772322975147</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1772322975147</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="innit commit" />
+    <MESSAGE value="added" />
+    <MESSAGE value="added confirm gui" />
+    <MESSAGE value="added more stuff" />
+    <MESSAGE value="bug fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug fixes" />
+  </component>
+</project>

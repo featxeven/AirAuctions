@@ -1,0 +1,107 @@
+# - true = buttons are always shown
+# - false = buttons only appear when next/previous page is available
+always-show-buttons: false
+
+# GUI title and size
+title: "<gradient:#5efce8:#736efe><bold>Expired Auctions</bold></gradient> <gray>»</gray> <dark_gray>(%page%/%pages%)</dark_gray>"
+rows: 6
+
+# Dynamic slot groups
+# These define where the item auction slots will be placed
+auction-slots: [10-16, 19-25, 28-34]
+
+# This is how auction item will be displayed inside auction-slots
+auction-item:
+  lore:
+    - "%lore%" # The item's lore. If there is no lore, skip this line
+    - "<dark_gray>Auction ID: %id%"
+    - ""
+    - "<gray>Listing Information:</gray>"
+    - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
+    - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+    - " <#736efe>»</#736efe> <gray>Auto-removed in:</gray> <white>%purge%</white>"
+    - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+    - ""
+    - "<#ff5f6d>Click</#ff5f6d> <gray>to collect listing</gray>"
+  item-flags:
+    - HIDE_ATTRIBUTES
+  actions:
+    - "[sound] ui.button.click 1 2"
+    - "[collect]"
+
+# GUI buttons
+# Special items with fixed actions in the GUI.
+# You can customize their appearance (glow, enchants, tooltips, actions, etc.).
+buttons:
+  next-page:
+    slots: [26]
+    material: SPECTRAL_ARROW
+    display-name: "<#5efce8>Next Page</#5efce8>"
+    lore:
+      - "<gray>Navigate to next page</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+
+  previous-page:
+    slots: [18]
+    material: SPECTRAL_ARROW
+    display-name: "<#5efce8>Previous Page</#5efce8>"
+    lore:
+      - "<gray>Return to previous page</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+
+  refresh:
+    slots: [49]
+    material: SUNFLOWER
+    display-name: "<#f9f047><bold>Refresh Listings</bold></#f9f047>"
+    lore:
+      - "<gray>Update your expired listings</gray>"
+      - "<gray>and check for updates.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.5"
+    cooldown: 5
+
+# Custom items
+items:
+  filler:
+    slots: [0-9, 17, 27, 35-44]
+    material: BLACK_STAINED_GLASS_PANE
+    hide-tooltip: true
+
+  back:
+    slots: [45]
+    material: ARROW
+    display-name: "<#f9f047><bold>Go Back</bold></#f9f047>"
+    lore:
+      - "<gray>Click to go back to</gray>"
+      - "<gray>previous menu.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.5"
+      - "[open] gui:player_listings filter:%filter% sort:%sort%"
+
+  close:
+    slots: [53]
+    material: BARRIER
+    display-name: "<#ff5f6d><bold>Close Menu</bold></#ff5f6d>"
+    lore:
+      - "<gray>Return to game.</gray>"
+    actions:
+      - "[close]"
+      - "[sound] ui.button.click 1 0.8"
+
+  no-next-page:
+    slots: [26]
+    material: ARROW
+    display-name: "<dark_gray>Next Page</dark_gray>"
+    lore:
+      - "<#ff5f6d>Last page reached</#ff5f6d>"
+
+  no-previous-page:
+    slots: [18]
+    material: ARROW
+    display-name: "<dark_gray>Previous Page</dark_gray>"
+    lore:
+      - "<#ff5f6d>First page reached</#ff5f6d>"

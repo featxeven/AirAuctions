@@ -1,0 +1,104 @@
+name: AirAuctions
+main: com.ftxeven.airauctions.AirAuctions
+version: 1.0.0
+api-version: "1.21"
+author: ftxeven
+description: A modern, highly-customizable Auction House GUI with full Folia support.
+depend: [Vault]
+folia-supported: true
+
+commands:
+  airauctions:
+    description: Main plugin command.
+    permission: airauctions.admin
+  auctionhouse:
+    description: Open the auction house.
+    permission: airauctions.command.browse
+
+permissions:
+  airauctions.command.browse:
+    description: Allows opening the main auction house menu.
+    default: op
+  airauctions.command.sell:
+    description: Allows listing items for sale.
+    default: op
+  airauctions.command.listings:
+    description: Allows viewing and managing your own active listings.
+    default: op
+  airauctions.command.expired:
+    description: Allows viewing and reclaiming expired items.
+    default: op
+  airauctions.command.history:
+    description: Allows viewing your personal transaction history.
+    default: op
+  airauctions.command.search:
+    description: Allows using the search subcommand.
+    default: op
+  airauctions.command.view-player:
+    description: Allows viewing another player's active listings via command.
+    default: op
+  airauctions.command.open:
+    description: Allows administrative use of the /ah open command.
+    default: op
+  airauctions.command.open.others:
+    description: Allows opening menus for other players.
+    default: op
+
+  airauctions.use:
+    description: Standard player wildcard for all basic features.
+    default: op
+    children:
+      airauctions.command.browse: true
+      airauctions.command.sell: true
+      airauctions.command.listings: true
+      airauctions.command.expired: true
+      airauctions.command.history: true
+      airauctions.command.search: true
+      airauctions.command.view-player: true
+
+  airauctions.admin:
+    description: Grants access to administrative commands.
+    default: op
+    children:
+      airauctions.command.open: true
+      airauctions.command.open.others: true
+      airauctions.bypass.*: true
+
+  airauctions.*:
+    description: Global wildcard for every feature in the plugin.
+    default: op
+    children:
+      airauctions.use: true
+      airauctions.admin: true
+
+  airauctions.bypass.gamemodes:
+    description: Allows auctioning items while in a restricted gamemode.
+    default: op
+  airauctions.bypass.worlds:
+    description: Allows auctioning items while in a disabled world.
+    default: op
+  airauctions.bypass.damageditems:
+    description: Allows auctioning items that are damaged even if restricted.
+    default: op
+  airauctions.bypass.blacklist:
+    description: Allows auctioning items that are blacklisted or not whitelisted.
+    default: op
+  airauctions.bypass.expire-time:
+    description: Sets custom expiry in seconds.
+  airauctions.bypass.*:
+    description: Wildcard to bypass all auction restrictions.
+    default: op
+    children:
+      airauctions.bypass.gamemodes: true
+      airauctions.bypass.worlds: true
+      airauctions.bypass.damageditems: true
+      airauctions.bypass.blacklist: true
+
+  airauctions.limit.*:
+    description: Grants unlimited auction listings.
+    default: op
+  airauctions.fee:
+    description: Sets custom listing fee.
+  airauctions.tax:
+    description: Sets custom sales tax.
+    default: op

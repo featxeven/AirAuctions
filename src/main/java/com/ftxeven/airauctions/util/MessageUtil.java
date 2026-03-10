@@ -1,0 +1,117 @@
+package com.ftxeven.airauctions.util;
+
+import com.ftxeven.airauctions.AirAuctions;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.Context;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.Tag;
+import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public final class MessageUtil {
+
+    private static final MiniMessage MM = MiniMessage.miniMessage();
+    private static final Map<String, Component> STATIC_CACHE = new ConcurrentHashMap<>();
+    private static final Tag EMPTY_TAG = Tag.inserting(Component.empty());
+    private static AirAuctions plugin;
+
+    private MessageUtil() {}
+
+    public static void init(AirAuctions airAuctions) {
+        plugin = airAuctions;
+        PlaceholderUtil.init(airAuctions);
+        STATIC_CACHE.clear();
+    }
+
+    public static Component mini(Player player, String raw, Map<String, String> placeholders) {
+        if (raw == null || raw.isBlank()) return Component.empty();
+
+        if ((placeholders == null || placeholders.isEmpty()) && !raw.contains("<") && !raw.contains("%")) {
+            return STATIC_CACHE.computeIfAbsent(raw, MM::deserialize);
+        }
+
+        String applied = PlaceholderUtil.apply(player, raw, placeholders);
+
+        TitleState titleState = new TitleState();
+        Component result = MM.deserialize(applied, new InlineTagResolver(player, placeholders, titleState));
+
+        if (titleState.hasAny()) {
+            TitleUtil.sendComponents(player, titleState.main, titleState.sub,
+                    titleState.fadeIn, titleState.stay, titleState.fadeOut);
+        }
+
+        return result;
+    }
+
+    public static void send(Player player, String message, Map<String, String> placeholders) {
+        if (player == null || message == null || message.isBlank() || message.equals("\"\"")) return;
+
+        Component component = mini(player, message, placeholders);
+
+        if (PlainTextComponentSerializer.plainText().serialize(component).isBlank()) {
+            return;
+        }
+
+        plugin.scheduler().runEntityTask(player, () -> player.sendMessage(component));
+    }
+
+    private static class TitleState {
+        Component main = Component.empty();
+        Component sub = Component.empty();
+        int fadeIn = 10, stay = 70, fadeOut = 20;
+        boolean hasAny() { return main != Component.empty() || sub != Component.empty(); }
+    }
+
+    private record InlineTagResolver(Player player, Map<String, String> placeholders, TitleState titleState) implements TagResolver {
+
+        @Override
+        public boolean has(@NotNull String name) {
+            return switch (name) {
+                case "sound", "actionbar", "title", "subtitle", "bossbar" -> true;
+                default -> false;
+            };
+        }
+
+        @Override
+        public Tag resolve(@NotNull String name, @NotNull ArgumentQueue args, @NotNull Context context) {
+            switch (name) {
+                case "sound" -> {
+                    SoundUtil.play(player, args.popOr("!").value(),
+                            args.hasNext() ? (float) args.pop().asDouble().orElse(1.0) : 1f,
+                            args.hasNext() ? (float) args.pop().asDouble().orElse(1.0) : 1f);
+                    return EMPTY_TAG;
+                }
+                case "actionbar" -> {
+                    ActionbarUtil.send(plugin, player, args.popOr("!").value(), placeholders);
+                    return EMPTY_TAG;
+                }
+                case "title" -> {
+                    titleState.main = MM.deserialize(PlaceholderUtil.apply(player, args.popOr("!").value(), placeholders));
+                    if (args.hasNext()) titleState.fadeIn = args.pop().asInt().orElse(10);
+                    if (args.hasNext()) titleState.stay = args.pop().asInt().orElse(70);
+                    if (args.hasNext()) titleState.fadeOut = args.pop().asInt().orElse(20);
+                    return EMPTY_TAG;
+                }
+                case "subtitle" -> {
+                    titleState.sub = MM.deserialize(PlaceholderUtil.apply(player, args.popOr("!").value(), placeholders));
+                    return EMPTY_TAG;
+                }
+                case "bossbar" -> {
+                    BossbarUtil.send(plugin, player, args.popOr("!").value(), placeholders,
+                            args.hasNext() ? args.pop().asInt().orElse(100) : 100,
+                            args.hasNext() ? BossBar.Color.valueOf(args.pop().value().toUpperCase()) : BossBar.Color.WHITE,
+                            BossBar.Overlay.PROGRESS, 1.0f, false);
+                    return EMPTY_TAG;
+                }
+            }
+            return null;
+        }
+    }
+}
