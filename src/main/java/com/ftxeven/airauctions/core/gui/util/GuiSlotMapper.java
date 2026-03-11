@@ -189,6 +189,9 @@ public final class GuiSlotMapper {
         String amountStr = String.valueOf(listing.item().getAmount());
         String idStr = String.valueOf(listing.id());
 
+        String itemFilterKey = plugin.filters().getCategory(listing.item());
+        String itemFilterDisplayName = plugin.filters().getDisplayName(itemFilterKey);
+
         List<Component> finalLore = new ArrayList<>();
         if (template != null && template.rawLore() != null) {
             double playerBalance = provider.getBalance(viewer);
@@ -203,12 +206,12 @@ public final class GuiSlotMapper {
                     }
                 } else if (line.startsWith("buy:")) {
                     if (playerBalance >= listing.price()) {
-                        finalLore.add(processLine(line.substring(4).trim(), seller, price, idStr, amountStr, globalPh, viewer));
+                        finalLore.add(processLine(line.substring(4).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
                     }
                 } else if (line.startsWith("preview:")) {
-                    if (isShulker) finalLore.add(processLine(line.substring(8).trim(), seller, price, idStr, amountStr, globalPh, viewer));
+                    if (isShulker) finalLore.add(processLine(line.substring(8).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
                 } else {
-                    finalLore.add(processLine(line, seller, price, idStr, amountStr, globalPh, viewer));
+                    finalLore.add(processLine(line, seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
                 }
             }
         }
@@ -217,7 +220,7 @@ public final class GuiSlotMapper {
 
         if (listing.item().getItemMeta() != null && !listing.item().getItemMeta().hasDisplayName()) {
             if (template != null && template.rawName() != null) {
-                builder.name(processLine(template.rawName(), seller, price, idStr, amountStr, globalPh, viewer));
+                builder.name(processLine(template.rawName(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
             }
         }
 
@@ -252,10 +255,12 @@ public final class GuiSlotMapper {
         String idStr = String.valueOf(log.id());
 
         String dateStr = TimeUtil.formatDate(plugin, log.soldAt());
-
         String timeStr = Instant.ofEpochMilli(log.soldAt())
                 .atZone(ZoneId.systemDefault())
                 .format(DateTimeFormatter.ofPattern("HH:mm"));
+
+        String itemFilterKey = plugin.filters().getCategory(log.item());
+        String itemFilterDisplayName = plugin.filters().getDisplayName(itemFilterKey);
 
         List<Component> finalLore = new ArrayList<>();
         if (template != null && template.rawLore() != null) {
@@ -266,9 +271,9 @@ public final class GuiSlotMapper {
                 if (line.contains("%lore%")) {
                     if (sourceMeta != null && sourceMeta.hasLore()) finalLore.addAll(Objects.requireNonNull(sourceMeta.lore()));
                 } else if (line.startsWith("preview:")) {
-                    if (isShulker) finalLore.add(processHistoryLine(line.substring(8).trim(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, globalPh, viewer));
+                    if (isShulker) finalLore.add(processHistoryLine(line.substring(8).trim(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
                 } else {
-                    finalLore.add(processHistoryLine(line, seller, buyer, price, idStr, amountStr, dateStr, timeStr, globalPh, viewer));
+                    finalLore.add(processHistoryLine(line, seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
                 }
             }
         }
@@ -277,15 +282,16 @@ public final class GuiSlotMapper {
 
         if (log.item().getItemMeta() != null && !log.item().getItemMeta().hasDisplayName()) {
             if (template != null && template.rawName() != null) {
-                builder.name(processHistoryLine(template.rawName(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, globalPh, viewer));
+                builder.name(processHistoryLine(template.rawName(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
             }
         }
 
         return builder.build();
     }
 
-    private static Component processLine(String line, String seller, String price, String id, String amount, Map<String, String> ph, Player viewer) {
-        String processed = line.replace("%seller%", seller)
+    private static Component processLine(String line, String seller, String price, String id, String amount, String itemFilter, Map<String, String> ph, Player viewer) {
+        String processed = line.replace("%filter%", itemFilter)
+                .replace("%seller%", seller)
                 .replace("%price%", price)
                 .replace("%id%", id)
                 .replace("%amount%", amount);
@@ -300,8 +306,9 @@ public final class GuiSlotMapper {
         return MessageUtil.mini(viewer, "<!italic>" + processed, ph);
     }
 
-    private static Component processHistoryLine(String line, String seller, String buyer, String price, String id, String amount, String date, String time, Map<String, String> ph, Player viewer) {
-        String processed = line.replace("%seller%", seller)
+    private static Component processHistoryLine(String line, String seller, String buyer, String price, String id, String amount, String date, String time, String itemFilter, Map<String, String> ph, Player viewer) {
+        String processed = line.replace("%filter%", itemFilter)
+                .replace("%seller%", seller)
                 .replace("%buyer%", buyer)
                 .replace("%price%", price)
                 .replace("%id%", id)
