@@ -6,6 +6,7 @@
 # GENERAL
 # ----------------------------------
 # Global options
+notify-updates: true               # Notify admins when there is a new update
 lang: "en_US"                      # Locale file name (lang/messages/KEY.yml)
 error-on-excess-args: true         # Show error message if too many arguments are provided (for commands)
 
@@ -228,7 +229,7 @@ restrictions:
       - "custom:mymodel/admin_pickaxe"
       - "minecraft:broken_shield"
 
-    # Nexo, ItemsAdder, CraftEngine items
+    # Match Nexo, ItemsAdder or CraftEngine items
     special-items: []
     #  - "nexo:item_id"
     #  - "itemsadder:item_id"

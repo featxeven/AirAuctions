@@ -33,6 +33,7 @@ public final class ConfigManager {
     private List<String> sl(String p) { return config.getStringList(p); }
 
     // General Settings
+    public boolean notifyUpdates() { return b("notify-updates"); }
     public boolean errorOnExcessArgs() { return b("error-on-excess-args"); }
     public String timeFormatMode() { return s("time-format.mode", "CUSTOM").toUpperCase(); }
     public int timeFormatGranularity() { return i("time-format.granularity", 2); }

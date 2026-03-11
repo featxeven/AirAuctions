@@ -11,10 +11,15 @@ import com.ftxeven.airauctions.listener.GuiListener;
 import com.ftxeven.airauctions.listener.PlayerLifecycleListener;
 import com.ftxeven.airauctions.config.*;
 import com.ftxeven.airauctions.util.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.bukkit.command.*;
 import org.bukkit.plugin.PluginManager;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +71,25 @@ public final class CoreInitializer {
             new AirAuctionsPAPIExpansion(plugin).register();
             plugin.getLogger().info("Successfully hooked into PlaceholderAPI.");
         }
+
+        checkUpdates();
+    }
+
+    private void checkUpdates() {
+        plugin.scheduler().runAsync(() -> {
+            try (InputStream is = URI.create("https://api.spiget.org/v2/resources/133357/versions/latest").toURL().openStream();
+                 InputStreamReader reader = new InputStreamReader(is)) {
+                JsonObject json = JsonParser.parseReader(reader).getAsJsonObject();
+                if (json.has("name")) {
+                    String latest = json.get("name").getAsString();
+                    String current = plugin.getPluginMeta().getVersion();
+                    if (!current.equalsIgnoreCase(latest)) {
+                        plugin.setLatestVersion(latest);
+                        plugin.getLogger().warning("A new update is available for AirAuctions! Current: " + current + " | Latest: " + latest);
+                    }
+                }
+            } catch (Exception ignored) {}
+        });
     }
 
     private void logServerType() {

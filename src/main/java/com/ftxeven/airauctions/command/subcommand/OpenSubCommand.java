@@ -3,6 +3,7 @@ package com.ftxeven.airauctions.command.subcommand;
 import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.util.MessageUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -15,41 +16,42 @@ public final class OpenSubCommand {
         this.plugin = plugin;
     }
 
-    public void execute(Player sender, String label, String[] args) {
-        if (!sender.hasPermission("airauctions.command.open")) {
-            MessageUtil.send(sender, plugin.lang().get("errors.no-permission"), Map.of());
+    public void execute(CommandSender sender, String label, String[] args) {
+        boolean isConsole = !(sender instanceof Player);
+
+        if (!isConsole && !sender.hasPermission("airauctions.command.open")) {
+            MessageUtil.send((Player) sender, plugin.lang().get("errors.no-permission"), Map.of());
             return;
         }
 
-        if (args.length < 4) {
-            String usage = sender.hasPermission("airauctions.command.open.others")
-                    ? plugin.config().getSubcommandUsageOthers("open", label)
-                    : plugin.config().getSubcommandUsage("open", label);
-
-            MessageUtil.send(sender, plugin.lang().get("errors.incorrect-usage"), Map.of("usage", usage));
+        if ((isConsole && args.length < 5) || (!isConsole && args.length < 4)) {
+            sendUsage(sender, label, isConsole);
             return;
         }
 
         String guiId = args[1];
         String filter = args[2];
         String sort = args[3];
-
-        Player target = sender;
+        Player target;
 
         if (args.length >= 5) {
-            if (!sender.hasPermission("airauctions.command.open.others")) {
-                MessageUtil.send(sender, plugin.lang().get("errors.no-permission"),
+            if (!isConsole && !sender.hasPermission("airauctions.command.open.others")) {
+                MessageUtil.send((Player) sender, plugin.lang().get("errors.no-permission"),
                         Map.of("permission", "airauctions.command.open.others"));
                 return;
             }
-
             target = Bukkit.getPlayerExact(args[4]);
+        } else {
+            target = (Player) sender;
+        }
 
-            if (target == null) {
-                MessageUtil.send(sender, plugin.lang().get("errors.player-not-found"),
-                        Map.of("player", args[4]));
-                return;
+        if (target == null) {
+            if (isConsole) {
+                sender.sendMessage("Player not found");
+            } else {
+                MessageUtil.send((Player) sender, plugin.lang().get("errors.player-not-found"), Map.of());
             }
+            return;
         }
 
         plugin.core().gui().open(guiId, target, Map.of(
@@ -58,9 +60,24 @@ public final class OpenSubCommand {
                 "page", "0"
         ));
 
-        if (target != sender) {
-            MessageUtil.send(sender, plugin.lang().get("auctions.open.success-others"),
-                    Map.of("player", target.getName(), "gui", guiId));
+        if (isConsole || target != sender) {
+            if (isConsole) {
+                sender.sendMessage("Opened GUI '" + guiId + "' for " + target.getName());
+            } else {
+                MessageUtil.send((Player) sender, plugin.lang().get("auctions.open.success-others"),
+                        Map.of("player", target.getName(), "gui", guiId));
+            }
+        }
+    }
+
+    private void sendUsage(CommandSender sender, String label, boolean isConsole) {
+        if (isConsole) {
+            sender.sendMessage("Usage: /" + label + " open <gui> <filter> <sort> <player>");
+        } else {
+            String usage = sender.hasPermission("airauctions.command.open.others")
+                    ? plugin.config().getSubcommandUsageOthers("open", label)
+                    : plugin.config().getSubcommandUsage("open", label);
+            MessageUtil.send((Player) sender, plugin.lang().get("errors.incorrect-usage"), Map.of("usage", usage));
         }
     }
 }

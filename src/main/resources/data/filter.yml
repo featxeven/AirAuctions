@@ -29,7 +29,7 @@ combat:
     #   - "minecraft:mymodels/epic_sword"
     #   - "custom:ruby_spear"
 
-    # Nexo, ItemsAdder, CraftEngine items
+    # Match Nexo, ItemsAdder or CraftEngine items
     # special-items:
     #   - "nexo:item_id"
     #   - "itemsadder:item_id"

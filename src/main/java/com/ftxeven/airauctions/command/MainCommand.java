@@ -43,7 +43,11 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("Only players may use this command.");
+            if (args.length > 0 && isTrigger(args[0], "open")) {
+                openSub.execute(sender, label, args);
+                return true;
+            }
+            sender.sendMessage("Usage: /" + label + " open <gui> <filter> <sort> <player>");
             return true;
         }
 
@@ -107,15 +111,21 @@ public class MainCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String @NotNull [] args) {
+        boolean isPlayer = sender instanceof Player;
+
         if (args.length == 1) {
             List<String> suggestions = new ArrayList<>();
-            addIfAllowed(sender, suggestions, "sell", "sell");
-            addIfAllowed(sender, suggestions, "listings", "listings");
-            addIfAllowed(sender, suggestions, "expired", "expired");
-            addIfAllowed(sender, suggestions, "history", "history");
-            addIfAllowed(sender, suggestions, "view-player", "player");
-            addIfAllowed(sender, suggestions, "search", "search");
-            addIfAllowed(sender, suggestions, "open", "open");
+            if (!isPlayer) {
+                suggestions.add(plugin.config().getSubcommandName("open", "open"));
+            } else {
+                addIfAllowed(sender, suggestions, "sell", "sell");
+                addIfAllowed(sender, suggestions, "listings", "listings");
+                addIfAllowed(sender, suggestions, "expired", "expired");
+                addIfAllowed(sender, suggestions, "history", "history");
+                addIfAllowed(sender, suggestions, "view-player", "player");
+                addIfAllowed(sender, suggestions, "search", "search");
+                addIfAllowed(sender, suggestions, "open", "open");
+            }
 
             return suggestions.stream()
                     .filter(s -> s.toLowerCase().startsWith(args[0].toLowerCase()))
@@ -124,35 +134,43 @@ public class MainCommand implements CommandExecutor, TabCompleter {
 
         String subArg = args[0].toLowerCase();
 
-        String key = findKeyByTrigger(subArg);
-        if (key != null && !sender.hasPermission("airauctions.command." + key)) {
-            return List.of();
+        if (isPlayer) {
+            String key = findKeyByTrigger(subArg);
+            if (key != null && !sender.hasPermission("airauctions.command." + key)) {
+                return List.of();
+            }
+        } else {
+            if (!isTrigger(subArg, "open")) return List.of();
         }
 
         return handleDeepTabComplete(sender, subArg, args);
     }
 
     private List<String> handleDeepTabComplete(CommandSender sender, String subArg, String[] args) {
+        boolean isConsole = !(sender instanceof Player);
         String openTrigger = plugin.config().getSubcommandName("open", "open").toLowerCase();
         String playerTrigger = plugin.config().getSubcommandName("view-player", "player").toLowerCase();
 
         if (args.length == 2) {
-            if (subArg.equals(playerTrigger)) return getPlayerSuggestions(args[1]);
+            if (!isConsole && subArg.equals(playerTrigger)) return getPlayerSuggestions(args[1]);
             if (subArg.equals(openTrigger)) {
                 return Stream.of("auction_house", "player_expired", "player_listings", "player_history", "categories")
                         .filter(s -> s.startsWith(args[1].toLowerCase())).toList();
             }
         }
+
         if (args.length == 3 && subArg.equals(openTrigger)) {
             return plugin.filters().getOrderedCategoryKeys().stream()
                     .filter(s -> s.startsWith(args[2].toLowerCase())).toList();
         }
+
         if (args.length == 4 && subArg.equals(openTrigger)) {
             return Stream.of("newest-date", "oldest-date", "highest-price", "lowest-price")
                     .filter(s -> s.startsWith(args[3].toLowerCase())).toList();
         }
+
         if (args.length == 5 && subArg.equals(openTrigger)) {
-            if (sender.hasPermission("airauctions.command.open.others")) {
+            if (isConsole || sender.hasPermission("airauctions.command.open.others")) {
                 return getPlayerSuggestions(args[4]);
             }
         }

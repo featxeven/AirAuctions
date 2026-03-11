@@ -21,6 +21,7 @@ public final class AirAuctions extends JavaPlugin {
     private EconomyManager economyManager;
     private CoreManager coreManager;
     private HookManager hookManager;
+    private String latestVersion;
 
     @Override
     public void onLoad() {
@@ -50,7 +51,8 @@ public final class AirAuctions extends JavaPlugin {
     public void setSchedulerUtil(SchedulerUtil schedulerUtil) { this.schedulerUtil = schedulerUtil; }
     public void setEconomyManager(EconomyManager economyManager) { this.economyManager = economyManager; }
     public void setCoreManager(CoreManager coreManager) { this.coreManager = coreManager; }
-    public void setHookManager(HookManager hookManager) { this.hookManager = hookManager;  }
+    public void setHookManager(HookManager hookManager) { this.hookManager = hookManager; }
+    public void setLatestVersion(String latestVersion) { this.latestVersion = latestVersion; }
 
     public ConfigManager config() { return configManager; }
     public DatabaseManager database() { return databaseManager; }
@@ -61,4 +63,5 @@ public final class AirAuctions extends JavaPlugin {
     public EconomyManager economy() { return economyManager; }
     public CoreManager core() { return coreManager; }
     public HookManager getHookManager() { return hookManager; }
+    public String getLatestVersion() { return latestVersion; }
 }

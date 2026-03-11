@@ -39,6 +39,10 @@ general:
 
   plugin-version: "%prefix% <white>Running version <gradient:#00ffcc:#0066ff>%version%</gradient></white>"
   plugin-reloaded: "<sound:block.note_block.chime:1:2>%prefix% <green>Plugin reloaded successfully!</green>"
+  plugin-outdated: "%prefix% <red>A new update is available!</red>
+      <newline><gray>  • Current: <white>%current%</white>
+      <newline><gray>  • Latest: <green>%latest%</green>
+      <newline><gray>  • Download: <yellow><click:open_url:'https://www.spigotmc.org/resources/133357/'>[Click Here]</click></yellow>"
 
 # -----------------------------
 # PLACEHOLDERS
@@ -114,4 +118,5 @@ errors:
   search-query-too-long: "%prefix% <#ff5f6d>Search query too long! <gray>(%length%/%limit%)</gray></#ff5f6d>"
   item-unavailable: "%prefix% <#ff5f6d>This item has already been claimed or sold.</#ff5f6d>"
   cannot-afford-fee: "%prefix% <#ff5f6d>You can't afford the <gold>%fee%</gold> listing fee!</#ff5f6d>"
+  # Triggers when error-on-excess-args is on true
   too-many-arguments: "%prefix% <#ff5f6d>Too many arguments!</#ff5f6d> <gray>Use: <white>%usage%</white></gray>"
