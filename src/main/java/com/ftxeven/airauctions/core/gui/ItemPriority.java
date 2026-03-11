@@ -8,12 +8,16 @@ import java.util.*;
 
 public record ItemPriority(
         List<Condition> parsedConditions,
-        String materialSelector,
+        String material,
         Integer amount,
         String displayName,
         List<String> lore,
         Integer customModelData,
-        List<String> actions
+        List<String> actions,
+        String itemModel,
+        String tooltipStyle,
+        Boolean hideTooltip,
+        Boolean glow
 ) {
     public static ItemPriority fromSection(ConfigurationSection sec) {
         List<Condition> conditions = sec.getStringList("conditions").stream()
@@ -27,12 +31,12 @@ public record ItemPriority(
                 sec.getString("display-name"),
                 sec.getStringList("lore"),
                 sec.get("custom-model-data") instanceof Integer i ? i : null,
-                sec.getStringList("actions")
+                sec.getStringList("actions"),
+                sec.getString("item-model"),
+                sec.getString("tooltip-style"),
+                sec.contains("hide-tooltip") ? sec.getBoolean("hide-tooltip") : null,
+                sec.contains("glow") ? sec.getBoolean("glow") : null
         );
-    }
-
-    public String material() {
-        return materialSelector;
     }
 
     public boolean matches(Player player, Map<String, String> context) {

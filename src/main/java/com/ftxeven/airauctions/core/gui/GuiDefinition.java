@@ -106,44 +106,62 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
         }
 
         public ItemStack buildStack(Player viewer, Map<String, String> ph, AirAuctions plugin) {
-            String activeMatStr = this.materialStr;
-            int activeAmount = this.amount;
-            String activeName = this.rawName;
-            List<String> activeLore = this.rawLore;
-            Integer activeData = this.customModelData;
+            String activeMat;
+            int activeAmount;
+            String activeName;
+            List<String> activeLore;
+            Integer activeData;
+            String activeModel;
+            String activeStyle;
+            boolean activeHide;
+            boolean activeGlow;
 
+            ItemPriority match = null;
             if (!priorities.isEmpty()) {
-                boolean match = false;
                 for (ItemPriority p : priorities.values()) {
                     if (p.matches(viewer, ph)) {
-                        if (p.material() != null) activeMatStr = p.material();
-                        if (p.amount() != null) activeAmount = p.amount();
-                        if (p.displayName() != null) activeName = p.displayName();
-                        if (p.lore() != null && !p.lore().isEmpty()) activeLore = p.lore();
-                        if (p.customModelData() != null) activeData = p.customModelData();
-                        match = true;
+                        match = p;
                         break;
                     }
                 }
-                if (!match) return new ItemStack(Material.AIR);
             }
 
-            ItemComponent builder = new ItemComponent(activeMatStr, plugin).amount(activeAmount);
+            if (match != null) {
+                activeMat = match.material() != null ? match.material() : "STONE";
+                activeAmount = match.amount() != null ? match.amount() : 1;
+                activeName = match.displayName();
+                activeLore = match.lore();
+                activeData = match.customModelData();
+                activeModel = match.itemModel();
+                activeStyle = match.tooltipStyle();
+                activeHide = match.hideTooltip() != null && match.hideTooltip();
+                activeGlow = match.glow() != null && match.glow();
+            } else {
+                activeMat = this.materialStr;
+                activeAmount = this.amount;
+                activeName = this.rawName;
+                activeLore = this.rawLore;
+                activeData = this.customModelData;
+                activeModel = this.itemModel;
+                activeStyle = this.tooltipStyle;
+                activeHide = this.hideTooltip;
+                activeGlow = this.glow;
+            }
+
+            if (activeMat == null) return new ItemStack(Material.AIR);
+
+            ItemComponent builder = new ItemComponent(activeMat, plugin).amount(activeAmount);
 
             if (activeName != null) {
                 builder.name(MM.deserialize("<!italic>" + PlaceholderUtil.apply(viewer, activeName, ph)));
             }
 
             if (activeLore != null && !activeLore.isEmpty()) {
-                List<Component> lore = new ArrayList<>(activeLore.size());
+                List<Component> lore = new ArrayList<>();
                 for (String line : activeLore) {
                     String applied = PlaceholderUtil.apply(viewer, line, ph);
-                    if (applied.indexOf('\n') != -1) {
-                        for (String split : applied.split("\n")) {
-                            lore.add(MM.deserialize("<!italic>" + split));
-                        }
-                    } else {
-                        lore.add(MM.deserialize("<!italic>" + applied));
+                    for (String split : applied.split("\n")) {
+                        lore.add(MM.deserialize("<!italic>" + split));
                     }
                 }
                 builder.lore(lore);
@@ -152,17 +170,16 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
             builder.customModelData(activeData)
                     .damage(damage)
                     .enchants(enchants)
-                    .glow(glow)
+                    .glow(activeGlow)
                     .flags(flags)
-                    .hideTooltip(hideTooltip)
-                    .tooltipStyle(tooltipStyle)
-                    .itemModel(itemModel);
+                    .hideTooltip(activeHide)
+                    .tooltipStyle(activeStyle)
+                    .itemModel(activeModel);
 
             if (this.headOwner() != null) {
                 String resolvedOwner = PlaceholderUtil.apply(viewer, this.headOwner(), ph);
                 PlayerAuctionProfile.SkinData fetchedSkin = null;
                 UUID ownerUuid = plugin.database().records().uuidFromName(resolvedOwner);
-
                 if (ownerUuid != null) {
                     var profile = plugin.core().profiles().get(ownerUuid);
                     if (profile != null) fetchedSkin = profile.getSkinData();

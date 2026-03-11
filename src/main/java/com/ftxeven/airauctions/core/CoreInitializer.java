@@ -85,7 +85,7 @@ public final class CoreInitializer {
                     String current = plugin.getPluginMeta().getVersion();
                     if (!current.equalsIgnoreCase(latest)) {
                         plugin.setLatestVersion(latest);
-                        plugin.getLogger().warning("A new update is available for AirAuctions! Current: " + current + " | Latest: " + latest);
+                        plugin.getLogger().warning("A new update is available! Current: " + current + " | Latest: " + latest);
                     }
                 }
             } catch (Exception ignored) {}
