@@ -98,7 +98,7 @@ public final class ConfigManager {
         if (player.isOp()) return Integer.MAX_VALUE;
 
         int configDefault = getDefaultLimit();
-        return (int) getValueFromPermissions(player, "airauctions.limit.", configDefault);
+        return (int) getValueFromPermissions(player, "airauctions.bypass.limit.", configDefault);
     }
 
     public int getExpireTime(Player player) {

@@ -94,7 +94,7 @@ permissions:
       airauctions.bypass.damageditems: true
       airauctions.bypass.blacklist: true
 
-  airauctions.limit.*:
+  airauctions.bypass.limit.*:
     description: Grants unlimited auction listings.
     default: op
   airauctions.fee:

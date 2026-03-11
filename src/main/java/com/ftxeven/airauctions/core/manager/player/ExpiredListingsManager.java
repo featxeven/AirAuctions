@@ -158,7 +158,7 @@ public final class ExpiredListingsManager implements GuiManager.CustomGuiManager
         boolean invFull = viewer.getInventory().firstEmpty() == -1;
 
         if (invFull && !dropEnabled) {
-            MessageUtil.send(viewer, plugin.lang().get("auctions.error.inventory-full"), Map.of());
+            MessageUtil.send(viewer, plugin.lang().get("auctions.cancel.error.inventory-full"), Map.of());
             return;
         }
 

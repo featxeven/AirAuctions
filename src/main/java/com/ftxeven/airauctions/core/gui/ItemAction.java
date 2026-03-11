@@ -3,6 +3,7 @@ package com.ftxeven.airauctions.core.gui;
 import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.core.manager.main.AuctionHouseManager;
 import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
+import com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager;
 import com.ftxeven.airauctions.core.model.AuctionListing;
 import com.ftxeven.airauctions.util.MessageUtil;
 import com.ftxeven.airauctions.util.PlaceholderUtil;
@@ -213,12 +214,12 @@ public final class ItemAction {
     private void handleCollect(Player p, Map<String, String> ph) {
         int id = Integer.parseInt(ph.getOrDefault("listing-id", "-1"));
         var listing = plugin.core().auctions().getExpiredListing(id);
-        var em = plugin.core().gui().get("player_expired", com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager.class);
+        var em = plugin.core().gui().get("player_expired", ExpiredListingsManager.class);
 
         if (listing == null || em == null) return;
 
         if (p.getInventory().firstEmpty() == -1 && !plugin.config().dropItemsWhenFull()) {
-            MessageUtil.send(p, plugin.lang().get("auctions.error.inventory-full"), Map.of());
+            MessageUtil.send(p, plugin.lang().get("auctions.cancel.error.inventory-full"), Map.of());
             return;
         }
 
