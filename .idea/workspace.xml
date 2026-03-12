@@ -4,8 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="ver change">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="fixed %id% for auction history stack">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/HistorySubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/HistorySubCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/ItemAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetListingsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetListingsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,15 +57,16 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "feature/bid",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/AirAuctions/src/main/resources/guis/purchase",
+    "last_opened_file_path": "D:/AirAuctions/src/main/resources/guis/target",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+    "settings.editor.selected.configurable": "File.Encoding"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\AirAuctions\src\main\resources\guis\target" />
       <recent name="D:\AirAuctions\src\main\resources\guis\purchase" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -340,7 +350,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773265152932</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="changed %seller% for success-broadcast message">
+      <option name="closed" value="true" />
+      <created>1773335062582</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1773335062582</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fixed %id% for auction history stack">
+      <option name="closed" value="true" />
+      <created>1773337258211</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1773337258211</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -372,6 +398,8 @@
     <MESSAGE value="added missing components for item priority stack" />
     <MESSAGE value="fixed message key for cancel &amp; permission" />
     <MESSAGE value="ver change" />
-    <option name="LAST_COMMIT_MESSAGE" value="ver change" />
+    <MESSAGE value="changed %seller% for success-broadcast message" />
+    <MESSAGE value="fixed %id% for auction history stack" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed %id% for auction history stack" />
   </component>
 </project>

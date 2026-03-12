@@ -31,6 +31,9 @@ permissions:
   airauctions.command.history:
     description: Allows viewing your personal transaction history.
     default: op
+  airauctions.command.history.others:
+    description: Allows viewing another player's transaction history.
+    default: op
   airauctions.command.search:
     description: Allows using the search subcommand.
     default: op

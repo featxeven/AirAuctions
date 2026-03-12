@@ -11,6 +11,7 @@ import com.ftxeven.airauctions.core.manager.player.PlayerListingsManager;
 import com.ftxeven.airauctions.core.manager.main.PreviewShulkerManager;
 import com.ftxeven.airauctions.core.gui.util.GuiSlotMapper;
 import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
+import com.ftxeven.airauctions.core.manager.target.TargetHistoryManager;
 import com.ftxeven.airauctions.core.manager.target.TargetListingsManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -61,6 +62,7 @@ public final class GuiManager {
         reg("player_expired", new ExpiredListingsManager(plugin));
         reg("cancel_listing", new CancelListingManager(plugin));
         reg("target_listings", new TargetListingsManager(plugin));
+        reg("target_history", new TargetHistoryManager(plugin));
     }
 
     private CustomGuiManager getManagerByInv(Inventory inv) {

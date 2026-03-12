@@ -150,11 +150,14 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         boolean isConsole = !(sender instanceof Player);
         String openTrigger = plugin.config().getSubcommandName("open", "open").toLowerCase();
         String playerTrigger = plugin.config().getSubcommandName("view-player", "player").toLowerCase();
+        String historyTrigger = plugin.config().getSubcommandName("history", "history").toLowerCase();
 
         if (args.length == 2) {
-            if (!isConsole && subArg.equals(playerTrigger)) return getPlayerSuggestions(args[1]);
+            if (!isConsole && (subArg.equals(playerTrigger) || (subArg.equals(historyTrigger) && sender.hasPermission("airauctions.command.history.others")))) {
+                return getPlayerSuggestions(args[1]);
+            }
             if (subArg.equals(openTrigger)) {
-                return Stream.of("auction_house", "player_expired", "player_listings", "player_history", "categories")
+                return Stream.of("auction_house", "player_expired", "player_listings", "player_history", "target_history", "categories")
                         .filter(s -> s.startsWith(args[1].toLowerCase())).toList();
             }
         }

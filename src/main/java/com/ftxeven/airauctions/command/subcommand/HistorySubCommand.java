@@ -14,14 +14,31 @@ public final class HistorySubCommand {
     }
 
     public void execute(Player player, String label, String[] args) {
-        if (plugin.config().errorOnExcessArgs() && args.length > 1) {
-            String usage = plugin.config().getSubcommandUsage("history", label);
-            MessageUtil.send(player, plugin.lang().get("errors.too-many-arguments"), Map.of("usage", usage));
+        if (args.length == 1) {
+            plugin.core().gui().open("player_history", player, Map.of("page", "0"));
             return;
         }
 
-        plugin.core().gui().open("player_history", player, Map.of(
-                "page", "0"
-        ));
+        if (args.length == 2) {
+            if (!player.hasPermission("airauctions.command.history.others")) {
+                MessageUtil.send(player, plugin.lang().get("errors.no-permission"), Map.of("permission", "airauctions.command.history.others"));
+                return;
+            }
+
+            String targetName = args[1];
+            plugin.core().gui().open("target_history", player, Map.of(
+                    "target", targetName,
+                    "page", "0"
+            ));
+            return;
+        }
+
+        if (plugin.config().errorOnExcessArgs()) {
+            String usage = player.hasPermission("airauctions.command.history.others")
+                    ? plugin.config().getSubcommandUsageOthers("history", label)
+                    : plugin.config().getSubcommandUsage("history", label);
+
+            MessageUtil.send(player, plugin.lang().get("errors.too-many-arguments"), Map.of("usage", usage));
+        }
     }
 }

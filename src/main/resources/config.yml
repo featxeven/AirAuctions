@@ -162,6 +162,7 @@ commands:
       enabled: true
       name: "history"
       usage: "/%label% %sublabel%"
+      usage-others: "/%label% %sublabel% [player]"
     search:
       enabled: true
       name: "search"
