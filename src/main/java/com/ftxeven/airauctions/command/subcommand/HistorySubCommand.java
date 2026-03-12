@@ -3,7 +3,9 @@ package com.ftxeven.airauctions.command.subcommand;
 import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.util.MessageUtil;
 import org.bukkit.entity.Player;
+
 import java.util.Map;
+import java.util.UUID;
 
 public final class HistorySubCommand {
 
@@ -15,20 +17,38 @@ public final class HistorySubCommand {
 
     public void execute(Player player, String label, String[] args) {
         if (args.length == 1) {
-            plugin.core().gui().open("player_history", player, Map.of("page", "0"));
+            plugin.core().gui().open("player_history", player, Map.of("page", "1"));
             return;
         }
 
         if (args.length == 2) {
+            String inputName = args[1];
+
+            if (inputName.equalsIgnoreCase(player.getName())) {
+                plugin.core().gui().open("player_history", player, Map.of("page", "1"));
+                return;
+            }
+
             if (!player.hasPermission("airauctions.command.history.others")) {
                 MessageUtil.send(player, plugin.lang().get("errors.no-permission"), Map.of("permission", "airauctions.command.history.others"));
                 return;
             }
 
-            String targetName = args[1];
+            UUID targetUuid = plugin.database().records().uuidFromName(inputName);
+            if (targetUuid == null) {
+                MessageUtil.send(player, plugin.lang().get("errors.player-never-joined"), Map.of());
+                return;
+            }
+
+            String realName = plugin.database().records().getNameFromUuid(targetUuid);
+            if (realName == null) {
+                MessageUtil.send(player, plugin.lang().get("errors.player-never-joined"), Map.of());
+                return;
+            }
+
             plugin.core().gui().open("target_history", player, Map.of(
-                    "target", targetName,
-                    "page", "0"
+                    "target", realName,
+                    "page", "1"
             ));
             return;
         }
