@@ -86,7 +86,7 @@ auctions:
 
     success: "%prefix% <green>Market listing created!</green> <gray>(<aqua>%amount%x %item%</aqua> for <gold>%price%</gold>)</gray>
     <newline>%prefix% <gray>Listing Fee: <red>%fee%</red> <dark_gray>| <gray>Status: <green>Active</green><sound:entity.player.levelup:1:2><actionbar:'<green>Item listed for <gold>%price%</gold>!</green>'>"
-    success-broadcast: "%prefix% <green>%player% has just listed <gray>(<aqua>%amount%x %item%</aqua> for <gold>%price%</gold>)</gray> on the Auction House!"
+    success-broadcast: "%prefix% <green>%seller% has just listed <gray>(<aqua>%amount%x %item%</aqua> for <gold>%price%</gold>)</gray> on the Auction House!"
     sold: "%prefix% <gradient:#00ffcc:#0066ff><bold>ITEM SOLD!</bold></gradient> <white>%amount%x %item%</white> was bought by <yellow>%buyer%</yellow>.
     <newline>%prefix% <gray>Payout: <gold>%price%</gold> <dark_gray>| <gray>Profit: <green>%profit%</green>"
 

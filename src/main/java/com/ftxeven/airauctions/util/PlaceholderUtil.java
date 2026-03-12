@@ -28,10 +28,6 @@ public final class PlaceholderUtil {
             result = result.replace("%prefix%", prefix);
         }
 
-        if (player != null && result.contains("%player%")) {
-            result = result.replace("%player%", player.getName());
-        }
-
         if (context != null && !context.isEmpty()) {
             for (Map.Entry<String, String> entry : context.entrySet()) {
                 String key = "%" + entry.getKey() + "%";
@@ -40,6 +36,10 @@ public final class PlaceholderUtil {
                     result = result.replace(key, val != null ? val : "");
                 }
             }
+        }
+
+        if (player != null && result.contains("%player%")) {
+            result = result.replace("%player%", player.getName());
         }
 
         return HAS_PAPI ? PlaceholderAPI.setPlaceholders(player, result) : result;
