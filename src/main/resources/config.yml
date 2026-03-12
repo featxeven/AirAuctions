@@ -46,7 +46,7 @@ auctions:
 
   # --- Listing Process ---
   confirm-auction: true            # Enable confirmation before listing an item
-  confirmation-expire-time: 60     # Seconds before confirmation request expires (-1 to disable)
+  confirmation-expire-time: 60     # Seconds before confirmation request expires if Confirm GUI is disabled (-1 to disable)
 
   # Amount Requirement:
   # REQUIRED: Player MUST choose an amount via command.

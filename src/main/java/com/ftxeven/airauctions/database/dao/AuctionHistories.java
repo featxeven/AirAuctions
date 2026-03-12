@@ -20,8 +20,9 @@ public final class AuctionHistories {
 
     public List<AuctionHistory> getHistorySync(UUID uuid, int limit) {
         List<AuctionHistory> list = new ArrayList<>();
-        String sql = "SELECT * FROM auction_history WHERE seller_uuid = ? OR buyer_uuid = ? ORDER BY sold_at DESC LIMIT ?;";
-        String defaultCurrency = plugin.config().economyDefaultProvider();
+        String sql = "SELECT id, seller_uuid, buyer_uuid, item_data, price, currency_id, sold_at FROM auction_history WHERE seller_uuid = ? OR buyer_uuid = ? ORDER BY sold_at DESC LIMIT ?;";
+
+        final String defaultCurrency = plugin.config().economyDefaultProvider();
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             String s = uuid.toString();
@@ -31,15 +32,13 @@ public final class AuctionHistories {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String currency = rs.getString("currency_id");
-                    if (currency == null) currency = defaultCurrency;
-
                     list.add(new AuctionHistory(
                             rs.getInt("id"),
                             UUID.fromString(rs.getString("seller_uuid")),
                             UUID.fromString(rs.getString("buyer_uuid")),
                             ItemSerializerUtil.deserialize(rs.getBytes("item_data")),
                             rs.getDouble("price"),
-                            currency,
+                            currency == null ? defaultCurrency : currency,
                             rs.getLong("sold_at")
                     ));
                 }
