@@ -5,6 +5,7 @@ import com.ftxeven.airauctions.core.model.PlayerAuctionProfile;
 import com.ftxeven.airauctions.util.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -145,23 +146,30 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
 
             if (activeLore != null && !activeLore.isEmpty()) {
                 List<Component> lore = new ArrayList<>();
+                boolean skip = plugin.config().skipEmptyLines();
+                boolean pendingEmpty = false;
+                var serializer = PlainTextComponentSerializer.plainText();
+
                 for (String line : activeLore) {
                     String applied = PlaceholderUtil.apply(viewer, line, ph);
-                    for (String split : applied.split("\n")) {
-                        lore.add(MM.deserialize("<!italic>" + split));
+                    String[] splits = applied.split("\n");
+
+                    for (String split : splits) {
+                        Component comp = MM.deserialize("<!italic>" + split);
+                        if (skip && serializer.serialize(comp).isEmpty()) {
+                            pendingEmpty = true;
+                        } else {
+                            if (pendingEmpty && !lore.isEmpty()) lore.add(Component.empty());
+                            lore.add(comp);
+                            pendingEmpty = false;
+                        }
                     }
                 }
                 builder.lore(lore);
             }
 
-            builder.customModelData(activeData)
-                    .damage(damage)
-                    .enchants(enchants)
-                    .glow(activeGlow)
-                    .flags(flags)
-                    .hideTooltip(activeHide)
-                    .tooltipStyle(activeStyle)
-                    .itemModel(activeModel);
+            builder.customModelData(activeData).damage(damage).enchants(enchants).glow(activeGlow)
+                    .flags(flags).hideTooltip(activeHide).tooltipStyle(activeStyle).itemModel(activeModel);
 
             if (this.headOwner() != null) {
                 String resolvedOwner = PlaceholderUtil.apply(viewer, this.headOwner(), ph);

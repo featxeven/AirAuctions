@@ -31,6 +31,10 @@ date-format: "dd/MM/yy"
 # false: Updates only auction slots (better for performance)
 force-update-gui: true
 
+# true:  "" lines are hidden UNLESS visible lines appear below them.
+# false: Show all lines regarding if they are empty ("").
+skip-empty-lines: true
+
 # ----------------------------------
 # AUCTIONS
 # ----------------------------------

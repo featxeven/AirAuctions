@@ -10,6 +10,7 @@ import com.ftxeven.airauctions.core.model.AuctionListing;
 import com.ftxeven.airauctions.util.MessageUtil;
 import com.ftxeven.airauctions.util.TimeUtil;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -166,95 +167,90 @@ public final class GuiSlotMapper {
 
     private static ItemStack buildAuctionStack(AirAuctions plugin, Player viewer, AuctionListing listing, Map<String, String> globalPh, GuiItem template) {
         ItemComponent builder = new ItemComponent(listing.item());
-
         var sellerProfile = plugin.core().profiles().get(listing.sellerUuid());
         var skinData = sellerProfile != null ? sellerProfile.getSkinData() : null;
 
         if (template != null) {
-            builder.customModelData(template.customModelData())
-                    .damage(template.damage())
-                    .glow(template.glow())
-                    .flags(template.flags())
-                    .hideTooltip(template.hideTooltip())
-                    .tooltipStyle(template.tooltipStyle())
-                    .itemModel(template.itemModel());
+            builder.customModelData(template.customModelData()).damage(template.damage()).glow(template.glow())
+                    .flags(template.flags()).hideTooltip(template.hideTooltip()).tooltipStyle(template.tooltipStyle()).itemModel(template.itemModel());
 
-            if (template.headOwner() != null) {
-                builder.skullOwner(template.headOwner(), viewer, skinData);
-            }
+            if (template.headOwner() != null) builder.skullOwner(template.headOwner(), viewer, skinData);
             if (template.enchants() != null && !template.enchants().isEmpty()) builder.enchants(template.enchants());
         }
 
         var provider = plugin.economy().getProvider(listing.currencyId());
-
         String seller = NAME_CACHE.computeIfAbsent(listing.sellerUuid(), uuid -> plugin.core().profiles().getName(uuid));
         String price = plugin.core().economy().formats().format(listing.price(), listing.currencyId());
         String amountStr = String.valueOf(listing.item().getAmount());
         String idStr = String.valueOf(listing.id());
-
         String itemFilterKey = plugin.filters().getCategory(listing.item());
         String itemFilterDisplayName = plugin.filters().getDisplayName(itemFilterKey);
 
         List<Component> finalLore = new ArrayList<>();
+        boolean skip = plugin.config().skipEmptyLines();
+        boolean pendingEmpty = false;
+
         if (template != null && template.rawLore() != null) {
             double playerBalance = provider.getBalance(viewer);
             boolean isShulker = listing.item().getType().name().endsWith("SHULKER_BOX");
             boolean isOwner = viewer.getName().equalsIgnoreCase(seller);
-
             ItemMeta sourceMeta = listing.item().getItemMeta();
 
             for (String line : template.rawLore()) {
                 if (line.contains("%lore%")) {
                     if (sourceMeta != null && sourceMeta.hasLore()) {
-                        finalLore.addAll(Objects.requireNonNull(sourceMeta.lore()));
+                        List<Component> sourceLore = Objects.requireNonNull(sourceMeta.lore());
+                        if (!sourceLore.isEmpty()) {
+                            if (pendingEmpty && !finalLore.isEmpty()) finalLore.add(Component.empty());
+                            finalLore.addAll(sourceLore);
+                            pendingEmpty = false;
+                        }
                     }
-                } else if (line.startsWith("buy:")) {
-                    if (playerBalance >= listing.price()) {
-                        finalLore.add(processLine(line.substring(4).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
-                    }
+                    continue;
+                }
+
+                Component comp = null;
+                if (line.startsWith("buy:")) {
+                    if (playerBalance >= listing.price()) comp = processLine(line.substring(4).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer);
                 } else if (line.startsWith("view-player:")) {
-                    if (!isOwner) {
-                        finalLore.add(processLine(line.substring(12).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
-                    }
+                    if (!isOwner) comp = processLine(line.substring(12).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer);
                 } else if (line.startsWith("preview:")) {
-                    if (isShulker) {
-                        finalLore.add(processLine(line.substring(8).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
-                    }
+                    if (isShulker) comp = processLine(line.substring(8).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer);
                 } else {
-                    finalLore.add(processLine(line, seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
+                    comp = processLine(line, seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer);
+                }
+
+                if (comp != null) {
+                    if (skip && isPlainEmpty(comp)) {
+                        pendingEmpty = true;
+                    } else {
+                        if (pendingEmpty && !finalLore.isEmpty()) finalLore.add(Component.empty());
+                        finalLore.add(comp);
+                        pendingEmpty = false;
+                    }
                 }
             }
         }
 
         builder.lore(finalLore);
-
         if (listing.item().getItemMeta() != null && !listing.item().getItemMeta().hasDisplayName()) {
             if (template != null && template.rawName() != null) {
                 builder.name(processLine(template.rawName(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
             }
         }
-
         return builder.build();
     }
 
     public static ItemStack buildHistoryStack(AirAuctions plugin, Player viewer, AuctionHistory log, Map<String, String> globalPh, GuiItem template) {
         ItemComponent builder = new ItemComponent(log.item());
-
         var sellerProfile = plugin.core().profiles().get(log.sellerUuid());
         var skinData = sellerProfile != null ? sellerProfile.getSkinData() : null;
 
         if (template != null) {
-            builder.customModelData(template.customModelData())
-                    .damage(template.damage())
-                    .glow(template.glow())
-                    .flags(template.flags())
-                    .hideTooltip(template.hideTooltip())
-                    .tooltipStyle(template.tooltipStyle())
-                    .itemModel(template.itemModel());
+            builder.customModelData(template.customModelData()).damage(template.damage()).glow(template.glow())
+                    .flags(template.flags()).hideTooltip(template.hideTooltip()).tooltipStyle(template.tooltipStyle()).itemModel(template.itemModel());
 
-            if (template.headOwner() != null) {
-                builder.skullOwner(template.headOwner(), viewer, skinData);
-            }
+            if (template.headOwner() != null) builder.skullOwner(template.headOwner(), viewer, skinData);
             if (template.enchants() != null && !template.enchants().isEmpty()) builder.enchants(template.enchants());
         }
 
@@ -263,40 +259,62 @@ public final class GuiSlotMapper {
         String price = plugin.core().economy().formats().format(log.price(), log.currencyId());
         String amountStr = String.valueOf(log.item().getAmount());
         String idStr = String.valueOf(log.id());
-
         String dateStr = TimeUtil.formatDate(plugin, log.soldAt());
-        String timeStr = Instant.ofEpochMilli(log.soldAt())
-                .atZone(ZoneId.systemDefault())
-                .format(DateTimeFormatter.ofPattern("HH:mm"));
-
+        String timeStr = Instant.ofEpochMilli(log.soldAt()).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
         String itemFilterKey = plugin.filters().getCategory(log.item());
         String itemFilterDisplayName = plugin.filters().getDisplayName(itemFilterKey);
 
         List<Component> finalLore = new ArrayList<>();
+        boolean skip = plugin.config().skipEmptyLines();
+        boolean pendingEmpty = false;
+
         if (template != null && template.rawLore() != null) {
             boolean isShulker = log.item().getType().name().endsWith("SHULKER_BOX");
             ItemMeta sourceMeta = log.item().getItemMeta();
 
             for (String line : template.rawLore()) {
                 if (line.contains("%lore%")) {
-                    if (sourceMeta != null && sourceMeta.hasLore()) finalLore.addAll(Objects.requireNonNull(sourceMeta.lore()));
-                } else if (line.startsWith("preview:")) {
-                    if (isShulker) finalLore.add(processHistoryLine(line.substring(8).trim(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
+                    if (sourceMeta != null && sourceMeta.hasLore()) {
+                        List<Component> sourceLore = Objects.requireNonNull(sourceMeta.lore());
+                        if (!sourceLore.isEmpty()) {
+                            if (pendingEmpty && !finalLore.isEmpty()) finalLore.add(Component.empty());
+                            finalLore.addAll(sourceLore);
+                            pendingEmpty = false;
+                        }
+                    }
+                    continue;
+                }
+
+                Component comp = null;
+                if (line.startsWith("preview:")) {
+                    if (isShulker) comp = processHistoryLine(line.substring(8).trim(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer);
                 } else {
-                    finalLore.add(processHistoryLine(line, seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
+                    comp = processHistoryLine(line, seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer);
+                }
+
+                if (comp != null) {
+                    if (skip && isPlainEmpty(comp)) {
+                        pendingEmpty = true;
+                    } else {
+                        if (pendingEmpty && !finalLore.isEmpty()) finalLore.add(Component.empty());
+                        finalLore.add(comp);
+                        pendingEmpty = false;
+                    }
                 }
             }
         }
 
         builder.lore(finalLore);
-
         if (log.item().getItemMeta() != null && !log.item().getItemMeta().hasDisplayName()) {
             if (template != null && template.rawName() != null) {
                 builder.name(processHistoryLine(template.rawName(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
             }
         }
-
         return builder.build();
+    }
+
+    private static boolean isPlainEmpty(Component component) {
+        return PlainTextComponentSerializer.plainText().serialize(component).isEmpty();
     }
 
     private static Component processLine(String line, String seller, String price, String id, String amount, String itemFilter, Map<String, String> ph, Player viewer) {
