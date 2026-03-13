@@ -45,21 +45,29 @@ public final class ItemAction {
 
         String[] parts = applied.split(" ");
         if (parts.length == 3) {
+            String left = parts[0];
+            String op = parts[1];
+            String right = parts[2];
+
             try {
-                double left = Double.parseDouble(parts[0]);
-                String op = parts[1];
-                double right = Double.parseDouble(parts[2]);
+                double dLeft = Double.parseDouble(left);
+                double dRight = Double.parseDouble(right);
 
                 return switch (op) {
-                    case ">" -> left > right;
-                    case "<" -> left < right;
-                    case ">=" -> left >= right;
-                    case "<=" -> left <= right;
-                    case "==" -> left == right;
+                    case ">" -> dLeft > dRight;
+                    case "<" -> dLeft < dRight;
+                    case ">=" -> dLeft >= dRight;
+                    case "<=" -> dLeft <= dRight;
+                    case "==" -> dLeft == dRight;
+                    case "!=" -> dLeft != dRight;
                     default -> true;
                 };
             } catch (NumberFormatException ignored) {
-                return parts[0].equalsIgnoreCase(parts[2]);
+                return switch (op) {
+                    case "==" -> left.equalsIgnoreCase(right);
+                    case "!=" -> !left.equalsIgnoreCase(right);
+                    default -> true;
+                };
             }
         }
 
