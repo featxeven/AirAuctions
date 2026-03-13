@@ -13,7 +13,7 @@ auction-house:
     lore:
       - "%lore%"
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Package Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
@@ -60,7 +60,7 @@ auction-search:
     lore:
       - "%lore%"
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Package Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
@@ -107,7 +107,7 @@ player-history:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Listing Information:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
@@ -121,7 +121,7 @@ player-history:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Listing Information:</gray>"
       - " <#736efe>»</#736efe> <gray>Buyer:</gray> <white>%buyer%</white>"
       - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
@@ -167,7 +167,7 @@ player-listings:
     lore:
       - "%lore%"
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Package Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
       - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
@@ -213,7 +213,7 @@ target-listings:
     lore:
       - "%lore%"
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Package Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
@@ -260,7 +260,7 @@ target-history:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Listing Information:</gray>"
       - " <#736efe>»</#736efe> <gray>Bought from:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
@@ -274,7 +274,7 @@ target-history:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Listing Information:</gray>"
       - " <#736efe>»</#736efe> <gray>Sold to:</gray> <white>%buyer%</white>"
       - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"

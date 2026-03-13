@@ -15,7 +15,7 @@ auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
@@ -23,17 +23,13 @@ auction-item:
     - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - ""
-    - "buy: <#5efce8>Left-Click</#5efce8> <gray>to purchase item</gray>"
-    - "view-player: <red>Right-Click</red> <gray>to view more %seller%'s listings</gray>"
+    - "buy: <#5efce8>Click</#5efce8> <gray>to purchase item</gray>"
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
     - HIDE_ATTRIBUTES
-  left-actions:
+  actions:
     - "[sound] ui.button.click 1 2"
     - "[buy]"
-  right-actions:
-    - "[requirement] %player% != %seller%"
-    - "[open] gui:target_listings sort:%sort% filter:%filter% target:%seller%"
   shift-actions:
     - "[sound] ui.button.click 1 2"
     - "[preview]"

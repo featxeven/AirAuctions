@@ -15,7 +15,7 @@ auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"

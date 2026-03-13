@@ -13,7 +13,7 @@ auction-house:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Transaction Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
@@ -35,9 +35,9 @@ auction-house:
       lore:
         - "<gray>Click to finalize your</gray>"
         - "<gray>purchase for exactly:</gray>"
-        - " "
+        - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
-        - " "
+        - ""
         - "<#85E52A>▶ Complete Transaction</#85E52A>"
       actions:
         - "[sound] entity.player.levelup 0.8 2"
@@ -49,7 +49,7 @@ auction-house:
       lore:
         - "<gray>Click to cancel the</gray>"
         - "<gray>transaction and return.</gray>"
-        - " "
+        - ""
         - "<#D94121>▶ Return to Market</#D94121>"
       actions:
         - "[sound] ui.button.click 0.3 1"
@@ -76,7 +76,7 @@ auction-search:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Transaction Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
@@ -98,9 +98,9 @@ auction-search:
       lore:
         - "<gray>Click to finalize your</gray>"
         - "<gray>purchase for exactly:</gray>"
-        - " "
+        - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
-        - " "
+        - ""
         - "<#85E52A>▶ Complete Transaction</#85E52A>"
       actions:
         - "[sound] entity.player.levelup 0.8 2"
@@ -112,7 +112,7 @@ auction-search:
       lore:
         - "<gray>Click to cancel the</gray>"
         - "<gray>transaction and return.</gray>"
-        - " "
+        - ""
         - "<#D94121>▶ Return to Market (search)</#D94121>"
       actions:
         - "[sound] ui.button.click 0.3 1"
@@ -139,7 +139,7 @@ target-listings:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Transaction Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
@@ -161,9 +161,9 @@ target-listings:
       lore:
         - "<gray>Click to finalize your</gray>"
         - "<gray>purchase for exactly:</gray>"
-        - " "
+        - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
-        - " "
+        - ""
         - "<#85E52A>▶ Complete Transaction</#85E52A>"
       actions:
         - "[sound] entity.player.levelup 0.8 2"
@@ -175,7 +175,7 @@ target-listings:
       lore:
         - "<gray>Click to cancel the</gray>"
         - "<gray>transaction and return.</gray>"
-        - " "
+        - ""
         - "<#D94121>▶ Return to %target%'s Listings</#D94121>"
       actions:
         - "[sound] ui.button.click 0.3 1"

@@ -17,7 +17,7 @@ auction-house:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Transaction Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
@@ -26,7 +26,7 @@ auction-house:
       - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
       - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
       - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
-      - " "
+      - ""
       - "<#f9f047>Inspect contents below before buying</#f9f047>"
     item-flags:
       - HIDE_ATTRIBUTES
@@ -44,9 +44,9 @@ auction-house:
       lore:
         - "<gray>By clicking here, you agree</gray>"
         - "<gray>to purchase this shulker for:</gray>"
-        - " "
+        - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
-        - " "
+        - ""
         - "<#85E52A>▶ Complete Transaction</#85E52A>"
       actions:
         - "[sound] entity.player.levelup 0.8 2"
@@ -58,7 +58,7 @@ auction-house:
       lore:
         - "<gray>Click to abort and return</gray>"
         - "<gray>to the marketplace.</gray>"
-        - " "
+        - ""
         - "<#D94121>▶ Stop Purchase</#D94121>"
       actions:
         - "[sound] ui.button.click 0.3 1"
@@ -94,7 +94,7 @@ auction-search:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Transaction Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
@@ -103,7 +103,7 @@ auction-search:
       - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
       - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
       - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
-      - " "
+      - ""
       - "<#f9f047>Inspect contents below before buying</#f9f047>"
     item-flags:
       - HIDE_ATTRIBUTES
@@ -121,9 +121,9 @@ auction-search:
       lore:
         - "<gray>By clicking here, you agree</gray>"
         - "<gray>to purchase this shulker for:</gray>"
-        - " "
+        - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
-        - " "
+        - ""
         - "<#85E52A>▶ Complete Transaction</#85E52A>"
       actions:
         - "[sound] entity.player.levelup 0.8 2"
@@ -135,7 +135,7 @@ auction-search:
       lore:
         - "<gray>Click to abort and return</gray>"
         - "<gray>to the marketplace (search).</gray>"
-        - " "
+        - ""
         - "<#D94121>▶ Stop Purchase</#D94121>"
       actions:
         - "[sound] ui.button.click 0.3 1"
@@ -171,7 +171,7 @@ target-listings:
     lore:
       - "%lore%" # The item's lore. If there is no lore, skip this line
       - "<dark_gray>Auction ID: %id%"
-      - " "
+      - ""
       - "<gray>Transaction Details:</gray>"
       - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
       - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
@@ -180,7 +180,7 @@ target-listings:
       - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
       - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
       - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
-      - " "
+      - ""
       - "<#f9f047>Inspect contents below before buying</#f9f047>"
     item-flags:
       - HIDE_ATTRIBUTES
@@ -198,9 +198,9 @@ target-listings:
       lore:
         - "<gray>By clicking here, you agree</gray>"
         - "<gray>to purchase this shulker for:</gray>"
-        - " "
+        - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
-        - " "
+        - ""
         - "<#85E52A>▶ Complete Transaction</#85E52A>"
       actions:
         - "[sound] entity.player.levelup 0.8 2"
@@ -212,7 +212,7 @@ target-listings:
       lore:
         - "<gray>Click to abort and return</gray>"
         - "<gray>to %target%'s Listings.</gray>"
-        - " "
+        - ""
         - "<#D94121>▶ Stop Purchase</#D94121>"
       actions:
         - "[sound] ui.button.click 0.3 1"

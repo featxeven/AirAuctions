@@ -11,7 +11,7 @@ auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Details:</gray>"
     - " <#736efe>»</#736efe> <gray>Original Price:</gray> %price%"
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
@@ -32,7 +32,7 @@ buttons:
       - "<gray>Click to remove this listing</gray>"
       - "<gray>from the market and return</gray>"
       - "<gray>it to your inventory.</gray>"
-      - " "
+      - ""
       - "<#85E52A>▶ Proceed with removal</#85E52A>"
     actions:
       - "[sound] entity.player.levelup 0.8 2"
@@ -44,7 +44,7 @@ buttons:
     lore:
       - "<gray>Click to abort and keep</gray>"
       - "<gray>your item for sale.</gray>"
-      - " "
+      - ""
       - "<#D94121>▶ Return to listings</#D94121>"
     actions:
       - "[sound] ui.button.click 0.3 1"

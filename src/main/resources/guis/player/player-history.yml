@@ -15,7 +15,7 @@ auction-item-bought:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
@@ -35,7 +35,7 @@ auction-item-sold:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Buyer:</gray> <white>%buyer%</white>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
@@ -98,10 +98,10 @@ items:
     display-name: "<#bdc3c7><bold>Marketplace</bold></#bdc3c7>"
     lore:
       - "<dark_gray>Global Terminal</dark_gray>"
-      - " "
+      - ""
       - "<gray>Return to the main market</gray>"
       - "<gray>to browse other listings.</gray>"
-      - " "
+      - ""
       - "<#5efce8>Click</#5efce8> <gray>to go back</gray>"
     actions:
       - "[open] gui:auction_house filter:%filter% sort:%sort%"
@@ -113,10 +113,10 @@ items:
     display-name: "<#5efce8><bold>Your Listings</bold></#5efce8>"
     lore:
       - "<dark_gray>Management</dark_gray>"
-      - " "
+      - ""
       - "<gray>Manage your active sales</gray>"
       - "<gray>and check your limits.</gray>"
-      - " "
+      - ""
       - "<#5efce8>Click</#5efce8> <gray>to view listings</gray>"
     actions:
       - "[open] gui:player_listings filter:%filter% sort:%sort%"
@@ -129,7 +129,7 @@ items:
     display-name: "<#ffbd3f><bold>Sales History</bold></#ffbd3f>"
     lore:
       - "<dark_gray>Transaction Logs</dark_gray>"
-      - " "
+      - ""
       - " <#736efe>»</#736efe> <gray>Status:</gray> <#5efce8>Currently Viewing</#5efce8>"
 
   close:

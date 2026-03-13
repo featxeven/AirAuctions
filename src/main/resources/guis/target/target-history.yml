@@ -15,7 +15,7 @@ auction-item-bought:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Bought from:</gray> <white>%seller%</white>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
@@ -35,7 +35,7 @@ auction-item-sold:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - " "
+    - ""
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Sold to:</gray> <white>%buyer%</white>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
