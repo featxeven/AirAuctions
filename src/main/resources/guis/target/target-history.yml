@@ -51,6 +51,8 @@ auction-item-sold:
     - "[preview]"
 
 # GUI buttons
+# Special items with fixed actions in the GUI.
+# You can customize their appearance (glow, enchants, tooltips, actions, etc.).
 buttons:
   next-page:
     slots: [26]

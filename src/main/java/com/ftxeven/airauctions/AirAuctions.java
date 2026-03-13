@@ -4,7 +4,7 @@ import com.ftxeven.airauctions.core.CoreInitializer;
 import com.ftxeven.airauctions.core.CoreManager;
 import com.ftxeven.airauctions.core.hook.HookManager;
 import com.ftxeven.airauctions.database.DatabaseManager;
-import com.ftxeven.airauctions.core.economy.EconomyManager; // Use Manager instead of Provider
+import com.ftxeven.airauctions.core.economy.EconomyManager;
 import com.ftxeven.airauctions.config.*;
 import com.ftxeven.airauctions.util.SchedulerUtil;
 import org.bukkit.plugin.java.JavaPlugin;

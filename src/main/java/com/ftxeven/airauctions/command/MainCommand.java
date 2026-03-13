@@ -157,7 +157,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                 return getPlayerSuggestions(args[1]);
             }
             if (subArg.equals(openTrigger)) {
-                return Stream.of("auction_house", "player_expired", "player_listings", "player_history", "target_history", "categories")
+                return Stream.of("auction_house", "player_expired", "player_listings", "player_history", "categories")
                         .filter(s -> s.startsWith(args[1].toLowerCase())).toList();
             }
         }
@@ -168,7 +168,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length == 4 && subArg.equals(openTrigger)) {
-            return Stream.of("newest-date", "oldest-date", "highest-price", "lowest-price")
+            return Stream.of("newest-date", "oldest-date", "highest-price", "lowest-price", "alphabetical", "amount")
                     .filter(s -> s.startsWith(args[3].toLowerCase())).toList();
         }
 

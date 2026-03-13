@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="fixed item priority actions">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added target-history section in preview-shulker gui">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -386,7 +385,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773367526741</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="added target-history section in preview-shulker gui">
+      <option name="closed" value="true" />
+      <created>1773368657068</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1773368657068</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,6 +430,7 @@
     <MESSAGE value="added target-history gui &amp; new arg target:%target% for [open] action" />
     <MESSAGE value="added sub-command validations" />
     <MESSAGE value="fixed item priority actions" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed item priority actions" />
+    <MESSAGE value="added target-history section in preview-shulker gui" />
+    <option name="LAST_COMMIT_MESSAGE" value="added target-history section in preview-shulker gui" />
   </component>
 </project>
