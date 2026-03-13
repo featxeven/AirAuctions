@@ -235,6 +235,49 @@ public final class TargetListingsManager implements GuiManager.CustomGuiManager 
         }
     }
 
+    public void processPurchase(Player viewer, AuctionListing listing) {
+        com.ftxeven.airauctions.core.service.AuctionService.PurchaseResult result = plugin.core().auctions().buyEntry(viewer, listing.id());
+
+        if (result == com.ftxeven.airauctions.core.service.AuctionService.PurchaseResult.SUCCESS) {
+            plugin.core().auctions().finalizePurchase(viewer, listing);
+        } else {
+            handlePurchaseError(viewer, result, listing);
+        }
+
+        if (viewer.getOpenInventory().getTopInventory().getHolder() instanceof TargetHolder holder) {
+            refreshWithValidation(viewer, holder);
+        }
+    }
+
+    public boolean isInvalidPurchase(Player viewer, AuctionListing listing) {
+        if (!plugin.config().purchaseOwn() && listing.sellerUuid().equals(viewer.getUniqueId())) {
+            MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.cannot-purchase-own"), Map.of());
+            return true;
+        }
+        if (!plugin.core().economy().canAfford(viewer, listing.currencyId(), listing.price())) {
+            double missing = listing.price() - plugin.core().economy().getBalance(viewer, listing.currencyId());
+            MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.insufficient-funds"), Map.of("amount", plugin.core().economy().formats().format(missing, listing.currencyId())));
+            return true;
+        }
+        if (!plugin.config().dropItemsWhenFull() && viewer.getInventory().firstEmpty() == -1) {
+            MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.inventory-full"), Map.of());
+            return true;
+        }
+        return false;
+    }
+
+    private void handlePurchaseError(Player viewer, com.ftxeven.airauctions.core.service.AuctionService.PurchaseResult result, AuctionListing listing) {
+        switch (result) {
+            case NOT_FOUND -> MessageUtil.send(viewer, plugin.lang().get("errors.item-unavailable"), Map.of());
+            case OWN_ITEM -> MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.cannot-purchase-own"), Map.of());
+            case CANNOT_AFFORD -> {
+                double missing = listing.price() - plugin.core().economy().getBalance(viewer, listing.currencyId());
+                MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.insufficient-funds"), Map.of("amount", plugin.core().economy().formats().format(missing, listing.currencyId())));
+            }
+            case INVENTORY_FULL -> MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.inventory-full"), Map.of());
+        }
+    }
+
     private int parseInt(String s) { try { return s != null ? Integer.parseInt(s) : 1; } catch (Exception e) { return 1; } }
     @Override public boolean owns(Inventory inv) { return inv != null && inv.getHolder() instanceof TargetHolder; }
 
