@@ -151,6 +151,7 @@ public final class TargetHistoryManager implements GuiManager.CustomGuiManager {
         ctx.put("price", String.valueOf(log.price()));
         ctx.put("seller", log.sellerUuid().toString());
         ctx.put("buyer", log.buyerUuid().toString());
+        ctx.put("target", holder.targetName());
 
         boolean isSold = log.sellerUuid().equals(holder.targetUuid());
         GuiItem template = isSold ? itemSoldTemplate : itemBoughtTemplate;

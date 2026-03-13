@@ -66,8 +66,16 @@ public final class PreviewShulkerManager implements GuiManager.CustomGuiManager 
         for (int s : previewSlots) if (s >= 0) reservedSlots.set(s);
 
         ConfigurationSection templateSec;
-        if (source.equals("player_history") && history != null) {
-            boolean isSold = history.sellerUuid().equals(viewer.getUniqueId());
+        if ((source.equals("player_history") || source.equals("target_history")) && history != null) {
+            UUID ownerUuid;
+            if (source.equals("player_history")) {
+                ownerUuid = viewer.getUniqueId();
+            } else {
+                String uuidStr = ph.get("target_uuid");
+                ownerUuid = (uuidStr != null) ? UUID.fromString(uuidStr) : null;
+            }
+
+            boolean isSold = history.sellerUuid().equals(ownerUuid);
             String typeKey = isSold ? "auction-item-sold" : "auction-item-bought";
             templateSec = section.getConfigurationSection(typeKey);
         } else {
@@ -90,10 +98,30 @@ public final class PreviewShulkerManager implements GuiManager.CustomGuiManager 
         holder.setInventory(inv);
 
         if (!auctionSlots.isEmpty() && template != null) {
-            List<AuctionListing> mapperList = (listing != null) ? Collections.singletonList(listing) : new ArrayList<>();
-            GuiSlotMapper.fill(plugin, inv, def, viewer, displayPh, mapperList, reservedSlots, 0, template, null, 1);
-
-            if (history != null && !auctionSlots.isEmpty()) {
+            if (listing != null) {
+                GuiSlotMapper.fill(plugin,
+                        inv,
+                        def,
+                        viewer,
+                        displayPh,
+                        Collections.singletonList(listing),
+                        reservedSlots,
+                        0,
+                        template,
+                        null,
+                        1);
+            } else {
+                GuiSlotMapper.fill(plugin,
+                        inv,
+                        def,
+                        viewer,
+                        displayPh,
+                        Collections.emptyList(),
+                        reservedSlots,
+                        0,
+                        null,
+                        null,
+                        0);
                 int slot = auctionSlots.getFirst();
                 ItemStack historyIcon = GuiSlotMapper.buildHistoryStack(plugin, viewer, history, displayPh, template);
                 inv.setItem(slot, historyIcon);
@@ -102,9 +130,7 @@ public final class PreviewShulkerManager implements GuiManager.CustomGuiManager 
             GuiSlotMapper.fill(plugin, inv, def, viewer, displayPh, new ArrayList<>(), reservedSlots, 0, null, null, 0);
         }
 
-        if (!previewSlots.isEmpty()) {
-            fillShulkerContents(inv, previewItem, previewSlots);
-        }
+        if (!previewSlots.isEmpty()) fillShulkerContents(inv, previewItem, previewSlots);
 
         return inv;
     }
@@ -138,6 +164,7 @@ public final class PreviewShulkerManager implements GuiManager.CustomGuiManager 
         Inventory top = viewer.getOpenInventory().getTopInventory();
 
         if (plugin.core().gui().get("player_history").owns(top)) return "player_history";
+        if (plugin.core().gui().get("target_history").owns(top)) return "target_history";
         if (plugin.core().gui().get("auction_search").owns(top)) return "auction_search";
         if (plugin.core().gui().get("player_listings").owns(top)) return "player_listings";
         if (plugin.core().gui().get("target_listings").owns(top)) return "target_listings";

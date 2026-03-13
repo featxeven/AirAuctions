@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added sub-command validations">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="fixed item priority actions">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,7 +378,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773348969968</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="fixed item priority actions">
+      <option name="closed" value="true" />
+      <created>1773367526741</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1773367526741</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -411,6 +422,7 @@
     <MESSAGE value="fixed %id% for auction history stack" />
     <MESSAGE value="added target-history gui &amp; new arg target:%target% for [open] action" />
     <MESSAGE value="added sub-command validations" />
-    <option name="LAST_COMMIT_MESSAGE" value="added sub-command validations" />
+    <MESSAGE value="fixed item priority actions" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed item priority actions" />
   </component>
 </project>
