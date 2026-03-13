@@ -99,7 +99,11 @@ public final class GuiSlotMapper {
                 inv.setItem(slot, availableTemplate.buildStack(viewer, ph, plugin));
             } else {
                 GuiItem fallbackItem = findItem(itemSec, def, slot, viewer, ph);
-                inv.setItem(slot, fallbackItem != null ? fallbackItem.buildStack(viewer, ph, plugin) : null);
+                if (fallbackItem != null) {
+                    inv.setItem(slot, fallbackItem.buildStack(viewer, ph, plugin));
+                } else {
+                    inv.setItem(slot, null);
+                }
             }
         }
     }
@@ -138,27 +142,26 @@ public final class GuiSlotMapper {
 
     private static GuiItem findItem(ConfigurationSection sec, GuiDefinition def, int slot, Player viewer, Map<String, String> ph) {
         if (sec == null) return null;
-        GuiItem bestMatch = null;
-        int bestPriorityValue = Integer.MAX_VALUE;
 
         for (String key : sec.getKeys(false)) {
             GuiItem i = def.items().get(key);
             if (i == null || !i.slots().contains(slot)) continue;
 
-            Map<Integer, com.ftxeven.airauctions.core.gui.ItemPriority> priorities = i.priorities();
-            if (priorities.isEmpty()) {
-                if (bestMatch == null) bestMatch = i;
-                continue;
+            if (i.priorities().isEmpty()) {
+                return i;
             }
 
-            for (var entry : priorities.entrySet()) {
-                if (entry.getKey() < bestPriorityValue && entry.getValue().matches(viewer, ph)) {
-                    bestPriorityValue = entry.getKey();
-                    bestMatch = i;
+            for (var priority : i.priorities().values()) {
+                if (priority.matches(viewer, ph)) {
+                    return i;
                 }
             }
+
+            if (i.materialStr() != null) {
+                return i;
+            }
         }
-        return bestMatch;
+        return null;
     }
 
     private static ItemStack buildAuctionStack(AirAuctions plugin, Player viewer, AuctionListing listing, Map<String, String> globalPh, GuiItem template) {
