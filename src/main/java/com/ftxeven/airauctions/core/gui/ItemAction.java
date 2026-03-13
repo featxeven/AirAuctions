@@ -176,14 +176,10 @@ public final class ItemAction {
             if (sm != null && !sm.isInvalidPurchase(p, listing)) {
                 processBuyLogic(p, listing, sm.getDefinition(), ph, () -> sm.processPurchase(p, listing));
             }
-        }
-        else if (holder instanceof TargetListingsManager.TargetHolder) {
+        } else if (holder instanceof TargetListingsManager.TargetHolder) {
             var tm = plugin.core().gui().get("target_listings", TargetListingsManager.class);
-            if (tm != null) {
-                processBuyLogic(p, listing, tm.getDefinition(), ph, () -> {
-                    var am = plugin.core().gui().get("auction_house", AuctionHouseManager.class);
-                    if (am != null) am.processPurchase(p, listing);
-                });
+            if (tm != null && !tm.isInvalidPurchase(p, listing)) {
+                processBuyLogic(p, listing, tm.getDefinition(), ph, () -> tm.processPurchase(p, listing));
             }
         }
     }
