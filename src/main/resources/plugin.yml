@@ -1,6 +1,6 @@
 name: AirAuctions
 main: com.ftxeven.airauctions.AirAuctions
-version: 1.0.1
+version: 1.0.2
 api-version: "1.21"
 author: ftxeven
 description: A modern, highly-customizable Auction House GUI with full Folia support.
@@ -30,6 +30,9 @@ permissions:
     default: op
   airauctions.command.history:
     description: Allows viewing your personal transaction history.
+    default: op
+  airauctions.command.history.others:
+    description: Allows viewing another player's transaction history.
     default: op
   airauctions.command.search:
     description: Allows using the search subcommand.

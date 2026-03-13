@@ -44,14 +44,15 @@ public final class AuctionListings {
 
         plugin.database().executeAsync("UPDATE auction_listings SET is_sold = 1 WHERE id = ?;", ps -> ps.setInt(1, id));
 
-        String historySql = "INSERT INTO auction_history (seller_uuid, buyer_uuid, item_data, price, currency_id, sold_at) VALUES (?, ?, ?, ?, ?, ?);";
+        String historySql = "INSERT INTO auction_history (id, seller_uuid, buyer_uuid, item_data, price, currency_id, sold_at) VALUES (?, ?, ?, ?, ?, ?, ?);";
         plugin.database().executeAsync(historySql, ps -> {
-            ps.setString(1, seller.toString());
-            ps.setString(2, buyer.toString());
-            ps.setBytes(3, serializedItem);
-            ps.setDouble(4, price);
-            ps.setString(5, currencyId);
-            ps.setLong(6, System.currentTimeMillis());
+            ps.setInt(1, id);
+            ps.setString(2, seller.toString());
+            ps.setString(3, buyer.toString());
+            ps.setBytes(4, serializedItem);
+            ps.setDouble(5, price);
+            ps.setString(6, currencyId);
+            ps.setLong(7, System.currentTimeMillis());
         });
 
         purgeHistory(seller);

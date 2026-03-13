@@ -122,7 +122,7 @@ public final class AuctionService {
                     if (broadcastMsg.isEmpty()) return;
 
                     Map<String, String> ph = Map.of(
-                            "player", seller.getName(),
+                            "seller", seller.getName(),
                             "amount", String.valueOf(amount),
                             "item", plugin.itemTranslations().translate(toStore.getType()),
                             "price", plugin.core().economy().formats().format(price, currencyId)

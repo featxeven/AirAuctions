@@ -285,4 +285,6 @@ public final class TargetListingsManager implements GuiManager.CustomGuiManager 
             return ctx;
         }
     }
+
+    public GuiDefinition getDefinition() { return definition; }
 }

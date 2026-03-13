@@ -28,9 +28,12 @@ public final class GuiItemFinder {
             }
 
             if (item.priorities().isEmpty()) return item;
+
             for (ItemPriority p : item.priorities().values()) {
                 if (p.matches(viewer, context)) return item;
             }
+
+            if (item.materialStr() != null) return item;
         }
         return null;
     }

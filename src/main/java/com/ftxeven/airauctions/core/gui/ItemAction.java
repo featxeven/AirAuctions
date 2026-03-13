@@ -4,6 +4,7 @@ import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.core.manager.main.AuctionHouseManager;
 import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
 import com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager;
+import com.ftxeven.airauctions.core.manager.target.TargetListingsManager;
 import com.ftxeven.airauctions.core.model.AuctionListing;
 import com.ftxeven.airauctions.util.MessageUtil;
 import com.ftxeven.airauctions.util.PlaceholderUtil;
@@ -120,17 +121,31 @@ public final class ItemAction {
         if (parts.length == 0) return;
 
         Map<String, String> newPh = new HashMap<>();
+
         if (ph.containsKey("target")) newPh.put("target", ph.get("target"));
 
         String guiId = null;
         for (String part : parts) {
             String[] kv = part.split(":", 2);
             if (kv.length != 2) continue;
-            String key = kv[0].toLowerCase();
-            String value = PlaceholderUtil.apply(p, kv[1], ph);
 
-            if (key.equals("gui")) guiId = value;
-            else newPh.put(key, value);
+            String key = kv[0].toLowerCase();
+            String rawValue = kv[1];
+
+            if (key.equals("gui")) {
+                guiId = PlaceholderUtil.apply(p, rawValue, ph);
+                continue;
+            }
+
+            if (key.equals("target")) {
+                String resolved = PlaceholderUtil.apply(p, rawValue, ph);
+                if (resolved.equals("%target%") || resolved.isEmpty()) {
+                    resolved = p.getName();
+                }
+                newPh.put("target", resolved);
+            } else {
+                newPh.put(key, PlaceholderUtil.apply(p, rawValue, ph));
+            }
         }
 
         if (guiId != null) plugin.core().gui().open(guiId, p, newPh);
@@ -152,6 +167,15 @@ public final class ItemAction {
             var sm = plugin.core().gui().get("auction_search", AuctionSearchManager.class);
             if (sm != null && !sm.isInvalidPurchase(p, listing)) {
                 processBuyLogic(p, listing, sm.getDefinition(), ph, () -> sm.processPurchase(p, listing));
+            }
+        }
+        else if (holder instanceof TargetListingsManager.TargetHolder) {
+            var tm = plugin.core().gui().get("target_listings", TargetListingsManager.class);
+            if (tm != null) {
+                processBuyLogic(p, listing, tm.getDefinition(), ph, () -> {
+                    var am = plugin.core().gui().get("auction_house", AuctionHouseManager.class);
+                    if (am != null) am.processPurchase(p, listing);
+                });
             }
         }
     }

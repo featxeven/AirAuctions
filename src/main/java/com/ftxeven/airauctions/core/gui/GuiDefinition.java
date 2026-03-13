@@ -46,10 +46,11 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
 
         public static GuiItem fromSection(String key, ConfigurationSection sec) {
             List<Integer> slots = parseSlots(sec.getStringList("slots"));
-            String matStr = sec.getString("material", "STONE");
+
+            String matStr = sec.getString("material");
             String head = sec.getString("head-owner");
 
-            if (matStr.startsWith("head-")) {
+            if (matStr != null && matStr.startsWith("head-")) {
                 head = matStr.substring(5);
             }
 
@@ -91,31 +92,29 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
         }
 
         public List<String> getActionsForClick(ClickType click, Player viewer, Map<String, String> ph) {
-            if (!priorities.isEmpty()) {
-                for (ItemPriority p : priorities.values()) {
-                    if (p.matches(viewer, ph) && p.actions() != null && !p.actions().isEmpty()) return p.actions();
-                }
-            }
-            return switch (click) {
+            List<String> baseActions = switch (click) {
                 case LEFT -> !leftActions.isEmpty() ? leftActions : actions;
                 case RIGHT -> !rightActions.isEmpty() ? rightActions : actions;
                 case SHIFT_LEFT -> !shiftLeftActions.isEmpty() ? shiftLeftActions : (!shiftActions.isEmpty() ? shiftActions : actions);
                 case SHIFT_RIGHT -> !shiftRightActions.isEmpty() ? shiftRightActions : (!shiftActions.isEmpty() ? shiftActions : actions);
                 default -> actions;
             };
+
+            if (!priorities.isEmpty()) {
+                for (ItemPriority p : priorities.values()) {
+                    if (p.matches(viewer, ph)) {
+                        if (p.actions() != null && !p.actions().isEmpty()) {
+                            return p.actions();
+                        }
+                        return baseActions;
+                    }
+                }
+            }
+
+            return baseActions;
         }
 
         public ItemStack buildStack(Player viewer, Map<String, String> ph, AirAuctions plugin) {
-            String activeMat;
-            int activeAmount;
-            String activeName;
-            List<String> activeLore;
-            Integer activeData;
-            String activeModel;
-            String activeStyle;
-            boolean activeHide;
-            boolean activeGlow;
-
             ItemPriority match = null;
             if (!priorities.isEmpty()) {
                 for (ItemPriority p : priorities.values()) {
@@ -126,29 +125,17 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
                 }
             }
 
-            if (match != null) {
-                activeMat = match.material() != null ? match.material() : "STONE";
-                activeAmount = match.amount() != null ? match.amount() : 1;
-                activeName = match.displayName();
-                activeLore = match.lore();
-                activeData = match.customModelData();
-                activeModel = match.itemModel();
-                activeStyle = match.tooltipStyle();
-                activeHide = match.hideTooltip() != null && match.hideTooltip();
-                activeGlow = match.glow() != null && match.glow();
-            } else {
-                activeMat = this.materialStr;
-                activeAmount = this.amount;
-                activeName = this.rawName;
-                activeLore = this.rawLore;
-                activeData = this.customModelData;
-                activeModel = this.itemModel;
-                activeStyle = this.tooltipStyle;
-                activeHide = this.hideTooltip;
-                activeGlow = this.glow;
-            }
-
+            String activeMat = (match != null && match.material() != null) ? match.material() : this.materialStr;
             if (activeMat == null) return new ItemStack(Material.AIR);
+
+            int activeAmount = (match != null && match.amount() != null) ? match.amount() : this.amount;
+            String activeName = (match != null && match.displayName() != null) ? match.displayName() : this.rawName;
+            List<String> activeLore = (match != null && match.lore() != null) ? match.lore() : this.rawLore;
+            Integer activeData = (match != null && match.customModelData() != null) ? match.customModelData() : this.customModelData;
+            String activeModel = (match != null && match.itemModel() != null) ? match.itemModel() : this.itemModel;
+            String activeStyle = (match != null && match.tooltipStyle() != null) ? match.tooltipStyle() : this.tooltipStyle;
+            boolean activeHide = (match != null && match.hideTooltip() != null) ? match.hideTooltip() : this.hideTooltip;
+            boolean activeGlow = (match != null && match.glow() != null) ? match.glow() : this.glow;
 
             ItemComponent builder = new ItemComponent(activeMat, plugin).amount(activeAmount);
 
