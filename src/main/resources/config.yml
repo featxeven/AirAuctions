@@ -230,11 +230,10 @@ restrictions:
       - "custom:mymodel/admin_pickaxe"
       - "minecraft:broken_shield"
 
-    # Match Nexo, ItemsAdder or CraftEngine items
+    # Match Nexo, ItemsAdder  items
     special-items: []
     #  - "nexo:item_id"
     #  - "itemsadder:item_id"
-    #  - "craftengine:item_id"
 
     # Match exact item stacks (advanced)
     # Used for items that need specific data/material combinations.

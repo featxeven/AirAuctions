@@ -41,8 +41,6 @@ public final class ItemComponent {
             hookedItem = plugin.getHookManager().getItem(materialSelector.substring(5), "nexo");
         } else if (lower.startsWith("itemsadder:")) {
             hookedItem = plugin.getHookManager().getItem(materialSelector.substring(11), "itemsadder");
-        } else if (lower.startsWith("craftengine:")) {
-            hookedItem = plugin.getHookManager().getItem(materialSelector.substring(12), "craftengine");
         }
 
         if (hookedItem != null) {

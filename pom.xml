@@ -61,20 +61,6 @@
             <version>4.0.10</version>
             <scope>provided</scope>
         </dependency>
-
-        <dependency>
-            <groupId>net.momirealms</groupId>
-            <artifactId>craft-engine-core</artifactId>
-            <version>0.0.67</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>net.momirealms</groupId>
-            <artifactId>craft-engine-bukkit</artifactId>
-            <version>0.0.67</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 
     <repositories>
@@ -116,11 +102,6 @@
         <repository>
             <id>itemsadder-repo</id>
             <url>https://maven.devs.beer/</url>
-        </repository>
-
-        <repository>
-            <id>momirealms-repo</id>
-            <url>https://repo.momirealms.net/releases/</url>
         </repository>
     </repositories>
 
