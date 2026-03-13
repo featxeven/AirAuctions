@@ -199,6 +199,7 @@ public final class GuiSlotMapper {
         if (template != null && template.rawLore() != null) {
             double playerBalance = provider.getBalance(viewer);
             boolean isShulker = listing.item().getType().name().endsWith("SHULKER_BOX");
+            boolean isOwner = viewer.getName().equalsIgnoreCase(seller);
 
             ItemMeta sourceMeta = listing.item().getItemMeta();
 
@@ -211,8 +212,14 @@ public final class GuiSlotMapper {
                     if (playerBalance >= listing.price()) {
                         finalLore.add(processLine(line.substring(4).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
                     }
+                } else if (line.startsWith("view-player:")) {
+                    if (!isOwner) {
+                        finalLore.add(processLine(line.substring(12).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
+                    }
                 } else if (line.startsWith("preview:")) {
-                    if (isShulker) finalLore.add(processLine(line.substring(8).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
+                    if (isShulker) {
+                        finalLore.add(processLine(line.substring(8).trim(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
+                    }
                 } else {
                     finalLore.add(processLine(line, seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
                 }
