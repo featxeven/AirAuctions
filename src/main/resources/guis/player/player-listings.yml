@@ -19,13 +19,13 @@ auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - ""
+    - " "
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
     - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
-    - ""
+    - " "
     - "<#ff5f6d>Click</#ff5f6d> <gray>to cancel listing</gray>"
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
@@ -47,7 +47,7 @@ slot-available:
   lore:
     - "<gray>You have a free slot to</gray>"
     - "<gray>list a new item for sale.</gray>"
-    - ""
+    - " "
     - " <#736efe>»</#736efe> <gray>Usage:</gray> <white>/ah sell <price></white>"
 
 # GUI buttons
@@ -91,9 +91,9 @@ buttons:
     display-name: "<gradient:#5efce8:#736efe><bold>Filter Categories</bold></gradient>"
     lore:
       - "<gray>Currently showing:</gray>"
-      - ""
+      - " "
       - "%filter%"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to cycle filters</gray>"
     actions:
       - "[sound] ui.button.click 1 1.2"
@@ -109,9 +109,9 @@ buttons:
     display-name: "<gradient:#5efce8:#736efe><bold>Sort Listings</bold></gradient>"
     lore:
       - "<gray>Current sorting:</gray>"
-      - ""
+      - " "
       - "%sort%"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to cycle modes</gray>"
     actions:
       - "[sound] ui.button.click 1 1.2"
@@ -136,7 +136,7 @@ items:
     lore:
       - "<gray>You don't have permission to</gray>"
       - "<gray>use this slot for a new listing.</gray>"
-      - ""
+      - " "
       - " <#736efe>»</#736efe> <gray>Status:</gray> <red>Locked</red>"
 
   expired-listings:
@@ -146,7 +146,7 @@ items:
     lore:
       - "<gray>Go to your expired listings</gray>"
       - "<gray>to claim them.</gray>"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to go</gray>"
     actions:
       - "[open] gui:player_expired filter:%filter% sort:%sort%"
@@ -158,10 +158,10 @@ items:
     display-name: "<#bdc3c7><bold>Marketplace</bold></#bdc3c7>"
     lore:
       - "<dark_gray>Global Terminal</dark_gray>"
-      - ""
+      - " "
       - "<gray>Return to the main market</gray>"
       - "<gray>to browse other listings.</gray>"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to go back</gray>"
     actions:
       - "[open] gui:auction_house filter:%filter% sort:%sort%"
@@ -174,7 +174,7 @@ items:
     display-name: "<#5efce8><bold>Your Listings</bold></#5efce8>"
     lore:
       - "<dark_gray>Management</dark_gray>"
-      - ""
+      - " "
       - " <#736efe>»</#736efe> <gray>Status:</gray> <#5efce8>Currently Viewing</#5efce8>"
 
   history:
@@ -183,10 +183,10 @@ items:
     display-name: "<#ffbd3f><bold>Sales History</bold></#ffbd3f>"
     lore:
       - "<dark_gray>Transaction Logs</dark_gray>"
-      - ""
+      - " "
       - "<gray>View your past successful</gray>"
       - "<gray>sales and purchases.</gray>"
-      - ""
+      - " "
       - "<#ffbd3f>Click</#ffbd3f> <gray>to view history</gray>"
     actions:
       - "[sound] ui.button.click 1 1.2"

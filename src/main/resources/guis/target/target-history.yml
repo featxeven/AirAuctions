@@ -15,14 +15,14 @@ auction-item-bought:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - ""
+    - " "
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Bought from:</gray> <white>%seller%</white>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - " <#736efe>»</#736efe> <gray>Purchased:</gray> <white>%date%</white> <dark_gray>@</dark_gray> <white>%time%</white>"
-    - "preview: "
+    - ""
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
     - HIDE_ATTRIBUTES
@@ -35,14 +35,14 @@ auction-item-sold:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - ""
+    - " "
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Sold to:</gray> <white>%buyer%</white>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - " <#736efe>»</#736efe> <gray>Sold on:</gray> <white>%date%</white> <dark_gray>@</dark_gray> <white>%time%</white>"
-    - "preview: "
+    - ""
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
     - HIDE_ATTRIBUTES

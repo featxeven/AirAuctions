@@ -14,7 +14,7 @@ auction-slot: [13]
 auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
-    - ""
+    - " "
     - "<gray>Listing Summary:</gray>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
     - " <#736efe>»</#736efe> <gray>Listing Fee:</gray> <red>-%fee%</red>"
@@ -34,10 +34,10 @@ buttons:
     lore:
       - "<gray>Click to list this item</gray>"
       - "<gray>on the public market.</gray>"
-      - ""
+      - " "
       - "<gray>Listing Cost: <red>%fee%</red></gray>"
       - " <#736efe>»</#736efe> <gold><bold>Price: %price%"
-      - ""
+      - " "
       - "<#85E52A>▶ Confirm & Pay Fee</#85E52A>"
     actions:
       - "[sound] entity.player.levelup 0.8 2"
@@ -49,7 +49,7 @@ buttons:
     lore:
       - "<gray>Click to abort and return</gray>"
       - "<gray>the item to your inventory.</gray>"
-      - ""
+      - " "
       - "<#D94121>▶ Stop listing</#D94121>"
     actions:
       - "[sound] ui.button.click 0.3 1"

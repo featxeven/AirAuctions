@@ -32,7 +32,7 @@ date-format: "dd/MM/yy"
 force-update-gui: true
 
 # true:  "" lines are hidden UNLESS visible lines appear below them.
-# false: Show all lines regarding if they are empty ("").
+# false: Show all lines regardless if they are empty ("").
 skip-empty-lines: true
 
 # ----------------------------------

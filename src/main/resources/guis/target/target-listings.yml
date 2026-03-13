@@ -15,7 +15,7 @@ auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - ""
+    - " "
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
@@ -46,7 +46,7 @@ slot-available:
   lore:
     - "<gray>%target% has a free slot to</gray>"
     - "<gray>list a new item for sale.</gray>"
-    - ""
+    - " "
     - " <#736efe>»</#736efe> <gray>Status:</gray> <green>Unlocked</green>"
 
 # GUI buttons
@@ -90,9 +90,9 @@ buttons:
     display-name: "<gradient:#5efce8:#736efe><bold>Filter Categories</bold></gradient>"
     lore:
       - "<gray>Currently showing:</gray>"
-      - ""
+      - " "
       - "%filter%"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to cycle filters</gray>"
     actions:
       - "[sound] ui.button.click 1 1.2"
@@ -108,9 +108,9 @@ buttons:
     display-name: "<gradient:#5efce8:#736efe><bold>Sort Listings</bold></gradient>"
     lore:
       - "<gray>Current sorting:</gray>"
-      - ""
+      - " "
       - "%sort%"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to cycle modes</gray>"
     actions:
       - "[sound] ui.button.click 1 1.2"
@@ -149,7 +149,7 @@ items:
     lore:
       - "<gray>%target% doesn't have permission to</gray>"
       - "<gray>use this slot for a new listing.</gray>"
-      - ""
+      - " "
       - " <#736efe>»</#736efe> <gray>Status:</gray> <red>Locked</red>"
 
   target-head:
@@ -164,7 +164,7 @@ items:
     lore:
       - "<gray>Return to the main market</gray>"
       - "<gray>to browse other listings.</gray>"
-      - ""
+      - " "
       - "<#5efce8>Click</#5efce8> <gray>to go back</gray>"
     actions:
       - "[open] gui:auction_house filter:%filter% sort:%sort%"

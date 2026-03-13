@@ -15,13 +15,13 @@ auction-item:
   lore:
     - "%lore%" # The item's lore. If there is no lore, skip this line
     - "<dark_gray>Auction ID: %id%"
-    - ""
+    - " "
     - "<gray>Listing Information:</gray>"
     - " <#736efe>»</#736efe> <gray>Price was worth:</gray> %price%"
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
     - " <#736efe>»</#736efe> <gray>Auto-removed in:</gray> <white>%purge%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
-    - ""
+    - " "
     - "<#ff5f6d>Click</#ff5f6d> <gray>to collect listing</gray>"
   item-flags:
     - HIDE_ATTRIBUTES
