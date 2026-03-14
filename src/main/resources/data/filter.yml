@@ -902,7 +902,7 @@ natural-blocks:
       - dark_oak_sapling
       - cherry_sapling
       - mangrove_propagule
-      - bamboo_sapling
+      - bamboo
       # Coral & Sea Life
       - tube_coral_block
       - brain_coral_block
@@ -1386,7 +1386,7 @@ building-blocks:
       # Resin block family
       - resin_block
       - resin_bricks
-      - resin_chiseled
+      - chiseled_resin_bricks
       - resin_slab
       - resin_brick_slab
       - resin_stairs
