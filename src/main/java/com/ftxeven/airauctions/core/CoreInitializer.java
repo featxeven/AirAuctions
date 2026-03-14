@@ -69,7 +69,6 @@ public final class CoreInitializer {
 
         if (plugin.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new AirAuctionsPAPIExpansion(plugin).register();
-            plugin.getLogger().info("Successfully hooked into PlaceholderAPI.");
         }
 
         checkUpdates();
@@ -104,7 +103,7 @@ public final class CoreInitializer {
         String defaultId = plugin.config().economyDefaultProvider();
 
         if (economyManager.getProvider(defaultId) instanceof EconomyManager.NullProvider) {
-            plugin.getLogger().severe("The default provider '" + defaultId + "' (or economy provider) is missing!");
+            plugin.getLogger().severe("The default provider '" + defaultId + "' is missing or not loaded!");
             return false;
         }
         return true;

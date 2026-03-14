@@ -166,13 +166,29 @@ public final class GuiSlotMapper {
     }
 
     private static ItemStack buildAuctionStack(AirAuctions plugin, Player viewer, AuctionListing listing, Map<String, String> globalPh, GuiItem template) {
-        ItemComponent builder = new ItemComponent(listing.item());
+        ItemStack original = listing.item();
+        ItemComponent builder = new ItemComponent(original);
+
         var sellerProfile = plugin.core().profiles().get(listing.sellerUuid());
         var skinData = sellerProfile != null ? sellerProfile.getSkinData() : null;
 
         if (template != null) {
-            builder.customModelData(template.customModelData()).damage(template.damage()).glow(template.glow())
-                    .flags(template.flags()).hideTooltip(template.hideTooltip()).tooltipStyle(template.tooltipStyle()).itemModel(template.itemModel());
+            if (template.customModelData() != null && template.customModelData() > 0) {
+                builder.customModelData(template.customModelData());
+            }
+
+            if (template.damage() != null && template.damage() > 0) {
+                builder.damage(template.damage());
+            }
+
+            if (template.itemModel() != null && !template.itemModel().isEmpty()) {
+                builder.itemModel(template.itemModel());
+            }
+
+            builder.glow(template.glow())
+                    .flags(template.flags())
+                    .hideTooltip(template.hideTooltip())
+                    .tooltipStyle(template.tooltipStyle());
 
             if (template.headOwner() != null) builder.skullOwner(template.headOwner(), viewer, skinData);
             if (template.enchants() != null && !template.enchants().isEmpty()) builder.enchants(template.enchants());
@@ -181,9 +197,9 @@ public final class GuiSlotMapper {
         var provider = plugin.economy().getProvider(listing.currencyId());
         String seller = NAME_CACHE.computeIfAbsent(listing.sellerUuid(), uuid -> plugin.core().profiles().getName(uuid));
         String price = plugin.core().economy().formats().format(listing.price(), listing.currencyId());
-        String amountStr = String.valueOf(listing.item().getAmount());
+        String amountStr = String.valueOf(original.getAmount());
         String idStr = String.valueOf(listing.id());
-        String itemFilterKey = plugin.filters().getCategory(listing.item());
+        String itemFilterKey = plugin.filters().getCategory(original);
         String itemFilterDisplayName = plugin.filters().getDisplayName(itemFilterKey);
 
         List<Component> finalLore = new ArrayList<>();
@@ -192,9 +208,9 @@ public final class GuiSlotMapper {
 
         if (template != null && template.rawLore() != null) {
             double playerBalance = provider.getBalance(viewer);
-            boolean isShulker = listing.item().getType().name().endsWith("SHULKER_BOX");
-            boolean isOwner = viewer.getName().equalsIgnoreCase(seller);
-            ItemMeta sourceMeta = listing.item().getItemMeta();
+            boolean isShulker = original.getType().name().endsWith("SHULKER_BOX");
+            boolean isOwner = viewer.getUniqueId().equals(listing.sellerUuid());
+            ItemMeta sourceMeta = original.getItemMeta();
 
             for (String line : template.rawLore()) {
                 if (line.contains("%lore%")) {
@@ -233,22 +249,43 @@ public final class GuiSlotMapper {
         }
 
         builder.lore(finalLore);
-        if (listing.item().getItemMeta() != null && !listing.item().getItemMeta().hasDisplayName()) {
+
+        ItemMeta meta = original.getItemMeta();
+        if (meta == null || !meta.hasDisplayName()) {
             if (template != null && template.rawName() != null) {
                 builder.name(processLine(template.rawName(), seller, price, idStr, amountStr, itemFilterDisplayName, globalPh, viewer));
             }
+        } else {
+            builder.name(meta.displayName());
         }
+
         return builder.build();
     }
 
     public static ItemStack buildHistoryStack(AirAuctions plugin, Player viewer, AuctionHistory log, Map<String, String> globalPh, GuiItem template) {
-        ItemComponent builder = new ItemComponent(log.item());
+        ItemStack original = log.item();
+        ItemComponent builder = new ItemComponent(original);
+
         var sellerProfile = plugin.core().profiles().get(log.sellerUuid());
         var skinData = sellerProfile != null ? sellerProfile.getSkinData() : null;
 
         if (template != null) {
-            builder.customModelData(template.customModelData()).damage(template.damage()).glow(template.glow())
-                    .flags(template.flags()).hideTooltip(template.hideTooltip()).tooltipStyle(template.tooltipStyle()).itemModel(template.itemModel());
+            if (template.customModelData() != null && template.customModelData() > 0) {
+                builder.customModelData(template.customModelData());
+            }
+
+            if (template.damage() != null && template.damage() > 0) {
+                builder.damage(template.damage());
+            }
+
+            if (template.itemModel() != null && !template.itemModel().isEmpty()) {
+                builder.itemModel(template.itemModel());
+            }
+
+            builder.glow(template.glow())
+                    .flags(template.flags())
+                    .hideTooltip(template.hideTooltip())
+                    .tooltipStyle(template.tooltipStyle());
 
             if (template.headOwner() != null) builder.skullOwner(template.headOwner(), viewer, skinData);
             if (template.enchants() != null && !template.enchants().isEmpty()) builder.enchants(template.enchants());
@@ -257,11 +294,11 @@ public final class GuiSlotMapper {
         String seller = plugin.core().profiles().getName(log.sellerUuid());
         String buyer = plugin.core().profiles().getName(log.buyerUuid());
         String price = plugin.core().economy().formats().format(log.price(), log.currencyId());
-        String amountStr = String.valueOf(log.item().getAmount());
+        String amountStr = String.valueOf(original.getAmount());
         String idStr = String.valueOf(log.id());
         String dateStr = TimeUtil.formatDate(plugin, log.soldAt());
         String timeStr = Instant.ofEpochMilli(log.soldAt()).atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("HH:mm"));
-        String itemFilterKey = plugin.filters().getCategory(log.item());
+        String itemFilterKey = plugin.filters().getCategory(original);
         String itemFilterDisplayName = plugin.filters().getDisplayName(itemFilterKey);
 
         List<Component> finalLore = new ArrayList<>();
@@ -269,8 +306,8 @@ public final class GuiSlotMapper {
         boolean pendingEmpty = false;
 
         if (template != null && template.rawLore() != null) {
-            boolean isShulker = log.item().getType().name().endsWith("SHULKER_BOX");
-            ItemMeta sourceMeta = log.item().getItemMeta();
+            boolean isShulker = original.getType().name().endsWith("SHULKER_BOX");
+            ItemMeta sourceMeta = original.getItemMeta();
 
             for (String line : template.rawLore()) {
                 if (line.contains("%lore%")) {
@@ -305,11 +342,16 @@ public final class GuiSlotMapper {
         }
 
         builder.lore(finalLore);
-        if (log.item().getItemMeta() != null && !log.item().getItemMeta().hasDisplayName()) {
+
+        ItemMeta meta = original.getItemMeta();
+        if (meta == null || !meta.hasDisplayName()) {
             if (template != null && template.rawName() != null) {
                 builder.name(processHistoryLine(template.rawName(), seller, buyer, price, idStr, amountStr, dateStr, timeStr, itemFilterDisplayName, globalPh, viewer));
             }
+        } else {
+            builder.name(meta.displayName());
         }
+
         return builder.build();
     }
 

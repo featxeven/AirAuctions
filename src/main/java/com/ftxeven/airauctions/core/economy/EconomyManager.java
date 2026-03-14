@@ -42,19 +42,15 @@ public final class EconomyManager {
                     RegisteredServiceProvider<Economy> rsp = plugin.getServer().getServicesManager().getRegistration(Economy.class);
                     if (rsp != null) {
                         providers.put(id.toLowerCase(), new VaultProvider(rsp.getProvider(), display, decimals, plugin.getLogger()));
-                    } else {
-                        plugin.getLogger().severe("Economy provider '" + id + "' requires Vault, but Vault was not found!");
                     }
                 }
                 case "PLACEHOLDER" -> {
                     if (plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-                        providers.put(id, new PlaceholderProvider(plugin, id, section));
-                    } else {
-                        plugin.getLogger().warning("Placeholder provider '" + id + "' was skipped because PlaceholderAPI is not installed!");
+                        providers.put(id.toLowerCase(), new PlaceholderProvider(plugin, id, section));
                     }
                 }
                 case "EXP" ->
-                        providers.put(id, new ExperienceProvider(plugin, id, display));
+                        providers.put(id.toLowerCase(), new ExperienceProvider(plugin, id, display));
             }
         }
     }

@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="changed default gui lore">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-search.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-search.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/categories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/confirm-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/confirm-listing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/cancel-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/cancel-listing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-expired.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-expired.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-history.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-listings.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -465,7 +457,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773430813491</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="changed default gui lore">
+      <option name="closed" value="true" />
+      <created>1773431201369</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1773431201369</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
