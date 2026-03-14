@@ -1379,7 +1379,7 @@ building-blocks:
       - red_sandstone_slab
       - red_sandstone_wall
       - chiseled_red_sandstone
-      - brick_block
+      - bricks
       - brick_stairs
       - brick_slab
       - brick_wall
