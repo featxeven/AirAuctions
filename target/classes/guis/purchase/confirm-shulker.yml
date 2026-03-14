@@ -1,0 +1,230 @@
+# Opens on Auction House GUI
+auction-house:
+  # - true = Opens this GUI when item is a Shulker Box
+  # - false = Fallbacks to confirm.yml > auction-house section GUI
+  enabled: true
+
+  # GUI title and size
+  title: "<gradient:#5efce8:#736efe><bold>Confirm Shulker Purchase</bold></gradient>"
+  rows: 6
+
+  # Dynamic slot groups
+  # This define where the item auction slot will be placed
+  auction-slot: [4]
+
+  # This is how auction item will be displayed inside auction-slots
+  auction-item:
+    lore:
+      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "<dark_gray>Auction ID: %id%"
+      - ""
+      - "<gray>Transaction Details:</gray>"
+      - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+      - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
+      - " <#736efe>»</#736efe> <gray>Sales Tax:</gray> <red>-%tax%</red>"
+      - " <#736efe>»</#736efe> <gray>Seller Profit:</gray> <green>%profit%</green>"
+      - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+      - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+      - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+      - ""
+      - "<#f9f047>Inspect contents below before buying</#f9f047>"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  # These define where the shulker items slots will be placed
+  preview-slots: [18-44]
+
+  # GUI buttons
+  buttons:
+    confirm:
+      slots: [11]
+      material: LIME_STAINED_GLASS_PANE
+      glow: true
+      display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
+      lore:
+        - "<gray>By clicking here, you agree</gray>"
+        - "<gray>to purchase this shulker for:</gray>"
+        - ""
+        - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
+        - ""
+        - "<#85E52A>▶ Complete Transaction</#85E52A>"
+      actions:
+        - "[sound] entity.player.levelup 0.8 2"
+
+    cancel:
+      slots: [15]
+      material: RED_STAINED_GLASS_PANE
+      display-name: "<#D94121><bold>CANCEL</bold></#D94121>"
+      lore:
+        - "<gray>Click to abort and return</gray>"
+        - "<gray>to the marketplace.</gray>"
+        - ""
+        - "<#D94121>▶ Stop Purchase</#D94121>"
+      actions:
+        - "[sound] ui.button.click 0.3 1"
+
+  # Custom items
+  items:
+    filler:
+      slots: [0-8, 45-53]
+      material: BLACK_STAINED_GLASS_PANE
+      hide-tooltip: true
+
+    preview-header:
+      slots: [9-17]
+      material: GRAY_STAINED_GLASS_PANE
+      display-name: "<#736efe>︾ <white>Package Contents</white> ︾</#736efe>"
+
+# Opens on Auction Search GUI
+auction-search:
+  # - true = Opens this GUI when item is a Shulker Box
+  # - false = Fallbacks to confirm.yml > auction-search section GUI
+  enabled: true
+
+  # GUI title and size
+  title: "<gradient:#5efce8:#736efe><bold>Confirm Shulker Purchase</bold></gradient> <white>- From search</white>"
+  rows: 6
+
+  # Dynamic slot groups
+  # This define where the item auction slot will be placed
+  auction-slot: [4]
+
+  # This is how auction item will be displayed inside auction-slots
+  auction-item:
+    lore:
+      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "<dark_gray>Auction ID: %id%"
+      - ""
+      - "<gray>Transaction Details:</gray>"
+      - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+      - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
+      - " <#736efe>»</#736efe> <gray>Sales Tax:</gray> <red>-%tax%</red>"
+      - " <#736efe>»</#736efe> <gray>Seller Profit:</gray> <green>%profit%</green>"
+      - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+      - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+      - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+      - ""
+      - "<#f9f047>Inspect contents below before buying</#f9f047>"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  # These define where the shulker items slots will be placed
+  preview-slots: [18-44]
+
+  # GUI buttons
+  buttons:
+    confirm:
+      slots: [11]
+      material: LIME_STAINED_GLASS_PANE
+      glow: true
+      display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
+      lore:
+        - "<gray>By clicking here, you agree</gray>"
+        - "<gray>to purchase this shulker for:</gray>"
+        - ""
+        - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
+        - ""
+        - "<#85E52A>▶ Complete Transaction</#85E52A>"
+      actions:
+        - "[sound] entity.player.levelup 0.8 2"
+
+    cancel:
+      slots: [15]
+      material: RED_STAINED_GLASS_PANE
+      display-name: "<#D94121><bold>CANCEL</bold></#D94121>"
+      lore:
+        - "<gray>Click to abort and return</gray>"
+        - "<gray>to the marketplace (search).</gray>"
+        - ""
+        - "<#D94121>▶ Stop Purchase</#D94121>"
+      actions:
+        - "[sound] ui.button.click 0.3 1"
+
+  # Custom items
+  items:
+    filler:
+      slots: [0-8, 45-53]
+      material: BLACK_STAINED_GLASS_PANE
+      hide-tooltip: true
+
+    preview-header:
+      slots: [9-17]
+      material: GRAY_STAINED_GLASS_PANE
+      display-name: "<#736efe>︾ <white>Package Contents</white> ︾</#736efe>"
+
+# Opens on Target Listings GUI
+target-listings:
+  # - true = Opens this GUI when item is a Shulker Box
+  # - false = Fallbacks to confirm.yml > target-listing section GUI
+  enabled: true
+
+  # GUI title and size
+  title: "<gradient:#5efce8:#736efe><bold>Confirm Shulker Purchase</bold></gradient> <white>- %target%'s Listing</white>"
+  rows: 6
+
+  # Dynamic slot groups
+  # This define where the item auction slot will be placed
+  auction-slot: [4]
+
+  # This is how auction item will be displayed inside auction-slots
+  auction-item:
+    lore:
+      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "<dark_gray>Auction ID: %id%"
+      - ""
+      - "<gray>Transaction Details:</gray>"
+      - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+      - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
+      - " <#736efe>»</#736efe> <gray>Sales Tax:</gray> <red>-%tax%</red>"
+      - " <#736efe>»</#736efe> <gray>Seller Profit:</gray> <green>%profit%</green>"
+      - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+      - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+      - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+      - ""
+      - "<#f9f047>Inspect contents below before buying</#f9f047>"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  # These define where the shulker items slots will be placed
+  preview-slots: [18-44]
+
+  # GUI buttons
+  buttons:
+    confirm:
+      slots: [11]
+      material: LIME_STAINED_GLASS_PANE
+      glow: true
+      display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
+      lore:
+        - "<gray>By clicking here, you agree</gray>"
+        - "<gray>to purchase this shulker for:</gray>"
+        - ""
+        - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
+        - ""
+        - "<#85E52A>▶ Complete Transaction</#85E52A>"
+      actions:
+        - "[sound] entity.player.levelup 0.8 2"
+
+    cancel:
+      slots: [15]
+      material: RED_STAINED_GLASS_PANE
+      display-name: "<#D94121><bold>CANCEL</bold></#D94121>"
+      lore:
+        - "<gray>Click to abort and return</gray>"
+        - "<gray>to %target%'s Listings.</gray>"
+        - ""
+        - "<#D94121>▶ Stop Purchase</#D94121>"
+      actions:
+        - "[sound] ui.button.click 0.3 1"
+
+  # Custom items
+  items:
+    filler:
+      slots: [0-8, 45-53]
+      material: BLACK_STAINED_GLASS_PANE
+      hide-tooltip: true
+
+    preview-header:
+      slots: [9-17]
+      material: GRAY_STAINED_GLASS_PANE
+      display-name: "<#736efe>︾ <white>Package Contents</white> ︾</#736efe>"

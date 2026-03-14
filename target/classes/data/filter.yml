@@ -1,0 +1,1528 @@
+# -------------------------------
+# Item Filter Configuration
+# -------------------------------
+# This file handles how items are categorized in the Auction House.
+# The order of sections here determines the cycle order in the GUI.
+#
+# - You can add, remove, or rename these sections as you like.
+# - Changing the 'display-name' updates what players see in the GUI.
+#
+# Note: Items not categorized in any section will still show up in the 'all' filter.
+
+all:
+  display-name: "All"
+
+# -------------------------------
+# Combat
+# -------------------------------
+combat:
+  display-name: "Combat"
+  match-rules:
+    # Match items by Custom Model Data
+    # Format: "123" (any item with CMD 123) or "PAPER:123" (specific material)
+    # custom-model-data:
+    #   - "1001"
+    #   - "PAPER:1002"
+
+    # 1.21.2+ Item Model support
+    # item-models:
+    #   - "minecraft:mymodels/epic_sword"
+    #   - "custom:ruby_spear"
+
+    # Match Nexo, ItemsAdder items
+    # special-items:
+    #   - "nexo:item_id"
+    #   - "itemsadder:item_id"
+
+    # Match by keywords in the item's name
+    # names:
+    #   - "Spear"
+    #   - "Dagger"
+    #   - "Battleaxe"
+    materials:
+      # Wooden
+      - wooden_spear
+      - wooden_sword
+      # Stone
+      - stone_spear
+      - stone_sword
+      # Copper
+      - copper_spear
+      - copper_sword
+      - copper_helmet
+      - copper_chestplate
+      - copper_leggings
+      - copper_boots
+      # Iron
+      - iron_spear
+      - iron_sword
+      - iron_helmet
+      - iron_chestplate
+      - iron_leggings
+      - iron_boots
+      # Golden
+      - golden_spear
+      - golden_sword
+      - golden_helmet
+      - golden_chestplate
+      - golden_leggings
+      - golden_boots
+      # Diamond
+      - diamond_spear
+      - diamond_sword
+      - diamond_helmet
+      - diamond_chestplate
+      - diamond_leggings
+      - diamond_boots
+      # Netherite
+      - netherite_spear
+      - netherite_sword
+      - netherite_helmet
+      - netherite_chestplate
+      - netherite_leggings
+      - netherite_boots
+      # Leather & Chainmail
+      - leather_helmet
+      - leather_chestplate
+      - leather_leggings
+      - leather_boots
+      - chainmail_helmet
+      - chainmail_chestplate
+      - chainmail_leggings
+      - chainmail_boots
+      # Ranged & special combat items
+      - bow
+      - crossbow
+      - trident
+      - mace
+      - elytra
+      - turtle_helmet
+      - wolf_armor
+      - shield
+      - totem_of_undying
+      - end_crystal
+      - wind_charge
+      # Horse armor
+      - leather_horse_armor
+      - iron_horse_armor
+      - golden_horse_armor
+      - diamond_horse_armor
+      - copper_horse_armor
+      - netherite_horse_armor
+      # Nautilus armor
+      - copper_nautilus_armor
+      - iron_nautilus_armor
+      - golden_nautilus_armor
+      - diamond_nautilus_armor
+      - netherite_nautilus_armor
+      # Harnesses
+      - white_harness
+      - orange_harness
+      - magenta_harness
+      - light_blue_harness
+      - yellow_harness
+      - lime_harness
+      - pink_harness
+      - gray_harness
+      - light_gray_harness
+      - cyan_harness
+      - purple_harness
+      - blue_harness
+      - brown_harness
+      - green_harness
+      - red_harness
+      - black_harness
+
+# -------------------------------
+# Tools & Utilities
+# -------------------------------
+tools:
+  display-name: "Tools"
+  match-rules:
+    materials:
+      # Basic tools
+      - wooden_pickaxe
+      - wooden_axe
+      - wooden_shovel
+      - wooden_hoe
+      - stone_pickaxe
+      - stone_axe
+      - stone_shovel
+      - stone_hoe
+      - copper_pickaxe
+      - copper_axe
+      - copper_shovel
+      - copper_hoe
+      - iron_pickaxe
+      - iron_axe
+      - iron_shovel
+      - iron_hoe
+      - golden_pickaxe
+      - golden_axe
+      - golden_shovel
+      - golden_hoe
+      - diamond_pickaxe
+      - diamond_axe
+      - diamond_shovel
+      - diamond_hoe
+      - netherite_pickaxe
+      - netherite_axe
+      - netherite_shovel
+      - netherite_hoe
+      # Utility items
+      - saddle
+      - lead
+      - fishing_rod
+      - flint_and_steel
+      - carrot_on_a_stick
+      - warped_fungus_on_a_stick
+      - shears
+      - brush
+      - goat_horn
+      - bundle
+      - white_bundle
+      - orange_bundle
+      - magenta_bundle
+      - light_blue_bundle
+      - yellow_bundle
+      - lime_bundle
+      - pink_bundle
+      - gray_bundle
+      - light_gray_bundle
+      - cyan_bundle
+      - purple_bundle
+      - blue_bundle
+      - brown_bundle
+      - green_bundle
+      - red_bundle
+      - black_bundle
+      # Buckets
+      - bucket
+      - water_bucket
+      - lava_bucket
+      - milk_bucket
+      - powder_snow_bucket
+      - axolotl_bucket
+      - cod_bucket
+      - pufferfish_bucket
+      - salmon_bucket
+      - tadpole_bucket
+      - tropical_fish_bucket
+      # Navigation & writing
+      - writable_book
+      - written_book
+      - recovery_compass
+      - clock
+      - compass
+      - map
+      - filled_map
+      - spyglass
+      - firework_rocket
+      # Boats & rafts
+      - oak_boat
+      - birch_boat
+      - spruce_boat
+      - jungle_boat
+      - dark_oak_boat
+      - acacia_boat
+      - mangrove_boat
+      - cherry_boat
+      - pale_oak_boat
+      - bamboo_raft
+      # Chest boats & rafts
+      - oak_chest_boat
+      - birch_chest_boat
+      - spruce_chest_boat
+      - jungle_chest_boat
+      - dark_oak_chest_boat
+      - acacia_chest_boat
+      - mangrove_chest_boat
+      - cherry_chest_boat
+      - pale_oak_chest_boat
+      - bamboo_chest_raft
+      # Music discs
+      - music_disc_5
+      - music_disc_11
+      - music_disc_13
+      - music_disc_blocks
+      - music_disc_cat
+      - music_disc_chirp
+      - music_disc_creator
+      - music_disc_creator_music_box
+      - music_disc_far
+      - music_disc_lava_chicken
+      - music_disc_mall
+      - music_disc_mellohi
+      - music_disc_otherside
+      - music_disc_pigstep
+      - music_disc_relic
+      - music_disc_stal
+      - music_disc_strad
+      - music_disc_wait
+      - music_disc_ward
+
+# -------------------------------
+# Food & Drinks
+# -------------------------------
+foods:
+  display-name: "Foods"
+  match-rules:
+    materials:
+      # Raw foods
+      - apple
+      - beef
+      - chicken
+      - porkchop
+      - mutton
+      - rabbit
+      - cod
+      - salmon
+      - tropical_fish
+      - pufferfish
+      - potato
+      - poisonous_potato
+      - carrot
+      - beetroot
+      - melon_slice
+      - sweet_berries
+      - glow_berries
+      - rotten_flesh
+      # Cooked foods
+      - cooked_beef
+      - cooked_chicken
+      - cooked_porkchop
+      - cooked_mutton
+      - cooked_rabbit
+      - cooked_cod
+      - cooked_salmon
+      - baked_potato
+      - dried_kelp
+      # Prepared meals & desserts
+      - bread
+      - cake
+      - cookie
+      - mushroom_stew
+      - beetroot_soup
+      - rabbit_stew
+      - pumpkin_pie
+      - golden_apple
+      - golden_carrot
+      - enchanted_golden_apple
+      - suspicious_stew
+      # Drinks & bottles
+      - potion
+      - splash_potion
+      - lingering_potion
+      - experience_bottle
+      - glass_bottle
+      - honey_bottle
+      - ominous_bottle
+
+# -------------------------------
+# Ingredients
+# -------------------------------
+ingredients:
+  display-name: "Ingredients"
+  match-rules:
+    materials:
+      # Basic materials
+      - string
+      - paper
+      - leather
+      - bone
+      - bone_meal
+      - flint
+      - charcoal
+      - stick
+      # Special drops / keys
+      - bottle_o_enchanting
+      - breeze_rod
+      - heavy_core
+      - trial_key
+      - ominous_trial_key
+      # Ores & ingots
+      - coal
+      - copper_ingot
+      - iron_ingot
+      - gold_ingot
+      - netherite_ingot
+      - netherite_scrap
+      - raw_copper
+      - raw_iron
+      - raw_gold
+      - resin_brick
+      - copper_nugget
+      - iron_nugget
+      - gold_nugget
+      # Gems & rare items
+      - diamond
+      - emerald
+      - lapis_lazuli
+      - amethyst_shard
+      - prismarine_shard
+      - prismarine_crystals
+      - echo_shard
+      - heart_of_the_sea
+      - nether_star
+      - disc_fragment_5
+      - honeycomb
+      # Dusts & powders
+      - redstone_dust
+      - glowstone_dust
+      - gunpowder
+      - blaze_powder
+      # Mob drops
+      - blaze_rod
+      - magma_cream
+      - slimeball
+      - spider_eye
+      - fermented_spider_eye
+      - ghast_tear
+      - ender_pearl
+      - ender_eye
+      - ink_sac
+      - glow_ink_sac
+      - shulker_shell
+      - phantom_membrane
+      - nautilus_shell
+      - dragon_breath
+      - armadillo_scute
+      - egg
+      - blue_egg
+      - brown_egg
+      - turtle_egg
+      - sniffer_egg
+      # Crops & plants
+      - wheat
+      - wheat_seeds
+      - melon_seeds
+      - pumpkin_seeds
+      - beetroot_seeds
+      - cocoa_beans
+      - nether_wart
+      - cactus_flower
+      - pitcher_pod
+      - torchflower_seeds
+      # Building materials
+      - clay_ball
+      - brick
+      - nether_brick
+      - resin_clump
+      - amethyst_cluster
+      - large_amethyst_bud
+      - medium_amethyst_bud
+      - small_amethyst_bud
+      - amethyst_block
+      - budding_amethyst
+      # Armor trim templates
+      - bolt_armor_trim_smithing_template
+      - coast_armor_trim_smithing_template
+      - dune_armor_trim_smithing_template
+      - eye_armor_trim_smithing_template
+      - flow_armor_trim_smithing_template
+      - host_armor_trim_smithing_template
+      - raiser_armor_trim_smithing_template
+      - rib_armor_trim_smithing_template
+      - sentry_armor_trim_smithing_template
+      - shaper_armor_trim_smithing_template
+      - silence_armor_trim_smithing_template
+      - snout_armor_trim_smithing_template
+      - spire_armor_trim_smithing_template
+      - tide_armor_trim_smithing_template
+      - vex_armor_trim_smithing_template
+      - ward_armor_trim_smithing_template
+      - wayfinder_armor_trim_smithing_template
+      - wild_armor_trim_smithing_template
+      - netherite_upgrade_smithing_template
+      # Dyes
+      - white_dye
+      - orange_dye
+      - magenta_dye
+      - light_blue_dye
+      - yellow_dye
+      - lime_dye
+      - pink_dye
+      - gray_dye
+      - light_gray_dye
+      - cyan_dye
+      - purple_dye
+      - blue_dye
+      - brown_dye
+      - green_dye
+      - red_dye
+      - black_dye
+      # Books & tags
+      - book
+      - enchanted_book
+      - name_tag
+      # Banner patterns
+      - creeper_banner_pattern
+      - skull_banner_pattern
+      - flower_banner_pattern
+      - mojang_banner_pattern
+      - globe_banner_pattern
+      - piglin_banner_pattern
+      - flow_banner_pattern
+      - guster_banner_pattern
+      - field_masoned_banner_pattern
+      - bordure_indented_banner_pattern
+      # Pottery sherds
+      - angler_pottery_sherd
+      - archer_pottery_sherd
+      - arms_up_pottery_sherd
+      - blade_pottery_sherd
+      - brewer_pottery_sherd
+      - burn_pottery_sherd
+      - danger_pottery_sherd
+      - explorer_pottery_sherd
+      - flow_pottery_sherd
+      - friend_pottery_sherd
+      - guster_pottery_sherd
+      - heart_pottery_sherd
+      - heartbreak_pottery_sherd
+      - howl_pottery_sherd
+      - miner_pottery_sherd
+      - mourner_pottery_sherd
+      - plenty_pottery_sherd
+      - prize_pottery_sherd
+      - scrape_pottery_sherd
+      - sheaf_pottery_sherd
+      - shelter_pottery_sherd
+      - skull_pottery_sherd
+      - snort_pottery_sherd
+
+# -------------------------------
+# Spawn eggs
+# -------------------------------
+spawn-eggs:
+  display-name: "Spawn Eggs"
+  match-rules:
+    materials:
+      # Passive / Neutral mobs
+      - allay_spawn_egg
+      - armadillo_spawn_egg
+      - axolotl_spawn_egg
+      - bat_spawn_egg
+      - bee_spawn_egg
+      - camel_spawn_egg
+      - camel_husk_spawn_egg
+      - cat_spawn_egg
+      - chicken_spawn_egg
+      - donkey_spawn_egg
+      - fox_spawn_egg
+      - frog_spawn_egg
+      - goat_spawn_egg
+      - horse_spawn_egg
+      - llama_spawn_egg
+      - mooshroom_spawn_egg
+      - mule_spawn_egg
+      - ocelot_spawn_egg
+      - panda_spawn_egg
+      - parrot_spawn_egg
+      - pig_spawn_egg
+      - polar_bear_spawn_egg
+      - rabbit_spawn_egg
+      - salmon_spawn_egg
+      - sheep_spawn_egg
+      - snow_golem_spawn_egg
+      - squid_spawn_egg
+      - strider_spawn_egg
+      - tropical_fish_spawn_egg
+      - turtle_spawn_egg
+      - wolf_spawn_egg
+      - trader_llama_spawn_egg
+      - sniffer_spawn_egg
+      - nautilus_spawn_egg
+      - copper_golem_spawn_egg
+      - happy_ghast_spawn_egg
+      - parched_spawn_egg
+      - wandering_trader_spawn_egg
+      - tadpole_spawn_egg
+      # Hostile mobs
+      - blaze_spawn_egg
+      - bogged_spawn_egg
+      - breeze_spawn_egg
+      - cave_spider_spawn_egg
+      - creaking_spawn_egg
+      - creeper_spawn_egg
+      - drowned_spawn_egg
+      - enderman_spawn_egg
+      - endermite_spawn_egg
+      - evoker_spawn_egg
+      - ghast_spawn_egg
+      - guardian_spawn_egg
+      - hoglin_spawn_egg
+      - husk_spawn_egg
+      - magma_cube_spawn_egg
+      - phantom_spawn_egg
+      - piglin_spawn_egg
+      - piglin_brute_spawn_egg
+      - pillager_spawn_egg
+      - pufferfish_spawn_egg
+      - ravager_spawn_egg
+      - shulker_spawn_egg
+      - silverfish_spawn_egg
+      - skeleton_spawn_egg
+      - skeleton_horse_spawn_egg
+      - slime_spawn_egg
+      - spider_spawn_egg
+      - stray_spawn_egg
+      - vex_spawn_egg
+      - villager_spawn_egg
+      - vindicator_spawn_egg
+      - witch_spawn_egg
+      - wither_skeleton_spawn_egg
+      - zoglin_spawn_egg
+      - zombie_spawn_egg
+      - zombie_horse_spawn_egg
+      - zombie_villager_spawn_egg
+      - zombified_piglin_spawn_egg
+      # Boss / Special mobs
+      - iron_golem_spawn_egg
+      - warden_spawn_egg
+
+# -------------------------------
+# Functional Blocks
+# -------------------------------
+functional-blocks:
+  display-name: "Functional Blocks"
+  match-rules:
+    materials:
+      # Crafting & Utility
+      - crafting_table
+      - crafter
+      - furnace
+      - blast_furnace
+      - smoker
+      - anvil
+      - chipped_anvil
+      - damaged_anvil
+      - grindstone
+      - stonecutter
+      - cartography_table
+      - loom
+      - smithing_table
+      - fletching_table
+      - enchanting_table
+      - brewing_stand
+      - cauldron
+      - lectern
+      - painting
+      # Storage
+      - chest
+      - copper_chest
+      - exposed_copper_chest
+      - weathered_copper_chest
+      - oxidized_copper_chest
+      - waxed_copper_chest
+      - waxed_exposed_copper_chest
+      - waxed_weathered_copper_chest
+      - waxed_oxidized_copper_chest
+      - barrel
+      - ender_chest
+      - shulker_box
+      - white_shulker_box
+      - orange_shulker_box
+      - magenta_shulker_box
+      - light_blue_shulker_box
+      - yellow_shulker_box
+      - lime_shulker_box
+      - pink_shulker_box
+      - gray_shulker_box
+      - light_gray_shulker_box
+      - cyan_shulker_box
+      - purple_shulker_box
+      - blue_shulker_box
+      - brown_shulker_box
+      - green_shulker_box
+      - red_shulker_box
+      - black_shulker_box
+      # Lighting
+      - torch
+      - soul_torch
+      - lantern
+      - soul_lantern
+      - sea_lantern
+      - jack_o_lantern
+      - end_rod
+      # Copper lanterns
+      - copper_lantern
+      - exposed_copper_lantern
+      - weathered_copper_lantern
+      - oxidized_copper_lantern
+      - waxed_copper_lantern
+      - waxed_exposed_copper_lantern
+      - waxed_weathered_copper_lantern
+      - waxed_oxidized_copper_lantern
+      # Special Functional Blocks
+      - beacon
+      - conduit
+      - lodestone
+      - respawn_anchor
+      - campfire
+      - soul_campfire
+      - scaffolding
+      - composter
+      - flower_pot
+      - armor_stand
+      - item_frame
+      - glow_item_frame
+      - trial_spawner
+      - spawner
+      - decorated_pot
+      - dragon_head
+      - dragon_egg
+      # Signs
+      - oak_sign
+      - spruce_sign
+      - birch_sign
+      - jungle_sign
+      - acacia_sign
+      - dark_oak_sign
+      - mangrove_sign
+      - cherry_sign
+      - pale_oak_sign
+      - bamboo_sign
+      - crimson_sign
+      - warped_sign
+      # Hanging Signs
+      - oak_hanging_sign
+      - spruce_hanging_sign
+      - birch_hanging_sign
+      - jungle_hanging_sign
+      - acacia_hanging_sign
+      - dark_oak_hanging_sign
+      - mangrove_hanging_sign
+      - cherry_hanging_sign
+      - pale_oak_hanging_sign
+      - bamboo_hanging_sign
+      - crimson_hanging_sign
+      - warped_hanging_sign
+
+# -------------------------------
+# Redstone Blocks
+# -------------------------------
+redstone-blocks:
+  display-name: "Redstone Blocks"
+  match-rules:
+    materials:
+      # Core redstone
+      - redstone
+      - redstone_block
+      - redstone_torch
+      - redstone_lamp
+      - slime_block
+      - honey_block
+      - tnt
+      # Power & input
+      - lever
+      - button
+      - oak_button
+      - stone_button
+      - pressure_plate
+      - wooden_pressure_plate
+      - stone_pressure_plate
+      - heavy_weighted_pressure_plate
+      - light_weighted_pressure_plate
+      - tripwire_hook
+      - daylight_detector
+      - target
+      # Shelves (redstone‑readable storage)
+      - oak_shelf
+      - spruce_shelf
+      - birch_shelf
+      - jungle_shelf
+      - acacia_shelf
+      - dark_oak_shelf
+      - mangrove_shelf
+      - cherry_shelf
+      - pale_oak_shelf
+      - bamboo_shelf
+      - crimson_shelf
+      - warped_shelf
+      - chiseled_bookshelf
+      # Signal components
+      - redstone_repeater
+      - redstone_comparator
+      - observer
+      # Movement & mechanics
+      - piston
+      - sticky_piston
+      - dispenser
+      - dropper
+      - hopper
+      - trapped_chest
+      # Sound & interaction
+      - note_block
+      - jukebox
+      - bell
+
+# -------------------------------
+# Natural Blocks
+# -------------------------------
+natural-blocks:
+  display-name: "Natural Blocks"
+  match-rules:
+    materials:
+      # Soil & Ground
+      - dirt
+      - dirt_path
+      - coarse_dirt
+      - grass_block
+      - podzol
+      - mycelium
+      - rooted_dirt
+      - mud
+      - clay
+      - gravel
+      - sand
+      - red_sand
+      - suspicious_sand
+      - suspicious_gravel
+      - farmland
+      - hay_block
+      - muddy_mangrove_roots
+      # Stone & Rock
+      - stone
+      - cobblestone
+      - mossy_cobblestone
+      - andesite
+      - diorite
+      - granite
+      - tuff
+      - calcite
+      - dripstone_block
+      - pointed_dripstone
+      - basalt
+      - smooth_basalt
+      - blackstone
+      - end_stone
+      - netherrack
+      - deepslate
+      - moss_block
+      - pale_moss_block
+      - pale_moss_carpet
+      - pale_hanging_moss
+      # Ores (natural form)
+      - coal_ore
+      - deepslate_coal_ore
+      - iron_ore
+      - deepslate_iron_ore
+      - copper_ore
+      - deepslate_copper_ore
+      - gold_ore
+      - deepslate_gold_ore
+      - redstone_ore
+      - deepslate_redstone_ore
+      - lapis_ore
+      - deepslate_lapis_ore
+      - diamond_ore
+      - deepslate_diamond_ore
+      - emerald_ore
+      - deepslate_emerald_ore
+      - nether_quartz_ore
+      - nether_gold_ore
+      - ancient_debris
+      # Logs & Wood
+      - oak_log
+      - spruce_log
+      - birch_log
+      - jungle_log
+      - acacia_log
+      - dark_oak_log
+      - mangrove_log
+      - cherry_log
+      - pale_oak_log
+      - crimson_stem
+      - warped_stem
+      - bamboo_block
+      - creaking_heart
+      - mangrove_roots
+      # Leaves & Foliage
+      - oak_leaves
+      - spruce_leaves
+      - birch_leaves
+      - jungle_leaves
+      - acacia_leaves
+      - dark_oak_leaves
+      - mangrove_leaves
+      - cherry_leaves
+      - pale_oak_leaves
+      - azalea_leaves
+      - flowering_azalea_leaves
+      # Plants & Nature
+      - cactus
+      - sugar_cane
+      - kelp
+      - seagrass
+      - tall_seagrass
+      - vine
+      - lily_pad
+      - moss_carpet
+      - azalea
+      - flowering_azalea
+      - big_dripleaf
+      - small_dripleaf
+      - glow_lichen
+      - hanging_roots
+      - spore_blossom
+      - open_eyeblossom
+      - closed_eyeblossom
+      - firefly_bush
+      - bush
+      - brown_mushroom
+      - red_mushroom
+      - mushroom_block
+      - wildflowers
+      - short_grass
+      - tall_grass
+      - short_dry_grass
+      - tall_dry_grass
+      - torchflower
+      - wither_rose
+      - poppy
+      - white_tulip
+      - orange_tulip
+      - red_tulip
+      - pink_tulip
+      - sunflower
+      - dead_bush
+      - leaf_litter
+      - lilac
+      - rose_bush
+      - peony
+      - pitcher_plant
+      - bamboo
+      # Saplings
+      - oak_sapling
+      - spruce_sapling
+      - birch_sapling
+      - jungle_sapling
+      - acacia_sapling
+      - dark_oak_sapling
+      - cherry_sapling
+      - mangrove_propagule
+      - bamboo_sapling
+      # Coral & Sea Life
+      - tube_coral_block
+      - brain_coral_block
+      - bubble_coral_block
+      - fire_coral_block
+      - horn_coral_block
+      - tube_coral
+      - brain_coral
+      - bubble_coral
+      - fire_coral
+      - horn_coral
+      - dead_tube_coral_block
+      - dead_brain_coral_block
+      - dead_bubble_coral_block
+      - dead_fire_coral_block
+      - dead_horn_coral_block
+      - dead_tube_coral
+      - dead_brain_coral
+      - dead_bubble_coral
+      - dead_fire_coral
+      - dead_horn_coral
+      - tube_coral_fan
+      - brain_coral_fan
+      - bubble_coral_fan
+      - fire_coral_fan
+      - horn_coral_fan
+      - dead_tube_coral_fan
+      - dead_brain_coral_fan
+      - dead_bubble_coral_fan
+      - dead_fire_coral_fan
+      - dead_horn_coral_fan
+      - sea_pickle
+      - sponge
+      - wet_sponge
+      - frogspawn
+      - dried_kelp_block
+      # Sculk Family
+      - sculk
+      - sculk_vein
+      - sculk_catalyst
+      - sculk_shrieker
+      - sculk_sensor
+      # Nether & End
+      - glowstone
+      - shroomlight
+      - nether_wart_block
+      - warped_wart_block
+      - crimson_nylium
+      - warped_nylium
+      - crimson_fungus
+      - crimson_roots
+      - warped_fungus
+      - warped_roots
+      - twisting_vines
+      - nether_sprouts
+      - chorus_flower
+      - chorus_plant
+      - magma_block
+      - weeping_vines
+      - dried_ghast
+      # Ice & Snow
+      - ice
+      - packed_ice
+      - blue_ice
+      - snow_block
+      - powder_snow
+
+# -------------------------------
+# Colored Blocks
+# -------------------------------
+colored-blocks:
+  display-name: "Colored Blocks"
+  match-rules:
+    materials:
+      # Wool
+      - white_wool
+      - orange_wool
+      - magenta_wool
+      - light_blue_wool
+      - yellow_wool
+      - lime_wool
+      - pink_wool
+      - gray_wool
+      - light_gray_wool
+      - cyan_wool
+      - purple_wool
+      - blue_wool
+      - brown_wool
+      - green_wool
+      - red_wool
+      - black_wool
+      # Terracotta
+      - terracotta
+      - white_terracotta
+      - orange_terracotta
+      - magenta_terracotta
+      - light_blue_terracotta
+      - yellow_terracotta
+      - lime_terracotta
+      - pink_terracotta
+      - gray_terracotta
+      - light_gray_terracotta
+      - cyan_terracotta
+      - purple_terracotta
+      - blue_terracotta
+      - brown_terracotta
+      - green_terracotta
+      - red_terracotta
+      - black_terracotta
+      # Glazed Terracotta
+      - white_glazed_terracotta
+      - orange_glazed_terracotta
+      - magenta_glazed_terracotta
+      - light_blue_glazed_terracotta
+      - yellow_glazed_terracotta
+      - lime_glazed_terracotta
+      - pink_glazed_terracotta
+      - gray_glazed_terracotta
+      - light_gray_glazed_terracotta
+      - cyan_glazed_terracotta
+      - purple_glazed_terracotta
+      - blue_glazed_terracotta
+      - brown_glazed_terracotta
+      - green_glazed_terracotta
+      - red_glazed_terracotta
+      - black_glazed_terracotta
+      # Concrete
+      - white_concrete
+      - orange_concrete
+      - magenta_concrete
+      - light_blue_concrete
+      - yellow_concrete
+      - lime_concrete
+      - pink_concrete
+      - gray_concrete
+      - light_gray_concrete
+      - cyan_concrete
+      - purple_concrete
+      - blue_concrete
+      - brown_concrete
+      - green_concrete
+      - red_concrete
+      - black_concrete
+      # Concrete Powder
+      - white_concrete_powder
+      - orange_concrete_powder
+      - magenta_concrete_powder
+      - light_blue_concrete_powder
+      - yellow_concrete_powder
+      - lime_concrete_powder
+      - pink_concrete_powder
+      - gray_concrete_powder
+      - light_gray_concrete_powder
+      - cyan_concrete_powder
+      - purple_concrete_powder
+      - blue_concrete_powder
+      - brown_concrete_powder
+      - green_concrete_powder
+      - red_concrete_powder
+      - black_concrete_powder
+      # Glass Blocks
+      - white_stained_glass
+      - orange_stained_glass
+      - magenta_stained_glass
+      - light_blue_stained_glass
+      - yellow_stained_glass
+      - lime_stained_glass
+      - pink_stained_glass
+      - gray_stained_glass
+      - light_gray_stained_glass
+      - cyan_stained_glass
+      - purple_stained_glass
+      - blue_stained_glass
+      - brown_stained_glass
+      - green_stained_glass
+      - red_stained_glass
+      - black_stained_glass
+      - tinted_glass
+      # Glass Panes
+      - white_stained_glass_pane
+      - orange_stained_glass_pane
+      - magenta_stained_glass_pane
+      - light_blue_stained_glass_pane
+      - yellow_stained_glass_pane
+      - lime_stained_glass_pane
+      - pink_stained_glass_pane
+      - gray_stained_glass_pane
+      - light_gray_stained_glass_pane
+      - cyan_stained_glass_pane
+      - purple_stained_glass_pane
+      - blue_stained_glass_pane
+      - brown_stained_glass_pane
+      - green_stained_glass_pane
+      - red_stained_glass_pane
+      - black_stained_glass_pane
+      # Carpets
+      - white_carpet
+      - orange_carpet
+      - magenta_carpet
+      - light_blue_carpet
+      - yellow_carpet
+      - lime_carpet
+      - pink_carpet
+      - gray_carpet
+      - light_gray_carpet
+      - cyan_carpet
+      - purple_carpet
+      - blue_carpet
+      - brown_carpet
+      - green_carpet
+      - red_carpet
+      - black_carpet
+      # Beds
+      - white_bed
+      - orange_bed
+      - magenta_bed
+      - light_blue_bed
+      - yellow_bed
+      - lime_bed
+      - pink_bed
+      - gray_bed
+      - light_gray_bed
+      - cyan_bed
+      - purple_bed
+      - blue_bed
+      - brown_bed
+      - green_bed
+      - red_bed
+      - black_bed
+      # Banners
+      - white_banner
+      - orange_banner
+      - magenta_banner
+      - light_blue_banner
+      - yellow_banner
+      - lime_banner
+      - pink_banner
+      - gray_banner
+      - light_gray_banner
+      - cyan_banner
+      - purple_banner
+      - blue_banner
+      - brown_banner
+      - green_banner
+      - red_banner
+      - black_banner
+      # Candles
+      - candle
+      - white_candle
+      - orange_candle
+      - magenta_candle
+      - light_blue_candle
+      - yellow_candle
+      - lime_candle
+      - pink_candle
+      - gray_candle
+      - light_gray_candle
+      - cyan_candle
+      - purple_candle
+      - blue_candle
+      - brown_candle
+      - green_candle
+      - red_candle
+      - black_candle
+
+# -------------------------------
+# Building Blocks
+# -------------------------------
+building-blocks:
+  display-name: "Building Blocks"
+  match-rules:
+    materials:
+      # Planks
+      - oak_wood
+      - oak_planks
+      - oak_stairs
+      - oak_slab
+      - oak_fence
+      - oak_fence_gate
+      - oak_trapdoor
+      - oak_door
+      - oak_pressure_plate
+      - stripped_oak_log
+      - stripped_oak_wood
+      - spruce_wood
+      - spruce_planks
+      - spruce_stairs
+      - spruce_slab
+      - spruce_fence
+      - spruce_fence_gate
+      - spruce_trapdoor
+      - spruce_door
+      - spruce_button
+      - spruce_pressure_plate
+      - stripped_spruce_log
+      - stripped_spruce_wood
+      - birch_wood
+      - birch_planks
+      - birch_stairs
+      - birch_slab
+      - birch_fence
+      - birch_fence_gate
+      - birch_trapdoor
+      - birch_door
+      - birch_button
+      - birch_pressure_plate
+      - stripped_birch_log
+      - stripped_birch_wood
+      - jungle_wood
+      - jungle_planks
+      - jungle_stairs
+      - jungle_slab
+      - jungle_fence
+      - jungle_fence_gate
+      - jungle_trapdoor
+      - jungle_door
+      - jungle_button
+      - jungle_pressure_plate
+      - stripped_jungle_log
+      - stripped_jungle_wood
+      - acacia_wood
+      - acacia_planks
+      - acacia_stairs
+      - acacia_slab
+      - acacia_fence
+      - acacia_fence_gate
+      - acacia_trapdoor
+      - acacia_door
+      - acacia_button
+      - acacia_pressure_plate
+      - stripped_acacia_log
+      - stripped_acacia_wood
+      - dark_oak_wood
+      - dark_oak_planks
+      - dark_oak_stairs
+      - dark_oak_slab
+      - dark_oak_fence
+      - dark_oak_fence_gate
+      - dark_oak_trapdoor
+      - dark_oak_door
+      - dark_oak_button
+      - dark_oak_pressure_plate
+      - stripped_dark_oak_log
+      - stripped_dark_oak_wood
+      - mangrove_wood
+      - mangrove_planks
+      - mangrove_stairs
+      - mangrove_slab
+      - mangrove_fence
+      - mangrove_fence_gate
+      - mangrove_trapdoor
+      - mangrove_door
+      - mangrove_button
+      - mangrove_pressure_plate
+      - stripped_mangrove_log
+      - stripped_mangrove_wood
+      - cherry_wood
+      - cherry_planks
+      - cherry_stairs
+      - cherry_slab
+      - cherry_fence
+      - cherry_fence_gate
+      - cherry_trapdoor
+      - cherry_door
+      - cherry_button
+      - cherry_pressure_plate
+      - stripped_cherry_log
+      - stripped_cherry_wood
+      - pale_oak_wood
+      - pale_oak_planks
+      - pale_oak_stairs
+      - pale_oak_slab
+      - pale_oak_fence
+      - pale_oak_fence_gate
+      - pale_oak_trapdoor
+      - pale_oak_door
+      - pale_oak_button
+      - pale_oak_pressure_plate
+      - stripped_pale_oak_log
+      - stripped_pale_oak_wood
+      - bamboo_planks
+      - stripped_bamboo_block
+      - bamboo_mosaic
+      - bamboo_stairs
+      - bamboo_slab
+      - bamboo_fence
+      - bamboo_fence_gate
+      - bamboo_trapdoor
+      - bamboo_door
+      - bamboo_button
+      - bamboo_pressure_plate
+      - stripped_bamboo_log
+      - stripped_bamboo_wood
+      - crimson_hyphae
+      - crimson_planks
+      - crimson_stairs
+      - crimson_slab
+      - crimson_fence
+      - crimson_fence_gate
+      - crimson_trapdoor
+      - crimson_door
+      - crimson_button
+      - crimson_pressure_plate
+      - stripped_crimson_stem
+      - stripped_crimson_hyphae
+      - warped_hyphae
+      - warped_planks
+      - warped_stairs
+      - warped_slab
+      - warped_fence
+      - warped_fence_gate
+      - warped_trapdoor
+      - warped_door
+      - warped_button
+      - warped_pressure_plate
+      - stripped_warped_stem
+      - stripped_warped_hyphae
+      # Stone Families
+      - stone_bricks
+      - stone_brick_stairs
+      - stone_brick_slab
+      - stone_brick_wall
+      - chiseled_stone_bricks
+      - mossy_stone_bricks
+      - mossy_stone_brick_stairs
+      - mossy_stone_brick_slab
+      - mossy_stone_brick_wall
+      - deepslate_bricks
+      - deepslate_brick_stairs
+      - deepslate_brick_slab
+      - deepslate_brick_wall
+      - deepslate_tiles
+      - deepslate_tile_stairs
+      - deepslate_tile_slab
+      - deepslate_tile_wall
+      - chiseled_deepslate
+      - polished_deepslate
+      - polished_deepslate_stairs
+      - polished_deepslate_slab
+      - polished_deepslate_wall
+      - blackstone_stairs
+      - blackstone_slab
+      - blackstone_wall
+      - polished_blackstone
+      - polished_blackstone_stairs
+      - polished_blackstone_slab
+      - polished_blackstone_wall
+      - chiseled_polished_blackstone
+      - polished_blackstone_bricks
+      - polished_blackstone_brick_stairs
+      - polished_blackstone_brick_slab
+      - polished_blackstone_brick_wall
+      - end_stone_bricks
+      - end_stone_brick_stairs
+      - end_stone_brick_slab
+      - end_stone_brick_wall
+      - nether_bricks
+      - nether_brick_stairs
+      - nether_brick_slab
+      - nether_brick_wall
+      - chiseled_nether_bricks
+      - red_nether_bricks
+      - red_nether_brick_stairs
+      - red_nether_brick_slab
+      - red_nether_brick_wall
+      - chiseled_red_nether_bricks
+      - sandstone
+      - sandstone_stairs
+      - sandstone_slab
+      - sandstone_wall
+      - chiseled_sandstone
+      - red_sandstone
+      - red_sandstone_stairs
+      - red_sandstone_slab
+      - red_sandstone_wall
+      - chiseled_red_sandstone
+      - brick_block
+      - brick_stairs
+      - brick_slab
+      - brick_wall
+      # Resin block family
+      - resin_block
+      - resin_bricks
+      - resin_chiseled
+      - resin_slab
+      - resin_brick_slab
+      - resin_stairs
+      - resin_brick_stairs
+      - resin_wall
+      - resin_brick_wall
+      # Tuff Family
+      - polished_tuff
+      - polished_tuff_stairs
+      - polished_tuff_slab
+      - polished_tuff_wall
+      - tuff_bricks
+      - tuff_brick_stairs
+      - tuff_brick_slab
+      - tuff_brick_wall
+      - chiseled_tuff_bricks
+      # Quartz
+      - quartz_block
+      - quartz_stairs
+      - quartz_slab
+      - chiseled_quartz_block
+      - smooth_quartz
+      # Prismarine
+      - prismarine
+      - prismarine_stairs
+      - prismarine_slab
+      - prismarine_bricks
+      - prismarine_brick_stairs
+      - prismarine_brick_slab
+      - dark_prismarine
+      - dark_prismarine_stairs
+      - dark_prismarine_slab
+      # Purpur
+      - purpur_block
+      - purpur_stairs
+      - purpur_slab
+      - purpur_pillar
+      - purpur_bricks
+      # Mud
+      - mud_brick_stairs
+      - mud_brick_slab
+      - mud_brick_wall
+      # Copper Family
+      - copper_block
+      - exposed_copper
+      - weathered_copper
+      - oxidized_copper
+      - waxed_copper_block
+      - waxed_exposed_copper
+      - waxed_weathered_copper
+      - waxed_oxidized_copper
+      - cut_copper
+      - exposed_cut_copper
+      - weathered_cut_copper
+      - oxidized_cut_copper
+      - waxed_cut_copper
+      - waxed_exposed_cut_copper
+      - waxed_weathered_cut_copper
+      - waxed_oxidized_cut_copper
+      - chiseled_copper
+      - exposed_chiseled_copper
+      - weathered_chiseled_copper
+      - oxidized_chiseled_copper
+      - waxed_chiseled_copper
+      - waxed_exposed_chiseled_copper
+      - waxed_weathered_chiseled_copper
+      - waxed_oxidized_chiseled_copper
+      - copper_grate
+      - exposed_copper_grate
+      - weathered_copper_grate
+      - oxidized_copper_grate
+      - waxed_copper_grate
+      - waxed_exposed_copper_grate
+      - waxed_weathered_copper_grate
+      - waxed_oxidized_copper_grate
+      - cut_copper_slab
+      - exposed_cut_copper_slab
+      - weathered_cut_copper_slab
+      - oxidized_cut_copper_slab
+      - waxed_cut_copper_slab
+      - waxed_exposed_cut_copper_slab
+      - waxed_weathered_cut_copper_slab
+      - waxed_oxidized_cut_copper_slab
+      - copper_door
+      - exposed_copper_door
+      - weathered_copper_door
+      - oxidized_copper_door
+      - waxed_copper_door
+      - waxed_exposed_copper_door
+      - waxed_weathered_copper_door
+      - waxed_oxidized_copper_door
+      - copper_trapdoor
+      - exposed_copper_trapdoor
+      - weathered_copper_trapdoor
+      - oxidized_copper_trapdoor
+      - waxed_copper_trapdoor
+      - waxed_exposed_copper_trapdoor
+      - waxed_weathered_copper_trapdoor
+      - waxed_oxidized_copper_trapdoor
+      - copper_bulb
+      - exposed_copper_bulb
+      - weathered_copper_bulb
+      - oxidized_copper_bulb
+      - waxed_copper_bulb
+      - waxed_exposed_copper_bulb
+      - waxed_weathered_copper_bulb
+      - waxed_oxidized_copper_bulb
+      # Bars & Decorative
+      - iron_bars
+      - copper_bars
+      - exposed_copper_bars
+      - weathered_copper_bars
+      - oxidized_copper_bars
+      - waxed_copper_bars
+      - waxed_exposed_copper_bars
+      - waxed_weathered_copper_bars
+      - waxed_oxidized_copper_bars
+      - iron_chain
+      - copper_chain
+      - exposed_copper_chain
+      - weathered_copper_chain
+      - oxidized_copper_chain
+      - waxed_copper_chain
+      - waxed_exposed_copper_chain
+      - waxed_weathered_copper_chain
+      - waxed_oxidized_copper_chain
+      - bricks
+      - obsidian
+      - crying_obsidian
+      - packed_mud
+      - mud_bricks
+      # Mineral blocks
+      - gold_block
+      - emerald_block
+      - netherite_block
+      - lapis_block
+      - diamond_block
+      - iron_block
+      - coal_block

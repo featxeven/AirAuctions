@@ -1,0 +1,195 @@
+# - true = buttons are always shown
+# - false = buttons only appear when next/previous page is available
+always-show-buttons: false
+
+# GUI title and size
+title: "<gradient:#5efce8:#736efe><bold>%target% Listings</bold></gradient> <gray>»</gray> <white>%filter%</white> <dark_gray>(%page%/%pages%)</dark_gray>"
+rows: 6
+
+# Dynamic slot groups
+# These define where the item auction slots will be placed
+auction-slots: [10-16, 19-25, 28-34]
+
+# This is how auction item will be displayed inside auction-slots
+auction-item:
+  lore:
+    - "%lore%" # The item's lore. If there is no lore, skip this line
+    - "<dark_gray>Auction ID: %id%"
+    - ""
+    - "<gray>Listing Information:</gray>"
+    - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+    - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
+    - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+    - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+    - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+    - ""
+    - "buy: <#5efce8>Click</#5efce8> <gray>to purchase item</gray>"
+    - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
+  item-flags:
+    - HIDE_ATTRIBUTES
+  actions:
+    - "[sound] ui.button.click 1 2"
+    - "[buy]"
+  shift-actions:
+    - "[sound] ui.button.click 1 2"
+    - "[preview]"
+  # If false, cancel-auction GUI will be disabled
+  apply-confirm: true
+
+# Slot Available Item (based on limit permission)
+# Only updates correctly if the player is online. For offline players it'll use default listings limit
+# Recommended to keep this disabled to avoid inconsistency
+slot-available:
+  enabled: false
+  material: LIME_STAINED_GLASS_PANE
+  display-name: "<#85E52A><bold>Available Slot</bold></#85E52A>"
+  lore:
+    - "<gray>%target% has a free slot to</gray>"
+    - "<gray>list a new item for sale.</gray>"
+    - ""
+    - " <#736efe>»</#736efe> <gray>Status:</gray> <green>Unlocked</green>"
+
+# GUI buttons
+# Special items with fixed actions in the GUI.
+# You can customize their appearance (glow, enchants, tooltips, actions, etc.).
+buttons:
+  next-page:
+    slots: [26]
+    material: SPECTRAL_ARROW
+    display-name: "<#5efce8>Next Page</#5efce8>"
+    lore:
+      - "<gray>Navigate to next page</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+
+  previous-page:
+    slots: [18]
+    material: SPECTRAL_ARROW
+    display-name: "<#5efce8>Previous Page</#5efce8>"
+    lore:
+      - "<gray>Return to previous page</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+
+  refresh:
+    slots: [49]
+    material: SUNFLOWER
+    display-name: "<#f9f047><bold>Refresh Listings</bold></#f9f047>"
+    lore:
+      - "<gray>Update your current sales</gray>"
+      - "<gray>and check for updates.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.5"
+    cooldown: 5
+
+  filter-by:
+    slots: [47]
+    material: COMPARATOR
+    display-name: "<gradient:#5efce8:#736efe><bold>Filter Categories</bold></gradient>"
+    lore:
+      - "<gray>Currently showing:</gray>"
+      - ""
+      - "%filter%"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to cycle filters</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+    show-list: true
+    format:
+      selected: "<#5efce8>⏵ %name%</#5efce8>"
+      unselected: "<dark_gray>  %name%</dark_gray>"
+
+  sort-by:
+    slots: [51]
+    material: HOPPER
+    display-name: "<gradient:#5efce8:#736efe><bold>Sort Listings</bold></gradient>"
+    lore:
+      - "<gray>Current sorting:</gray>"
+      - ""
+      - "%sort%"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to cycle modes</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+    show-list: true
+    format:
+      selected: "<#5efce8>⏵ %name%</#5efce8>"
+      unselected: "<dark_gray>  %name%</dark_gray>"
+
+# Custom items
+items:
+  filler:
+    slots: [1-3, 5-9, 17, 27, 35-44]
+    material: BLACK_STAINED_GLASS_PANE
+    hide-tooltip: true
+
+  target-history:
+    slots: [45]
+    priority:
+      0:
+        conditions:
+          # Requires Player PlaceholderAPI Expansion
+          - "%player_has_permission_airauctions.command.history.others% == yes"
+        material: BOOK
+        display-name: "<#bdc3c7><bold>%target%</bold></#bdc3c7><white>'s History"
+        lore:
+          - "<gray>View %target%'s history listings"
+        actions:
+          - "[sound] ui.button.click 1 1.2"
+          - "[open] gui:target_history filter:%filter% sort:%sort% target:%target%"
+
+  blocked-slot:
+    slots: [10-16, 19-25, 28-34]
+    material: BARRIER
+    display-name: "<#ff5f6d><bold>Locked Slot</bold></#ff5f6d>"
+    lore:
+      - "<gray>%target% doesn't have permission to</gray>"
+      - "<gray>use this slot for a new listing.</gray>"
+      - ""
+      - " <#736efe>»</#736efe> <gray>Status:</gray> <red>Locked</red>"
+
+  target-head:
+    slots: [4]
+    material: head-%target%
+    display-name: "<#bdc3c7><bold>%target%</bold></#bdc3c7><white>'s Listings"
+
+  back:
+    slots: [0]
+    material: ARROW
+    display-name: "<#bdc3c7><bold>Go back</bold></#bdc3c7>"
+    lore:
+      - "<gray>Return to the main market</gray>"
+      - "<gray>to browse other listings.</gray>"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to go back</gray>"
+    actions:
+      - "[open] gui:auction_house filter:%filter% sort:%sort%"
+      - "[sound] ui.button.click 1 1.2"
+
+  close:
+    slots: [53]
+    material: BARRIER
+    display-name: "<#ff5f6d><bold>Close Menu</bold></#ff5f6d>"
+    lore:
+      - "<gray>Return to game.</gray>"
+    actions:
+      - "[close]"
+      - "[sound] ui.button.click 1 0.8"
+
+  no-next-page:
+    slots: [26]
+    material: ARROW
+    display-name: "<dark_gray>Next Page</dark_gray>"
+    lore:
+      - "<#ff5f6d>Last page reached</#ff5f6d>"
+
+  no-previous-page:
+    slots: [18]
+    material: ARROW
+    display-name: "<dark_gray>Previous Page</dark_gray>"
+    lore:
+      - "<#ff5f6d>First page reached</#ff5f6d>"

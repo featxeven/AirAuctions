@@ -1,0 +1,188 @@
+# Opens on Auction House GUI
+auction-house:
+  # GUI title and size
+  title: "<gradient:#5efce8:#736efe><bold>Confirm Purchase</bold></gradient>"
+  rows: 3
+
+  # Dynamic slot groups
+  # This define where the item auction slot will be placed
+  auction-slot: [13]
+
+  # This is how auction item will be displayed inside auction-slots
+  auction-item:
+    lore:
+      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "<dark_gray>Auction ID: %id%"
+      - ""
+      - "<gray>Transaction Details:</gray>"
+      - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+      - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
+      - " <#736efe>»</#736efe> <gray>Sales Tax:</gray> <red>-%tax%</red>"
+      - " <#736efe>»</#736efe> <gray>Seller Profit:</gray> <green>%profit%</green>"
+      - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+      - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+      - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  # GUI buttons
+  buttons:
+    confirm:
+      slots: [11]
+      material: LIME_STAINED_GLASS_PANE
+      glow: true
+      display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
+      lore:
+        - "<gray>Click to finalize your</gray>"
+        - "<gray>purchase for exactly:</gray>"
+        - ""
+        - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
+        - ""
+        - "<#85E52A>▶ Complete Transaction</#85E52A>"
+      actions:
+        - "[sound] entity.player.levelup 0.8 2"
+
+    cancel:
+      slots: [15]
+      material: RED_STAINED_GLASS_PANE
+      display-name: "<#D94121><bold>ABORT</bold></#D94121>"
+      lore:
+        - "<gray>Click to cancel the</gray>"
+        - "<gray>transaction and return.</gray>"
+        - ""
+        - "<#D94121>▶ Return to Market</#D94121>"
+      actions:
+        - "[sound] ui.button.click 0.3 1"
+
+  # Custom items
+  items:
+    filler:
+      slots: [0-26]
+      material: BLACK_STAINED_GLASS_PANE
+      hide-tooltip: true
+
+# Opens on Auction Search GUI
+auction-search:
+  # GUI title and size
+  title: "<gradient:#5efce8:#736efe><bold>Confirm Purchase</bold></gradient> <white>from search</white>"
+  rows: 3
+
+  # Dynamic slot groups
+  # This define where the item auction slot will be placed
+  auction-slot: [13]
+
+  # This is how auction item will be displayed inside auction-slots
+  auction-item:
+    lore:
+      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "<dark_gray>Auction ID: %id%"
+      - ""
+      - "<gray>Transaction Details:</gray>"
+      - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+      - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
+      - " <#736efe>»</#736efe> <gray>Sales Tax:</gray> <red>-%tax%</red>"
+      - " <#736efe>»</#736efe> <gray>Seller Profit:</gray> <green>%profit%</green>"
+      - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+      - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+      - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  # GUI buttons
+  buttons:
+    confirm:
+      slots: [11]
+      material: LIME_STAINED_GLASS_PANE
+      glow: true
+      display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
+      lore:
+        - "<gray>Click to finalize your</gray>"
+        - "<gray>purchase for exactly:</gray>"
+        - ""
+        - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
+        - ""
+        - "<#85E52A>▶ Complete Transaction</#85E52A>"
+      actions:
+        - "[sound] entity.player.levelup 0.8 2"
+
+    cancel:
+      slots: [15]
+      material: RED_STAINED_GLASS_PANE
+      display-name: "<#D94121><bold>ABORT</bold></#D94121>"
+      lore:
+        - "<gray>Click to cancel the</gray>"
+        - "<gray>transaction and return.</gray>"
+        - ""
+        - "<#D94121>▶ Return to Market (search)</#D94121>"
+      actions:
+        - "[sound] ui.button.click 0.3 1"
+
+  # Custom items
+  items:
+    filler:
+      slots: [0-26]
+      material: BLACK_STAINED_GLASS_PANE
+      hide-tooltip: true
+
+# Opens on Target Listings GUI
+target-listings:
+  # GUI title and size
+  title: "<gradient:#5efce8:#736efe><bold>Confirm Purchase</bold></gradient> <white>- %target%'s Listing</white>"
+  rows: 3
+
+  # Dynamic slot groups
+  # This define where the item auction slot will be placed
+  auction-slot: [13]
+
+  # This is how auction item will be displayed inside auction-slots
+  auction-item:
+    lore:
+      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "<dark_gray>Auction ID: %id%"
+      - ""
+      - "<gray>Transaction Details:</gray>"
+      - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%seller%</white>"
+      - " <#736efe>»</#736efe> <gray>Total Price:</gray> %price%"
+      - " <#736efe>»</#736efe> <gray>Sales Tax:</gray> <red>-%tax%</red>"
+      - " <#736efe>»</#736efe> <gray>Seller Profit:</gray> <green>%profit%</green>"
+      - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+      - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
+      - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+    item-flags:
+      - HIDE_ATTRIBUTES
+
+  # GUI buttons
+  buttons:
+    confirm:
+      slots: [11]
+      material: LIME_STAINED_GLASS_PANE
+      glow: true
+      display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
+      lore:
+        - "<gray>Click to finalize your</gray>"
+        - "<gray>purchase for exactly:</gray>"
+        - ""
+        - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
+        - ""
+        - "<#85E52A>▶ Complete Transaction</#85E52A>"
+      actions:
+        - "[sound] entity.player.levelup 0.8 2"
+
+    cancel:
+      slots: [15]
+      material: RED_STAINED_GLASS_PANE
+      display-name: "<#D94121><bold>ABORT</bold></#D94121>"
+      lore:
+        - "<gray>Click to cancel the</gray>"
+        - "<gray>transaction and return.</gray>"
+        - ""
+        - "<#D94121>▶ Return to %target%'s Listings</#D94121>"
+      actions:
+        - "[sound] ui.button.click 0.3 1"
+
+  # Custom items
+  items:
+    filler:
+      slots: [0-26]
+      material: BLACK_STAINED_GLASS_PANE
+      hide-tooltip: true
