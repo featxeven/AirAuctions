@@ -29,11 +29,10 @@ combat:
     #   - "minecraft:mymodels/epic_sword"
     #   - "custom:ruby_spear"
 
-    # Match Nexo, ItemsAdder or CraftEngine items
+    # Match Nexo, ItemsAdder items
     # special-items:
     #   - "nexo:item_id"
     #   - "itemsadder:item_id"
-    #   - "craftengine:item_id"
 
     # Match by keywords in the item's name
     # names:

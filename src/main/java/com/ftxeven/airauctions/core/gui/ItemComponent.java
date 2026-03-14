@@ -41,8 +41,6 @@ public final class ItemComponent {
             hookedItem = plugin.getHookManager().getItem(materialSelector.substring(5), "nexo");
         } else if (lower.startsWith("itemsadder:")) {
             hookedItem = plugin.getHookManager().getItem(materialSelector.substring(11), "itemsadder");
-        } else if (lower.startsWith("craftengine:")) {
-            hookedItem = plugin.getHookManager().getItem(materialSelector.substring(12), "craftengine");
         }
 
         if (hookedItem != null) {
@@ -61,14 +59,29 @@ public final class ItemComponent {
     }
 
     public ItemComponent amount(int amount) {
-        item.setAmount(Math.max(1, Math.min(item.getMaxStackSize(), amount)));
+        item.setAmount(Math.max(1, amount));
         return this;
     }
 
-    public ItemComponent name(Component name) { if (meta != null) meta.displayName(name); return this; }
-    public ItemComponent lore(List<Component> lore) { if (meta != null) meta.lore(lore); return this; }
-    public ItemComponent customModelData(Integer data) { if (meta != null) meta.setCustomModelData(data); return this; }
-    public ItemComponent damage(Integer dmg) { if (meta instanceof Damageable d && dmg != null) d.setDamage(dmg); return this; }
+    public ItemComponent name(Component name) {
+        if (meta != null && name != null) meta.displayName(name);
+        return this;
+    }
+
+    public ItemComponent lore(List<Component> lore) {
+        if (meta != null && lore != null) meta.lore(lore);
+        return this;
+    }
+
+    public ItemComponent customModelData(Integer data) {
+        if (meta != null && data != null && data > 0) meta.setCustomModelData(data);
+        return this;
+    }
+
+    public ItemComponent damage(Integer dmg) {
+        if (meta instanceof Damageable d && dmg != null && dmg >= 0) d.setDamage(dmg);
+        return this;
+    }
 
     public ItemComponent enchants(Map<String, Integer> enchants) {
         if (meta != null && enchants != null) {
@@ -88,10 +101,13 @@ public final class ItemComponent {
         return this;
     }
 
-    public ItemComponent flags(ItemFlag... flags) { if (meta != null && flags.length > 0) meta.addItemFlags(flags); return this; }
+    public ItemComponent flags(ItemFlag... flags) {
+        if (meta != null && flags != null && flags.length > 0) meta.addItemFlags(flags);
+        return this;
+    }
 
-    public void skullOwner(String owner, Player viewer, SkinData skinData) {
-        if (!(meta instanceof SkullMeta sm) || owner == null || owner.isEmpty()) return;
+    public ItemComponent skullOwner(String owner, Player viewer, SkinData skinData) {
+        if (!(meta instanceof SkullMeta sm) || owner == null || owner.isEmpty()) return this;
 
         if (skinData != null && skinData.hasData()) {
             String profileName = (owner.contains("%") || owner.length() > 16) ? "AuctionHead" : owner;
@@ -100,12 +116,12 @@ public final class ItemComponent {
             PlayerProfile profile = Bukkit.createProfile(consistentUuid, profileName);
             profile.setProperty(new ProfileProperty("textures", skinData.value(), skinData.signature()));
             sm.setPlayerProfile(profile);
-            return;
+            return this;
         }
 
         if (owner.length() > 36 && !owner.contains("-")) {
             applyCustomHead(sm, owner);
-            return;
+            return this;
         }
 
         if (owner.equalsIgnoreCase("%player%") || (viewer != null && owner.equalsIgnoreCase(viewer.getName()))) {
@@ -113,6 +129,7 @@ public final class ItemComponent {
         } else {
             sm.setOwningPlayer(Bukkit.getOfflinePlayer(owner));
         }
+        return this;
     }
 
     private void applyCustomHead(SkullMeta sm, String texture) {
@@ -131,18 +148,19 @@ public final class ItemComponent {
     }
 
     public ItemComponent tooltipStyle(String style) {
-        if (HAS_TOOLTIP_STYLE && meta != null && style != null) {
+        if (HAS_TOOLTIP_STYLE && meta != null && style != null && !style.isEmpty()) {
             NamespacedKey key = NamespacedKey.fromString(style);
             if (key != null) meta.setTooltipStyle(key);
         }
         return this;
     }
 
-    public void itemModel(String model) {
-        if (HAS_ITEM_MODEL && meta != null && model != null) {
+    public ItemComponent itemModel(String model) {
+        if (HAS_ITEM_MODEL && meta != null && model != null && !model.isEmpty()) {
             NamespacedKey key = NamespacedKey.fromString(model);
             if (key != null) meta.setItemModel(key);
         }
+        return this;
     }
 
     public ItemStack build() {

@@ -2,9 +2,10 @@ package com.ftxeven.airauctions.core.gui;
 
 import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.core.model.PlayerAuctionProfile;
+import com.ftxeven.airauctions.util.MessageUtil;
 import com.ftxeven.airauctions.util.PlaceholderUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -15,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, ConfigurationSection config) {
-    private static final MiniMessage MM = MiniMessage.miniMessage();
 
     public static List<Integer> parseSlots(List<String> raw) {
         if (raw == null || raw.isEmpty()) return Collections.emptyList();
@@ -140,15 +140,29 @@ public record GuiDefinition(String title, int rows, Map<String, GuiItem> items, 
             ItemComponent builder = new ItemComponent(activeMat, plugin).amount(activeAmount);
 
             if (activeName != null) {
-                builder.name(MM.deserialize("<!italic>" + PlaceholderUtil.apply(viewer, activeName, ph)));
+                String appliedName = PlaceholderUtil.apply(viewer, activeName, ph);
+                builder.name(MessageUtil.mini(viewer, "<!italic>" + appliedName, ph));
             }
 
             if (activeLore != null && !activeLore.isEmpty()) {
                 List<Component> lore = new ArrayList<>();
+                boolean skip = plugin.config().skipEmptyLines();
+                boolean pendingEmpty = false;
+                var serializer = PlainTextComponentSerializer.plainText();
+
                 for (String line : activeLore) {
                     String applied = PlaceholderUtil.apply(viewer, line, ph);
-                    for (String split : applied.split("\n")) {
-                        lore.add(MM.deserialize("<!italic>" + split));
+                    String[] splits = applied.split("\n");
+
+                    for (String split : splits) {
+                        Component comp = MessageUtil.mini(viewer, "<!italic>" + split, ph);
+                        if (skip && serializer.serialize(comp).isEmpty()) {
+                            pendingEmpty = true;
+                        } else {
+                            if (pendingEmpty && !lore.isEmpty()) lore.add(Component.empty());
+                            lore.add(comp);
+                            pendingEmpty = false;
+                        }
                     }
                 }
                 builder.lore(lore);

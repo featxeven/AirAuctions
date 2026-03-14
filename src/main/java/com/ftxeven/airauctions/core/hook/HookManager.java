@@ -18,9 +18,6 @@ public class HookManager {
         if (isId("ItemsAdder")) {
             try { hooks.add(new ItemsAdderHook()); } catch (Throwable ignored) {}
         }
-        if (isId("CraftEngine")) {
-            try { hooks.add(new CraftEngineHook()); } catch (Throwable ignored) {}
-        }
     }
 
     private boolean isId(String name) {

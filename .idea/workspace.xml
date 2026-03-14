@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="fixed item priority actions">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="changed default gui lore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/PreviewShulkerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiDefinition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -386,7 +385,87 @@
       <option name="project" value="LOCAL" />
       <updated>1773367526741</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="added target-history section in preview-shulker gui">
+      <option name="closed" value="true" />
+      <created>1773368657068</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1773368657068</updated>
+    </task>
+    <task id="LOCAL-00040" summary="minor changes">
+      <option name="closed" value="true" />
+      <created>1773413921605</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1773413921605</updated>
+    </task>
+    <task id="LOCAL-00041" summary="removed ce hook">
+      <option name="closed" value="true" />
+      <created>1773422057894</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1773422057894</updated>
+    </task>
+    <task id="LOCAL-00042" summary="fixed != comparator">
+      <option name="closed" value="true" />
+      <created>1773425663482</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1773425663482</updated>
+    </task>
+    <task id="LOCAL-00043" summary="added view-player lore parser">
+      <option name="closed" value="true" />
+      <created>1773426206202</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1773426206202</updated>
+    </task>
+    <task id="LOCAL-00044" summary="changed default auction-house gui config">
+      <option name="closed" value="true" />
+      <created>1773426604305</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1773426604305</updated>
+    </task>
+    <task id="LOCAL-00045" summary="addded missing validation check for target listings">
+      <option name="closed" value="true" />
+      <created>1773428707126</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1773428707126</updated>
+    </task>
+    <task id="LOCAL-00046" summary="added skip-empty-lines">
+      <option name="closed" value="true" />
+      <created>1773430483139</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1773430483139</updated>
+    </task>
+    <task id="LOCAL-00047" summary="changed default gui lore">
+      <option name="closed" value="true" />
+      <created>1773430813491</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1773430813491</updated>
+    </task>
+    <task id="LOCAL-00048" summary="changed default gui lore">
+      <option name="closed" value="true" />
+      <created>1773431201369</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1773431201369</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -404,10 +483,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="added" />
-    <MESSAGE value="added confirm gui" />
-    <MESSAGE value="added more stuff" />
-    <MESSAGE value="bug fixes" />
     <MESSAGE value="innit commit" />
     <MESSAGE value="handled error if vault/economy provider is missing" />
     <MESSAGE value="added force-update-gui option" />
@@ -423,6 +498,16 @@
     <MESSAGE value="added target-history gui &amp; new arg target:%target% for [open] action" />
     <MESSAGE value="added sub-command validations" />
     <MESSAGE value="fixed item priority actions" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed item priority actions" />
+    <MESSAGE value="added target-history section in preview-shulker gui" />
+    <MESSAGE value="minor changes" />
+    <MESSAGE value="removed ce" />
+    <MESSAGE value="removed ce hook" />
+    <MESSAGE value="fixed != comparator" />
+    <MESSAGE value="added view-player lore parser" />
+    <MESSAGE value="changed default auction-house gui config" />
+    <MESSAGE value="addded missing validation check for target listings" />
+    <MESSAGE value="added skip-empty-lines" />
+    <MESSAGE value="changed default gui lore" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed default gui lore" />
   </component>
 </project>

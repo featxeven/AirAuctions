@@ -128,18 +128,15 @@ public final class ItemBlacklistService {
 
         Set<String> nexo = new HashSet<>();
         Set<String> itemsAdder = new HashSet<>();
-        Set<String> craftEngine = new HashSet<>();
 
         for (String s : specialItems) {
             String lower = s.toLowerCase();
             if (lower.startsWith("nexo:")) nexo.add(lower.substring(5));
             else if (lower.startsWith("itemsadder:")) itemsAdder.add(lower.substring(11));
-            else if (lower.startsWith("craftengine:")) craftEngine.add(lower.substring(12));
         }
 
         var hm = plugin.getHookManager();
         if (!nexo.isEmpty() && hm.match(item, nexo, "nexo") != null) return true;
-        if (!itemsAdder.isEmpty() && hm.match(item, itemsAdder, "itemsadder") != null) return true;
-        return !craftEngine.isEmpty() && hm.match(item, craftEngine, "craftengine") != null;
+        return !itemsAdder.isEmpty() && hm.match(item, itemsAdder, "itemsadder") != null;
     }
 }

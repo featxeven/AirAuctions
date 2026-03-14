@@ -96,7 +96,6 @@ public final class FilterManager {
         private final List<String> names = new ArrayList<>();
         private final Set<String> nexoIds = new HashSet<>();
         private final Set<String> itemsAdderIds = new HashSet<>();
-        private final Set<String> craftEngineIds = new HashSet<>();
 
         public FilterCategory(String internalKey, String displayName) {
             this.internalKey = internalKey;
@@ -122,8 +121,6 @@ public final class FilterManager {
                     nexoIds.add(lower.substring(5));
                 } else if (lower.startsWith("itemsadder:")) {
                     itemsAdderIds.add(lower.substring(11));
-                } else if (lower.startsWith("craftengine:")) {
-                    craftEngineIds.add(lower.substring(12));
                 }
             });
         }
@@ -137,7 +134,6 @@ public final class FilterManager {
 
             if (!nexoIds.isEmpty() && hm.match(item, nexoIds, "nexo") != null) return true;
             if (!itemsAdderIds.isEmpty() && hm.match(item, itemsAdderIds, "itemsadder") != null) return true;
-            if (!craftEngineIds.isEmpty() && hm.match(item, craftEngineIds, "craftengine") != null) return true;
 
             ItemMeta meta = item.getItemMeta();
             if (meta == null) return false;

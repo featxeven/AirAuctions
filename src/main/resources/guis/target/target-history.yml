@@ -22,7 +22,7 @@ auction-item-bought:
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - " <#736efe>»</#736efe> <gray>Purchased:</gray> <white>%date%</white> <dark_gray>@</dark_gray> <white>%time%</white>"
-    - "preview: "
+    - ""
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
     - HIDE_ATTRIBUTES
@@ -42,7 +42,7 @@ auction-item-sold:
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - " <#736efe>»</#736efe> <gray>Sold on:</gray> <white>%date%</white> <dark_gray>@</dark_gray> <white>%time%</white>"
-    - "preview: "
+    - ""
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
     - HIDE_ATTRIBUTES
@@ -51,6 +51,8 @@ auction-item-sold:
     - "[preview]"
 
 # GUI buttons
+# Special items with fixed actions in the GUI.
+# You can customize their appearance (glow, enchants, tooltips, actions, etc.).
 buttons:
   next-page:
     slots: [26]

@@ -27,9 +27,13 @@ time-format:
 # E, dd MMM     -> Sun, 08 Mar
 date-format: "dd/MM/yy"
 
-# true:  Reopens the GUI when using filter or sort buttons
-# false: Updates only auction slots
+# true:  Always reopens GUI when using filter or sort buttons
+# false: Updates only auction slots (better for performance)
 force-update-gui: true
+
+# true:  "" lines are hidden UNLESS visible lines appear below them.
+# false: Show all lines regardless if they are empty ("").
+skip-empty-lines: true
 
 # ----------------------------------
 # AUCTIONS
@@ -230,11 +234,10 @@ restrictions:
       - "custom:mymodel/admin_pickaxe"
       - "minecraft:broken_shield"
 
-    # Match Nexo, ItemsAdder or CraftEngine items
+    # Match Nexo, ItemsAdder  items
     special-items: []
     #  - "nexo:item_id"
     #  - "itemsadder:item_id"
-    #  - "craftengine:item_id"
 
     # Match exact item stacks (advanced)
     # Used for items that need specific data/material combinations.

@@ -39,6 +39,7 @@ public final class ConfigManager {
     public int timeFormatGranularity() { return i("time-format.granularity", 2); }
     public String getDateFormat() { return s("date-format", "dd/MM/yy"); }
     public boolean forceUpdateGui() { return b("force-update-gui"); }
+    public boolean skipEmptyLines() { return config.getBoolean("skip-empty-lines", true); }
 
     // Economy Settings
     public String economyDefaultProvider() { return s("economy.default-currency", "vault"); }
