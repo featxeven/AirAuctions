@@ -52,6 +52,10 @@ auctions:
   confirm-auction: true            # Enable confirmation before listing an item
   confirmation-expire-time: 60     # Seconds before confirmation request expires if Confirm GUI is disabled (-1 to disable)
 
+  # --- Remove Process ---
+  confirm-remove: true             # Enable confirmation before removing an item
+  remove-expire-time: 60           # Seconds before confirmation request expires if Confirm GUI is disabled (-1 to disable)
+
   # Amount Requirement:
   # REQUIRED: Player MUST choose an amount via command.
   # OPTIONAL: Uses item in hand amount if no amount is specified.
@@ -64,7 +68,7 @@ auctions:
 
   # --- Sorting ---
   # Define the available sorting modes used in the GUIs.
-  # The order here determines the order they appear on the GUIs.
+  # The order here determines the order they appear on the GUIs (You can also remove modes).
   sorting:
     newest-date: "Newest date"
     oldest-date: "Oldest date"

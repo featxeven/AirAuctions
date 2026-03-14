@@ -107,6 +107,15 @@ auctions:
     moved-to-expired: "%prefix% <yellow>Listing ended.</yellow> <gray>Claim your items from <white>Expired Listings</white>."
     inventory-full-dropped: "%prefix% <#ff5f6d>Reclaimed item dropped on the ground (Inventory Full).</#ff5f6d>"
 
+  remove:
+    confirmation:
+      request: "%prefix% <white>Removing <aqua>%amount%x %item%</aqua> <gold>#%id%</gold> <white>(Seller: %seller%)</white>.<newline><yellow>Type again to confirm.</yellow>"
+      expired: "%prefix% <#ff5f6d>Remove confirmation for <white>x%amount% %item% <gold>#%id%</gold> (Seller: %selller%)</white> expired.</#ff5f6d>"
+
+    removed: "%prefix% <green>You removed your own listing from the Auction House.</green> <gray>(<white>%amount%x %item% #%id%</white>)</gray>"
+    removed-for: "%prefix% <green>Listing removed from the Auction House.</green> <gray>(<white>%amount%x %item% #%id%</white> from seller %seller%)</gray>"
+    removed-by: "%prefix% <red>Your listing <gray>(<white>%amount%x %item% #%id%</white>)</gray> was removed from the Auction House by <dark_red>%player%</dark_red>."
+
 # -----------------------------
 # GENERAL ERRORS
 # -----------------------------

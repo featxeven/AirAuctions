@@ -1,24 +1,26 @@
-# - true = Opens Confirmation GUI
+# - true = Opens Remove Confirm GUI
 # - false = Sends confirmation message in chat
 enabled: true
 
 # GUI title and size
-title: "<gradient:#5efce8:#736efe><bold>Confirm Listing</bold></gradient>"
-rows: 3
+title: "<gradient:#5efce8:#736efe><bold>Remove %target%'s Listing</bold></gradient>"
+rows: 6
 
 # Dynamic slot groups
-# This define where the item auction slot will be placed
+# These define where the item auction slots will be placed
 auction-slot: [13]
 
 # This is how auction item will be displayed inside auction-slots
 auction-item:
   lore:
     - "%lore%"
+    - "<dark_gray>Auction ID: %id%"
     - ""
-    - "<gray>Listing Summary:</gray>"
+    - "<gray>Listing Information:</gray>"
+    - " <#736efe>»</#736efe> <gray>Seller:</gray> <white>%target%</white>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"
-    - " <#736efe>»</#736efe> <gray>Listing Fee:</gray> <red>-%fee%</red>"
     - " <#736efe>»</#736efe> <gray>Amount:</gray> <white>x%amount%</white>"
+    - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
   item-flags:
     - HIDE_ATTRIBUTES
 
@@ -30,15 +32,12 @@ buttons:
     slots: [11]
     material: LIME_STAINED_GLASS_PANE
     glow: true
-    display-name: "<#85E52A><bold>CONFIRM AUCTION</bold></#85E52A>"
+    display-name: "<#85E52A><bold>REMOVE</bold></#85E52A>"
     lore:
-      - "<gray>Click to list this item</gray>"
-      - "<gray>on the public market.</gray>"
+      - "<gray>Click to remove item</gray>"
+      - "<gray>from the public market.</gray>"
       - ""
-      - "<gray>Listing Cost: <red>%fee%</red></gray>"
-      - " <#736efe>»</#736efe> <gold><bold>Price: %price%"
-      - ""
-      - "<#85E52A>▶ Confirm & Pay Fee</#85E52A>"
+      - "<#85E52A>▶ Confirm Removal</#85E52A>"
     actions:
       - "[sound] entity.player.levelup 0.8 2"
 
@@ -47,10 +46,7 @@ buttons:
     material: RED_STAINED_GLASS_PANE
     display-name: "<#D94121><bold>CANCEL</bold></#D94121>"
     lore:
-      - "<gray>Click to abort and return</gray>"
-      - "<gray>the item to your inventory.</gray>"
-      - ""
-      - "<#D94121>▶ Stop listing</#D94121>"
+      - "<gray>Click to cancel this action.</gray>"
     actions:
       - "[sound] ui.button.click 0.3 1"
 

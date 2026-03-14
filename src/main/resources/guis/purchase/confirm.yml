@@ -11,7 +11,7 @@ auction-house:
   # This is how auction item will be displayed inside auction-slots
   auction-item:
     lore:
-      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "%lore%"
       - "<dark_gray>Auction ID: %id%"
       - ""
       - "<gray>Transaction Details:</gray>"
@@ -74,7 +74,7 @@ auction-search:
   # This is how auction item will be displayed inside auction-slots
   auction-item:
     lore:
-      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "%lore%"
       - "<dark_gray>Auction ID: %id%"
       - ""
       - "<gray>Transaction Details:</gray>"
@@ -137,7 +137,7 @@ target-listings:
   # This is how auction item will be displayed inside auction-slots
   auction-item:
     lore:
-      - "%lore%" # The item's lore. If there is no lore, skip this line
+      - "%lore%"
       - "<dark_gray>Auction ID: %id%"
       - ""
       - "<gray>Transaction Details:</gray>"

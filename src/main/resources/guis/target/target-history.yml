@@ -13,7 +13,7 @@ auction-slots: [10-16, 19-25, 28-34]
 # This is how auction item (bought) will be displayed inside auction-slots
 auction-item-bought:
   lore:
-    - "%lore%" # The item's lore. If there is no lore, skip this line
+    - "%lore%"
     - "<dark_gray>Auction ID: %id%"
     - ""
     - "<gray>Listing Information:</gray>"
@@ -33,7 +33,7 @@ auction-item-bought:
 # This is how auction item (sold) will be displayed inside auction-slots
 auction-item-sold:
   lore:
-    - "%lore%" # The item's lore. If there is no lore, skip this line
+    - "%lore%"
     - "<dark_gray>Auction ID: %id%"
     - ""
     - "<gray>Listing Information:</gray>"
