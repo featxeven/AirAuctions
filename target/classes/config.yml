@@ -28,7 +28,7 @@ time-format:
 date-format: "dd/MM/yy"
 
 # true:  Always reopens GUI when using filter or sort buttons
-# false: Updates only auction slots (better for performance)
+# false: Updates only auction slots
 force-update-gui: true
 
 # true:  "" lines are hidden UNLESS visible lines appear below them.
@@ -42,10 +42,10 @@ auctions:
   # --- General Settings ---
   max-listings: 3                  # Max listings per player (bypass with airauctions.bypass.limit.<#>)
   history-item-limit: 50           # Max entries stored in player auction history GUI (-1 to disable)
-  expired-item-limit: 50           # Max entries stored in player expired auctions GUI (-1 to disable)
+  expired-item-limit: 50           # Max entries a player can store in expired auctions GUI (-1 to disable)
   auction-cooldown: 5              # Seconds between creating new listings (-1 to disable)
   purge-time: -1                   # Seconds before an expired item is deleted from DB (-1 to disable)
-  expire-time: 86400               # Duration in seconds before a listing expires (bypass with airauctions.bypass.expire-time.<#>)
+  expire-time: 86400               # Duration in seconds before a listing expires (bypass with airauctions.bypass.expire-time.<#> or use -1)
   broadcast-to-self: false         # If true, the seller also receives the global 'new listing' broadcast.
 
   # --- Listing Process ---
@@ -210,37 +210,37 @@ restrictions:
     as-whitelist: false
 
     # Match by Bukkit Material names (e.g., BARRIER, BEDROCK)
-    materials:
-      - COMMAND_BLOCK
-      - BEDROCK
-      - BARRIER
+    materials: []
+    #  - COMMAND_BLOCK
+    #  - BEDROCK
+    #  - BARRIER
 
     # Match by Display Name or Lore (supports partial matches, ignores colors)
     # Syntax for lores: "line_index:text" or just "text" to search all lines.
-    names:
-      - "Soulbound Item"
-      - "Quest Item"
-    lores:
-      - "0:Not for Sale"
-      - "Soulbound"
+    names: []
+    #  - "Soulbound Item"
+    #  - "Quest Item"
+    lores: []
+    #  - "0:Not for Sale"
+    #  - "Soulbound"
 
     # Match by Enchantment and Level
     # Syntax: "ENCHANT_NAME" (any level) or "ENCHANT_NAME:LEVEL"
-    enchantments:
-      - "BINDING_CURSE"
-      - "VANISHING_CURSE:1"
+    enchantments: []
+    #  - "BINDING_CURSE"
+    #  - "VANISHING_CURSE:1"
 
     # Match by NBT data, Custom Model Data, or Item Model
     # Syntax for models: "DATA" (any material) or "MATERIAL:DATA"
-    nbt-keys:
-      - "undroppable"
-      - "unique_id"
-    custom-model-data:
-      - "1005"
-      - "PAPER:1002"
-    item-models:
-      - "custom:mymodel/admin_pickaxe"
-      - "minecraft:broken_shield"
+    nbt-keys: []
+    #  - "undroppable"
+    #  - "unique_id"
+    custom-model-data: []
+    #  - "1005"
+    #  - "PAPER:1002"
+    item-models: []
+    #  - "custom:mymodel/admin_pickaxe"
+    #  - "minecraft:broken_shield"
 
     # Match Nexo, ItemsAdder  items
     special-items: []
@@ -249,8 +249,8 @@ restrictions:
 
     # Match exact item stacks (advanced)
     # Used for items that need specific data/material combinations.
-    specific-items:
-      example_restriction:
-        material: STICK
-        name: "Admin Stick"
-        glow: true
+    specific-items: []
+    #  example_restriction:
+    #    material: STICK
+    #    name: "Admin Stick"
+    #    glow: true

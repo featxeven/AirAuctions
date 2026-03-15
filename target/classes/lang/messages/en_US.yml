@@ -57,6 +57,7 @@ placeholders:
   day: " day"
   days: " days"
   purge-never: "<#ff5f6d><italic>Never</italic></#ff5f6d>"
+  expire-never: "<#ff5f6d><italic>Never</italic></#ff5f6d>"
 
 # -----------------------------
 # AUCTIONS

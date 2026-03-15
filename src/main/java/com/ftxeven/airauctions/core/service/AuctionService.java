@@ -56,9 +56,7 @@ public final class AuctionService {
             ids.remove(listing.id());
         }
 
-        plugin.scheduler().runAsync(() -> {
-            plugin.database().listings().deleteListingSync(listing.id());
-        });
+        plugin.scheduler().runAsync(() -> plugin.database().listings().deleteListingSync(listing.id()));
     }
 
     public List<AuctionListing> getActive(String filter) {
@@ -67,7 +65,7 @@ public final class AuctionService {
 
         return activeListings.values().stream()
                 .filter(l -> {
-                    if (l.expiryAt() < now) {
+                    if (l.expiryAt() != -1 && l.expiryAt() < now) {
                         processExpiration(l);
                         return false;
                     }
@@ -90,13 +88,26 @@ public final class AuctionService {
             AuctionListing l = activeListings.get(id);
             if (l == null) continue;
 
-            if (l.expiryAt() < now) {
+            if (l.expiryAt() != -1 && l.expiryAt() < now) {
                 processExpiration(l);
                 continue;
             }
             listings.add(l);
         }
         return listings;
+    }
+
+    public void checkExpirations(UUID sellerUuid) {
+        Set<Integer> ids = sellerMap.get(sellerUuid);
+        if (ids == null || ids.isEmpty()) return;
+
+        long now = System.currentTimeMillis();
+        for (int id : ids) {
+            AuctionListing l = activeListings.get(id);
+            if (l != null && l.expiryAt() != -1 && l.expiryAt() < now) {
+                processExpiration(l);
+            }
+        }
     }
 
     public PurchaseResult buyEntry(Player buyer, int id) {
@@ -254,18 +265,6 @@ public final class AuctionService {
         return list;
     }
 
-    public void checkExpirations(UUID sellerUuid) {
-        Set<Integer> ids = sellerMap.get(sellerUuid);
-        if (ids == null || ids.isEmpty()) return;
-
-        long now = System.currentTimeMillis();
-        for (int id : ids) {
-            AuctionListing l = activeListings.get(id);
-            if (l != null && l.expiryAt() < now) {
-                processExpiration(l);
-            }
-        }
-    }
     public int getExpiredCount(UUID uuid) {
         return plugin.database().listings().getExpiredCountSync(uuid);
     }

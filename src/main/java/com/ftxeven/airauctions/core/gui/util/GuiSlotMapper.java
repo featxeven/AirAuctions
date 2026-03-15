@@ -116,12 +116,17 @@ public final class GuiSlotMapper {
         List<Component> lore = meta.lore();
         if (lore == null) return;
 
-        long expDiff = Math.max(0, (listing.expiryAt() - now) / 1000L) + 1;
-        String expireStr = TimeUtil.formatSeconds(plugin, expDiff);
+        String expireStr;
+        if (listing.expiryAt() == -1L) {
+            expireStr = plugin.lang().get("placeholders.expire-never");
+        } else {
+            long expDiff = Math.max(0, (listing.expiryAt() - now) / 1000L) + 1;
+            expireStr = TimeUtil.formatSeconds(plugin, expDiff);
+        }
 
         int purgeSeconds = plugin.config().purgeTime();
         String purgeStr;
-        if (purgeSeconds <= 0) {
+        if (purgeSeconds <= 0 || listing.expiryAt() == -1L) {
             purgeStr = plugin.lang().get("placeholders.purge-never");
         } else {
             long pDiff = Math.max(0, (listing.expiryAt() + (purgeSeconds * 1000L) - now) / 1000L) + 1;
@@ -131,7 +136,7 @@ public final class GuiSlotMapper {
         Component expireComp = getCachedMini(expireStr);
         Component purgeComp = getCachedMini(purgeStr);
 
-        List<Component> updatedLore = new ArrayList<>();
+        List<Component> updatedLore = new ArrayList<>(lore.size());
         for (Component line : lore) {
             updatedLore.add(line.replaceText(t -> t.match(EXPIRE_PAT).replacement(expireComp))
                     .replaceText(t -> t.match(PURGE_PAT).replacement(purgeComp)));
