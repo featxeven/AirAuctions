@@ -17,6 +17,7 @@ D:\AirAuctions\src\main\java\com\ftxeven\airauctions\util\BossbarUtil.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\gui\GuiManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\economy\EconomyProvider.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\util\ItemSerializerUtil.java
+D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\confirm\ConfirmRemoveManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\command\subcommand\SearchSubCommand.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\confirm\ConfirmPurchaseManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\command\subcommand\ExpiredSubCommand.java
@@ -60,7 +61,6 @@ D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\hook\impl\ItemsAdderHo
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\util\SoundUtil.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\service\AuctionService.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\player\ListingHistoryManager.java
-D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\main\RemoveListingManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\gui\util\GuiListingUtil.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\target\TargetHistoryManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\AirAuctions.java

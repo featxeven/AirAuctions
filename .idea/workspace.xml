@@ -4,35 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added basic structure">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/manager/main/RemoveListingManager.java" afterDir="false" />
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added new remove feature">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/MainCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/RemoveSubCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/subcommand/RemoveSubCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/GuiManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/AuctionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/AuctionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/lang/messages/en_US.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lang/messages/en_US.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/MainCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/MainCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/config/ConfigManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/config/ConfigManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/GuiManager$CustomGuiManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/GuiManager$CustomGuiManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/GuiManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/GuiManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/service/AuctionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/service/AuctionService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/auction-house.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/auction-house.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/auction-search.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/auction-search.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/confirm-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/confirm-listing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/player/cancel-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/player/cancel-listing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/player/player-expired.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/player/player-expired.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/player/player-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/player/player-history.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/player/player-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/player/player-listings.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/preview-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/preview-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/purchase/confirm-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/purchase/confirm-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/purchase/confirm.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/purchase/confirm.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/target/target-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/target/target-history.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/guis/target/target-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/guis/target/target-listings.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/lang/messages/en_US.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lang/messages/en_US.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
@@ -106,14 +80,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1771648637894</updated>
-    </task>
-    <task id="LOCAL-00005" summary="added more stuff">
-      <option name="closed" value="true" />
-      <created>1771793084855</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1771793084855</updated>
     </task>
     <task id="LOCAL-00006" summary="added more stuff">
       <option name="closed" value="true" />
@@ -499,7 +465,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773531528923</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="added new remove feature">
+      <option name="closed" value="true" />
+      <created>1773534300180</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1773534300180</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -529,7 +503,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="added tooltip-style component" />
     <MESSAGE value="fixed %filter% for auction stack" />
     <MESSAGE value="added notify-updates&#10;added console support for /ah open command&#10;console now only filters /ah open" />
     <MESSAGE value="added missing components for item priority stack" />
@@ -554,6 +527,7 @@
     <MESSAGE value="changed item name" />
     <MESSAGE value="fixed item names" />
     <MESSAGE value="added basic structure" />
-    <option name="LAST_COMMIT_MESSAGE" value="added basic structure" />
+    <MESSAGE value="added new remove feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="added new remove feature" />
   </component>
 </project>
