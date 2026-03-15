@@ -181,7 +181,7 @@ public final class ListingHistoryManager implements GuiManager.CustomGuiManager 
     @Override public boolean owns(Inventory inv) { return inv != null && inv.getHolder() instanceof HistoryHolder; }
 
     public static final class HistoryHolder implements PageableHolder {
-        private final int page, totalPages;
+        private int page, totalPages;
         private final String filter, sort;
         private final List<AuctionHistory> cachedHistory;
         private Inventory inventory;
@@ -193,6 +193,9 @@ public final class ListingHistoryManager implements GuiManager.CustomGuiManager 
             this.sort = sort;
             this.cachedHistory = history;
         }
+
+        public void setPage(int page) { this.page = page; }
+        public void setTotalPages(int totalPages) { this.totalPages = totalPages; }
 
         @Override public int page() { return page; }
         @Override public int totalPages() { return totalPages; }

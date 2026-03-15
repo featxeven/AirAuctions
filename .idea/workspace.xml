@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added new remove feature">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added PAPI target-history gui context">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/GuiManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/GuiManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,14 +77,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1771648637894</updated>
-    </task>
-    <task id="LOCAL-00006" summary="added more stuff">
-      <option name="closed" value="true" />
-      <created>1771799838761</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1771799838761</updated>
     </task>
     <task id="LOCAL-00007" summary="bug fixes">
       <option name="closed" value="true" />
@@ -473,7 +462,15 @@
       <option name="project" value="LOCAL" />
       <updated>1773534300180</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="added PAPI target-history gui context">
+      <option name="closed" value="true" />
+      <created>1773535591602</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1773535591602</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -503,7 +500,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="fixed %filter% for auction stack" />
     <MESSAGE value="added notify-updates&#10;added console support for /ah open command&#10;console now only filters /ah open" />
     <MESSAGE value="added missing components for item priority stack" />
     <MESSAGE value="fixed message key for cancel &amp; permission" />
@@ -528,6 +524,7 @@
     <MESSAGE value="fixed item names" />
     <MESSAGE value="added basic structure" />
     <MESSAGE value="added new remove feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="added new remove feature" />
+    <MESSAGE value="added PAPI target-history gui context" />
+    <option name="LAST_COMMIT_MESSAGE" value="added PAPI target-history gui context" />
   </component>
 </project>
