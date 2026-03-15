@@ -4,9 +4,49 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="implement smooth pagination for history and target guis">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="target and player history now allow null templates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/config/LangManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/config/LangManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/AuctionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/core/service/AuctionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/MessageUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/MessageUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/PlaceholderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/PlaceholderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/TimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/util/TimeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/confirm-remove.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/confirm-remove.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/lang/messages/en_US.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/lang/messages/en_US.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/CoreCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/CoreCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/MainCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/MainCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/ExpiredSubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/ExpiredSubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/HistorySubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/HistorySubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/ListingsSubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/ListingsSubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/OpenSubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/OpenSubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/PlayerSubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/PlayerSubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/SearchSubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/SearchSubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/SellSubCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/subcommand/SellSubCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/config/ItemTranslationManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/config/ItemTranslationManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/config/LangManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/config/LangManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/ItemAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/ItemAction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/gui/util/GuiSlotMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/confirm/ConfirmListingManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/confirm/ConfirmListingManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/main/AuctionHouseManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/main/AuctionHouseManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/main/AuctionSearchManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/main/AuctionSearchManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/CancelListingManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/CancelListingManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ExpiredListingsManager$ExpiredHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ExpiredListingsManager$ExpiredHolder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ExpiredListingsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ExpiredListingsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ListingHistoryManager$HistoryHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ListingHistoryManager$HistoryHolder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ListingHistoryManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/ListingHistoryManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/PlayerListingsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/player/PlayerListingsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager$TargetHistoryHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager$TargetHistoryHolder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/target/TargetHistoryManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/target/TargetListingsManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/manager/target/TargetListingsManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/service/AuctionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/core/service/AuctionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/listener/PlayerLifecycleListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/listener/PlayerLifecycleListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/MessageUtil$InlineTagResolver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/MessageUtil$InlineTagResolver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/MessageUtil$TitleState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/MessageUtil$TitleState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/MessageUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/MessageUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/PlaceholderUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/PlaceholderUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/TimeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/util/TimeUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/lang/messages/en_US.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/lang/messages/en_US.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,30 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1771648637894</updated>
-    </task>
-    <task id="LOCAL-00008" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771820701319</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1771820701319</updated>
-    </task>
-    <task id="LOCAL-00009" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771824494704</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1771824494704</updated>
-    </task>
-    <task id="LOCAL-00010" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771856865725</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1771856865726</updated>
     </task>
     <task id="LOCAL-00011" summary="bug fixes">
       <option name="closed" value="true" />
@@ -471,7 +487,31 @@
       <option name="project" value="LOCAL" />
       <updated>1773543750375</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="added -1 to auctions.expire-time">
+      <option name="closed" value="true" />
+      <created>1773591459146</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1773591459147</updated>
+    </task>
+    <task id="LOCAL-00058" summary="fixed item displayname">
+      <option name="closed" value="true" />
+      <created>1773592433625</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1773592433625</updated>
+    </task>
+    <task id="LOCAL-00059" summary="target and player history now allow null templates">
+      <option name="closed" value="true" />
+      <created>1773593210090</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1773593210090</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -501,9 +541,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="added missing components for item priority stack" />
-    <MESSAGE value="fixed message key for cancel &amp; permission" />
-    <MESSAGE value="ver change" />
     <MESSAGE value="changed %seller% for success-broadcast message" />
     <MESSAGE value="fixed %id% for auction history stack" />
     <MESSAGE value="added target-history gui &amp; new arg target:%target% for [open] action" />
@@ -526,6 +563,9 @@
     <MESSAGE value="added new remove feature" />
     <MESSAGE value="added PAPI target-history gui context" />
     <MESSAGE value="implement smooth pagination for history and target guis" />
-    <option name="LAST_COMMIT_MESSAGE" value="implement smooth pagination for history and target guis" />
+    <MESSAGE value="added -1 to auctions.expire-time" />
+    <MESSAGE value="fixed item displayname" />
+    <MESSAGE value="target and player history now allow null templates" />
+    <option name="LAST_COMMIT_MESSAGE" value="target and player history now allow null templates" />
   </component>
 </project>

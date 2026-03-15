@@ -144,7 +144,7 @@ public final class AuctionService {
                 sellerMap.computeIfAbsent(uuid, k -> ConcurrentHashMap.newKeySet()).add(id);
 
                 plugin.scheduler().runTask(() -> {
-                    String broadcastMsg = plugin.lang().get("auctions.sell.success-broadcast");
+                    String broadcastMsg = String.valueOf(plugin.lang().get("auctions.sell.success-broadcast"));
                     if (broadcastMsg.isEmpty()) return;
 
                     Map<String, String> ph = Map.of(

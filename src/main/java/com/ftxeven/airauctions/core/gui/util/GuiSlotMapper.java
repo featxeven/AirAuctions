@@ -118,7 +118,7 @@ public final class GuiSlotMapper {
 
         String expireStr;
         if (listing.expiryAt() == -1L) {
-            expireStr = plugin.lang().get("placeholders.expire-never");
+            expireStr = String.valueOf(plugin.lang().get("placeholders.expire-never"));
         } else {
             long expDiff = Math.max(0, (listing.expiryAt() - now) / 1000L) + 1;
             expireStr = TimeUtil.formatSeconds(plugin, expDiff);
@@ -127,7 +127,7 @@ public final class GuiSlotMapper {
         int purgeSeconds = plugin.config().purgeTime();
         String purgeStr;
         if (purgeSeconds <= 0 || listing.expiryAt() == -1L) {
-            purgeStr = plugin.lang().get("placeholders.purge-never");
+            purgeStr = String.valueOf(plugin.lang().get("placeholders.purge-never"));
         } else {
             long pDiff = Math.max(0, (listing.expiryAt() + (purgeSeconds * 1000L) - now) / 1000L) + 1;
             purgeStr = TimeUtil.formatSeconds(plugin, pDiff);

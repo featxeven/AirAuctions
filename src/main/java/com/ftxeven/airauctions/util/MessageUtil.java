@@ -8,10 +8,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.ArgumentQueue;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +31,7 @@ public final class MessageUtil {
     }
 
     public static Component mini(Player player, String raw, Map<String, String> placeholders) {
-        if (raw == null || raw.isBlank()) return Component.empty();
+        if (raw == null || raw.isEmpty()) return Component.empty();
 
         if ((placeholders == null || placeholders.isEmpty()) && !raw.contains("<") && !raw.contains("%")) {
             return STATIC_CACHE.computeIfAbsent(raw, MM::deserialize);
@@ -50,15 +50,49 @@ public final class MessageUtil {
         return result;
     }
 
-    public static void send(Player player, String message, Map<String, String> placeholders) {
-        if (player == null || message == null || message.isBlank() || message.equals("\"\"")) return;
+    public static void send(Player player, Object messageObj, Map<String, String> placeholders) {
+        if (player == null || messageObj == null) return;
 
-        Component component = mini(player, message, placeholders);
+        if (messageObj instanceof List<?> list) {
+            for (Object line : list) {
+                if (line instanceof String s) {
+                    processSingleMessage(player, s, placeholders);
+                }
+            }
+        } else if (messageObj instanceof String s) {
+            processSingleMessage(player, s, placeholders);
+        }
+    }
 
-        if (PlainTextComponentSerializer.plainText().serialize(component).isBlank()) {
+    private static void processSingleMessage(Player player, String message, Map<String, String> placeholders) {
+        if (message == null || message.isEmpty() || message.equals("\"\"")) return;
+
+        boolean hasVisibleText = false;
+        boolean hasTags = false;
+        int depth = 0;
+
+        for (int i = 0; i < message.length(); i++) {
+            char c = message.charAt(i);
+            if (c == '<') {
+                depth++;
+                hasTags = true;
+            } else if (c == '>') {
+                depth = Math.max(0, depth - 1);
+            } else if (depth == 0 && c != ' ') {
+                hasVisibleText = true;
+                break;
+            } else if (depth == 0) {
+                hasVisibleText = true;
+                break;
+            }
+        }
+
+        if (!hasVisibleText && hasTags) {
+            mini(player, message, placeholders);
             return;
         }
 
+        Component component = mini(player, message, placeholders);
         plugin.scheduler().runEntityTask(player, () -> player.sendMessage(component));
     }
 

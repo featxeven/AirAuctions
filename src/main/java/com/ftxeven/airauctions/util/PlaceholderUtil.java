@@ -16,7 +16,7 @@ public final class PlaceholderUtil {
 
     public static void init(AirAuctions plugin) {
         HAS_PAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
-        prefix = plugin.lang().get("general.prefix", "");
+        prefix = String.valueOf(plugin.lang().get("general.prefix", ""));
     }
 
     public static String apply(Player player, String text, Map<String, String> context) {

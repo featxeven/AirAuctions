@@ -4,7 +4,7 @@ enabled: true
 
 # GUI title and size
 title: "<gradient:#5efce8:#736efe><bold>Remove %target%'s Listing</bold></gradient>"
-rows: 6
+rows: 3
 
 # Dynamic slot groups
 # These define where the item auction slots will be placed

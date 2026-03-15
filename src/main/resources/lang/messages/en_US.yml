@@ -26,6 +26,15 @@
 #       overlay   = Appearance (PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20).
 #       progress  = Initial fill (0.0 to 1.0).
 #       countdown = If true, the bar animates from the 'progress' value down to 0 over the duration.
+#
+# Flexible Tag Logic:
+#  - Inline tags (sound, actionbar, etc.) can be placed on the same line as text or on their own separate line in a list.
+#  - If a line ONLY contains tags, it will execute the action but will not send an empty line to chat.
+#  - To force an empty line (a spacer), add a single space: " "
+#
+# Best Practices:
+#  - Use lists [-] for multi-line messages to keep functional tags separate.
+#  - Separating sounds/actionbars onto their own lines makes the config easier to read.
 
 # -----------------------------
 # GENERAL
@@ -33,16 +42,20 @@
 general:
   prefix: "<gray>[<gradient:#00ffcc:#0066ff>AirAuctions</gradient>]</gray>"
 
-  plugin-usage: "%prefix% <white>Available commands:</white>
-    <newline><gray>  • <yellow>/airauctions reload</yellow> <dark_gray>| <gray>Refresh configs</gray>
-    <newline><gray>  • <yellow>/airauctions version</yellow> <dark_gray>| <gray>Display plugin version</gray>"
+  plugin-usage:
+    - "%prefix% <white>Available commands:</white>"
+    - "<gray>  • <yellow>/airauctions reload</yellow> <dark_gray>| <gray>Refresh configs</gray>"
+    - "<gray>  • <yellow>/airauctions version</yellow> <dark_gray>| <gray>Display plugin version</gray>"
 
   plugin-version: "%prefix% <white>Running version <gradient:#00ffcc:#0066ff>%version%</gradient></white>"
-  plugin-reloaded: "<sound:block.note_block.chime:1:2>%prefix% <green>Plugin reloaded successfully!</green>"
-  plugin-outdated: "%prefix% <red>A new update is available!</red>
-      <newline><gray>  • Current: <white>%current%</white>
-      <newline><gray>  • Latest: <green>%latest%</green>
-      <newline><gray>  • Download: <yellow><click:open_url:'https://www.spigotmc.org/resources/133357/'>[Click Here]</click></yellow>"
+  plugin-reloaded:
+    - "%prefix% <green>Plugin reloaded successfully!</green>"
+    - "<sound:block.note_block.chime:1:2>"
+  plugin-outdated:
+    - "%prefix% <red>A new update is available!</red>"
+    - "<gray>  • Current: <white>%current%</white>"
+    - "<gray>  • Latest: <green>%latest%</green>"
+    - "<gray>  • Download: <yellow><click:open_url:'https://www.spigotmc.org/resources/133357/'>[Click Here]</click></yellow>"
 
 # -----------------------------
 # PLACEHOLDERS
@@ -65,7 +78,9 @@ placeholders:
 auctions:
   sell:
     error:
-      holding-air: "%prefix% <#ff5f6d>You must be holding an item to list it!</#ff5f6d><sound:block.note_block.didgeridoo:1:0.5>"
+      holding-air:
+      - "%prefix% <#ff5f6d>You must be holding an item to list it!</#ff5f6d>"
+      - "<sound:block.note_block.didgeridoo:1:0.5>"
       invalid-price: "%prefix% <#ff5f6d>Price must be a valid number.</#ff5f6d>"
       invalid-amount: "%prefix% <#ff5f6d>Amount must be a positive number.</#ff5f6d>"
       amount-required: "%prefix% <#ff5f6d>You need to specific an amount.</#ff5f6d>"
@@ -82,22 +97,32 @@ auctions:
       not-whitelisted: "%prefix% <#ff5f6d>This item is not approved for trade.</#ff5f6d>"
 
     confirmation:
-      request: "%prefix% <white>Listing <aqua>%amount%x %item%</aqua> for <gold>%price%</gold>.<newline>%prefix% <gray>Fee: <red>%fee%</red>. <yellow>Type again to confirm.</yellow>"
+      request:
+        - "%prefix% <white>Listing <aqua>%amount%x %item%</aqua> for <gold>%price%</gold>."
+        - "%prefix% <gray>Fee: <red>%fee%</red>. <yellow>Type again to confirm.</yellow>"
       expired: "%prefix% <#ff5f6d>Sale confirmation for <white>%item%</white> expired.</#ff5f6d>"
 
-    success: "%prefix% <green>Market listing created!</green> <gray>(<aqua>%amount%x %item%</aqua> for <gold>%price%</gold>)</gray>
-    <newline>%prefix% <gray>Listing Fee: <red>%fee%</red> <dark_gray>| <gray>Status: <green>Active</green><sound:entity.player.levelup:1:2><actionbar:'<green>Item listed for <gold>%price%</gold>!</green>'>"
+    success:
+      - "%prefix% <green>Market listing created!</green> <gray>(<aqua>%amount%x %item%</aqua> for <gold>%price%</gold>)</gray>"
+      - "%prefix% <gray>Listing Fee: <red>%fee%</red> <dark_gray>| <gray>Status: <green>Active</green>"
+      - "<sound:entity.player.levelup:1:2>"
+      - "<actionbar:'<green>Item listed for <gold>%price%</gold>!</green>'>"
     success-broadcast: "%prefix% <green>%seller% has just listed <gray>(<aqua>%amount%x %item%</aqua> for <gold>%price%</gold>)</gray> on the Auction House!"
-    sold: "%prefix% <gradient:#00ffcc:#0066ff><bold>ITEM SOLD!</bold></gradient> <white>%amount%x %item%</white> was bought by <yellow>%buyer%</yellow>.
-    <newline>%prefix% <gray>Payout: <gold>%price%</gold> <dark_gray>| <gray>Profit: <green>%profit%</green>"
+    sold:
+      - "%prefix% <gradient:#00ffcc:#0066ff><bold>ITEM SOLD!</bold></gradient> <white>%amount%x %item%</white> was bought by <yellow>%buyer%</yellow>."
+      - "%prefix% <gray>Payout: <gold>%price%</gold> <dark_gray>| <gray>Profit: <green>%profit%</green>"
 
   buy:
     error:
       cannot-purchase-own: "%prefix% <#ff5f6d>You can't buy your own stock!</#ff5f6d>"
-      insufficient-funds: "%prefix% <#ff5f6d>Insufficient balance! You need <gold>%amount%</gold>.</#ff5f6d><sound:block.note_block.didgeridoo:1:0.5>"
+      insufficient-funds:
+        - "%prefix% <#ff5f6d>Insufficient balance! You need <gold>%amount%</gold>.</#ff5f6d>"
+        - "<sound:block.note_block.didgeridoo:1:0.5>"
       inventory-full: "%prefix% <#ff5f6d>Inventory full! Make some space first.</#ff5f6d>"
 
-    success: "%prefix% <green>Purchase complete!</green> <white>%amount%x %item%</white> for <gold>%price%</gold>.<sound:entity.experience_orb.pickup:1:1>"
+    success:
+      - "%prefix% <green>Purchase complete!</green> <white>%amount%x %item%</white> for <gold>%price%</gold>."
+      - "<sound:entity.experience_orb.pickup:1:1>"
     inventory-full-dropped: "%prefix% <gold>Inventory full! <italic>Your item was dropped at your feet.</italic></gold>"
 
   cancel:
@@ -113,7 +138,9 @@ auctions:
       not-found: "%prefix% <red>ID not found or is not active on the Auction House!</red>"
 
     confirmation:
-      request: "%prefix% <white>Removing <aqua>%amount%x %item%</aqua> <gold>#%id%</gold> <white>(Seller: %seller%)</white>.<newline>%prefix% <yellow>Type again to confirm.</yellow>"
+      request:
+        - "%prefix% <white>Removing <aqua>%amount%x %item%</aqua> <gold>#%id%</gold> <white>(Seller: %seller%)</white>."
+        - "%prefix% <yellow>Type again to confirm.</yellow>"
       expired: "%prefix% <#ff5f6d>Remove confirmation for <white>x%amount% %item% <gold>#%id%</gold> (Seller: %seller%)</white> expired.</#ff5f6d>"
 
     removed: "%prefix% <green>You removed your own listing from the Auction House.</green> <gray>(<white>%amount%x %item% #%id%</white>)</gray>"
@@ -129,7 +156,7 @@ errors:
   player-never-joined: "%prefix% <#ff5f6d>That player never joined the server before.</#ff5f6d>"
   player-not-found: "%prefix% <#ff5f6d>Player not found.</#ff5f6d>"
   search-query-too-long: "%prefix% <#ff5f6d>Search query too long! <gray>(%length%/%limit%)</gray></#ff5f6d>"
-  item-unavailable: "%prefix% <#ff5f6d>This item has already been claimed or sold.</#ff5f6d>"
+  item-unavailable: "%prefix% <#ff5f6d>This item is no longer available.</#ff5f6d>"
   cannot-afford-fee: "%prefix% <#ff5f6d>You can't afford the <gold>%fee%</gold> listing fee!</#ff5f6d>"
   # Triggers when error-on-excess-args is on true
   too-many-arguments: "%prefix% <#ff5f6d>Too many arguments!</#ff5f6d> <gray>Use: <white>%usage%</white></gray>"
