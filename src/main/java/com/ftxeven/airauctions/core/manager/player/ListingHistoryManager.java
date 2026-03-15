@@ -49,8 +49,11 @@ public final class ListingHistoryManager implements GuiManager.CustomGuiManager 
         this.auctionSlotSet.clear();
         for (int s : auctionSlotsList) if (s >= 0) this.auctionSlotSet.set(s);
 
-        this.itemBoughtTemplate = GuiItem.fromSection("auction-item-bought", Objects.requireNonNull(section.getConfigurationSection("auction-item-bought")));
-        this.itemSoldTemplate = GuiItem.fromSection("auction-item-sold", Objects.requireNonNull(section.getConfigurationSection("auction-item-sold")));
+        ConfigurationSection boughtSec = section.getConfigurationSection("auction-item-bought");
+        this.itemBoughtTemplate = boughtSec != null ? GuiItem.fromSection("auction-item-bought", boughtSec) : null;
+
+        ConfigurationSection soldSec = section.getConfigurationSection("auction-item-sold");
+        this.itemSoldTemplate = soldSec != null ? GuiItem.fromSection("auction-item-sold", soldSec) : null;
 
         Map<String, GuiItem> items = new LinkedHashMap<>();
         loadItems(section.getConfigurationSection("buttons"), items);
@@ -87,15 +90,20 @@ public final class ListingHistoryManager implements GuiManager.CustomGuiManager 
             GuiSlotMapper.fill(plugin, inv, definition, viewer, displayPh, Collections.emptyList(), auctionSlotSet, page, null, null, 0);
 
             int startIndex = page * itemsPerPage;
-            for (int i = 0; i < auctionSlotsList.size() && (startIndex + i) < history.size(); i++) {
-                AuctionHistory log = history.get(startIndex + i);
-                int slot = auctionSlotsList.get(i);
-
+            int placedCount = 0;
+            for (int i = 0; i < history.size() && placedCount < auctionSlotsList.size(); i++) {
+                AuctionHistory log = history.get(i);
                 boolean isSold = log.sellerUuid().equals(viewer.getUniqueId());
                 GuiItem template = isSold ? itemSoldTemplate : itemBoughtTemplate;
 
-                ItemStack historyStack = GuiSlotMapper.buildHistoryStack(plugin, viewer, log, displayPh, template);
-                inv.setItem(slot, historyStack);
+                if (template == null) continue;
+
+                if (placedCount >= startIndex && placedCount < startIndex + itemsPerPage) {
+                    int slot = auctionSlotsList.get(placedCount % itemsPerPage);
+                    ItemStack historyStack = GuiSlotMapper.buildHistoryStack(plugin, viewer, log, displayPh, template);
+                    inv.setItem(slot, historyStack);
+                }
+                placedCount++;
             }
             return inv;
         } finally {
@@ -129,23 +137,36 @@ public final class ListingHistoryManager implements GuiManager.CustomGuiManager 
         int historyIndex = (holder.page() * itemsPerPage) + slotIndex;
 
         List<AuctionHistory> history = holder.getCachedHistory();
-        if (historyIndex < 0 || historyIndex >= history.size()) return;
 
-        AuctionHistory log = history.get(historyIndex);
+        int currentCount = 0;
+        AuctionHistory targetLog = null;
+        for (AuctionHistory log : history) {
+            boolean isSold = log.sellerUuid().equals(viewer.getUniqueId());
+            if ((isSold && itemSoldTemplate != null) || (!isSold && itemBoughtTemplate != null)) {
+                if (currentCount == historyIndex) {
+                    targetLog = log;
+                    break;
+                }
+                currentCount++;
+            }
+        }
+
+        if (targetLog == null) return;
 
         Map<String, String> ctx = new HashMap<>(holder.asContext());
-        ctx.put("listing-id", String.valueOf(log.id()));
-        ctx.put("price", String.valueOf(log.price()));
-        ctx.put("seller", log.sellerUuid().toString());
-        ctx.put("buyer", log.buyerUuid().toString());
+        ctx.put("listing-id", String.valueOf(targetLog.id()));
+        ctx.put("price", String.valueOf(targetLog.price()));
+        ctx.put("seller", targetLog.sellerUuid().toString());
+        ctx.put("buyer", targetLog.buyerUuid().toString());
 
-        boolean isSold = log.sellerUuid().equals(viewer.getUniqueId());
+        boolean isSold = targetLog.sellerUuid().equals(viewer.getUniqueId());
         GuiItem template = isSold ? itemSoldTemplate : itemBoughtTemplate;
 
-        List<String> actions = template.getActionsForClick(event.getClick(), viewer, ctx);
-
-        if (actions != null && !actions.isEmpty()) {
-            plugin.core().gui().action().executeAll(actions, viewer, ctx);
+        if (template != null) {
+            List<String> actions = template.getActionsForClick(event.getClick(), viewer, ctx);
+            if (actions != null && !actions.isEmpty()) {
+                plugin.core().gui().action().executeAll(actions, viewer, ctx);
+            }
         }
     }
 
