@@ -5,7 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class ItemTranslationManager {
     private final AirAuctions plugin;
@@ -73,5 +76,15 @@ public final class ItemTranslationManager {
         if (value != null) return value;
 
         return base.replace("_", " ");
+    }
+
+    public String getName(ItemStack item) {
+        if (item == null) return "Unknown";
+
+        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+            return MiniMessage.miniMessage().serialize(Objects.requireNonNull(item.getItemMeta().displayName()));
+        }
+
+        return translate(item.getType());
     }
 }

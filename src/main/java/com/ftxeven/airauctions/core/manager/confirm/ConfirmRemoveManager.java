@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -132,7 +133,7 @@ public final class ConfirmRemoveManager implements GuiManager.CustomGuiManager {
         Map<String, String> ph = new HashMap<>();
         ph.put("id", String.valueOf(listing.id()));
         ph.put("amount", String.valueOf(listing.item().getAmount()));
-        ph.put("item", plugin.itemTranslations().translate(listing.item().getType()));
+        ph.put("item", plugin.itemTranslations().getName(listing.item()));
         String sellerName = plugin.database().records().getNameFromUuid(listing.sellerUuid());
         ph.put("seller", sellerName != null ? sellerName : "Unknown");
         return ph;

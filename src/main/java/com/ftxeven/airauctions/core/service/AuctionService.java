@@ -150,16 +150,14 @@ public final class AuctionService {
                     Map<String, String> ph = Map.of(
                             "seller", seller.getName(),
                             "amount", String.valueOf(amount),
-                            "item", plugin.itemTranslations().translate(toStore.getType()),
+                            "item", plugin.itemTranslations().getName(toStore),
                             "price", plugin.core().economy().formats().format(price, currencyId)
                     );
 
                     boolean broadcastToSelf = plugin.config().broadcastToSelf();
 
                     for (Player online : Bukkit.getOnlinePlayers()) {
-                        if (!broadcastToSelf && online.getUniqueId().equals(uuid)) {
-                            continue;
-                        }
+                        if (!broadcastToSelf && online.getUniqueId().equals(uuid)) continue;
                         MessageUtil.send(online, broadcastMsg, ph);
                     }
                 });
@@ -204,7 +202,7 @@ public final class AuctionService {
 
         Map<String, String> ph = Map.of(
                 "amount", String.valueOf(listing.item().getAmount()),
-                "item", plugin.itemTranslations().translate(listing.item().getType()),
+                "item", plugin.itemTranslations().getName(listing.item()),
                 "price", plugin.core().economy().formats().format(listing.price(), listing.currencyId()),
                 "profit", plugin.core().economy().formats().format(profit, listing.currencyId()),
                 "buyer", buyer.getName()
@@ -212,13 +210,13 @@ public final class AuctionService {
 
         MessageUtil.send(buyer, plugin.lang().get("auctions.buy.success"), ph);
 
-        Map<Integer, org.bukkit.inventory.ItemStack> overflow = buyer.getInventory().addItem(listing.item().clone());
+        Map<Integer, ItemStack> overflow = buyer.getInventory().addItem(listing.item().clone());
         if (!overflow.isEmpty()) {
             overflow.values().forEach(item -> buyer.getWorld().dropItemNaturally(buyer.getLocation(), item));
             MessageUtil.send(buyer, plugin.lang().get("auctions.buy.inventory-full-dropped"), ph);
         }
 
-        Player seller = org.bukkit.Bukkit.getPlayer(listing.sellerUuid());
+        Player seller = Bukkit.getPlayer(listing.sellerUuid());
         if (seller != null && seller.isOnline()) {
             MessageUtil.send(seller, plugin.lang().get("auctions.sell.sold"), ph);
         }
@@ -227,7 +225,7 @@ public final class AuctionService {
     public void finalizeCancellation(Player viewer, AuctionListing listing) {
         Map<String, String> ph = Map.of(
                 "amount", String.valueOf(listing.item().getAmount()),
-                "item", plugin.itemTranslations().translate(listing.item().getType())
+                "item", plugin.itemTranslations().getName(listing.item())
         );
 
         Map<Integer, ItemStack> overflow = viewer.getInventory().addItem(listing.item().clone());
