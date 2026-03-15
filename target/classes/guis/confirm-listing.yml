@@ -13,7 +13,7 @@ auction-slot: [13]
 # This is how auction item will be displayed inside auction-slots
 auction-item:
   lore:
-    - "%lore%" # The item's lore. If there is no lore, skip this line
+    - "%lore%"
     - ""
     - "<gray>Listing Summary:</gray>"
     - " <#736efe>»</#736efe> <gray>Price:</gray> %price%"

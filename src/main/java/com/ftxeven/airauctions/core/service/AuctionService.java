@@ -17,8 +17,8 @@ public final class AuctionService {
     private final Map<Integer, AuctionListing> activeListings = new ConcurrentHashMap<>();
     private final Map<UUID, Set<Integer>> sellerMap = new ConcurrentHashMap<>();
     private final Map<UUID, PendingListing> pendingChatConfirmations = new ConcurrentHashMap<>();
+    private final Map<UUID, Integer> pendingRemoveConfirmations = new ConcurrentHashMap<>();
     private final Map<UUID, Long> lastListingTimes = new ConcurrentHashMap<>();
-
     public enum PurchaseResult { SUCCESS, NOT_FOUND, CANNOT_AFFORD, OWN_ITEM, INVENTORY_FULL }
 
     public AuctionService(AirAuctions plugin) { this.plugin = plugin; }
@@ -37,6 +37,7 @@ public final class AuctionService {
     public void clearPlayerData(UUID uuid) {
         pendingChatConfirmations.remove(uuid);
         lastListingTimes.remove(uuid);
+        pendingRemoveConfirmations.remove(uuid);
     }
 
     public void processExpiration(AuctionListing listing) {
@@ -44,6 +45,20 @@ public final class AuctionService {
         Set<Integer> set = sellerMap.get(listing.sellerUuid());
         if (set != null) set.remove(listing.id());
         plugin.scheduler().runAsync(() -> plugin.database().listings().markAsExpired(listing.id()));
+    }
+
+    public void forceDeleteListing(AuctionListing listing) {
+        if (listing == null) return;
+
+        activeListings.remove(listing.id());
+        Set<Integer> ids = sellerMap.get(listing.sellerUuid());
+        if (ids != null) {
+            ids.remove(listing.id());
+        }
+
+        plugin.scheduler().runAsync(() -> {
+            plugin.database().listings().deleteListingSync(listing.id());
+        });
     }
 
     public List<AuctionListing> getActive(String filter) {
@@ -257,6 +272,7 @@ public final class AuctionService {
     public int getTotalActiveCount() { return activeListings.size(); }
 
     public Map<UUID, PendingListing> getPendingChatConfirmations() { return pendingChatConfirmations; }
+    public Map<UUID, Integer> getPendingRemoveConfirmations() { return pendingRemoveConfirmations; }
     public Map<UUID, Long> getLastListingTimes() { return lastListingTimes; }
     public Collection<AuctionListing> getCache() { return activeListings.values(); }
 }

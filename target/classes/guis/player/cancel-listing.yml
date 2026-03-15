@@ -9,7 +9,7 @@ auction-slot: [13]
 # This is how auction item will be displayed inside auction-slots
 auction-item:
   lore:
-    - "%lore%" # The item's lore. If there is no lore, skip this line
+    - "%lore%"
     - "<dark_gray>Auction ID: %id%"
     - ""
     - "<gray>Listing Details:</gray>"

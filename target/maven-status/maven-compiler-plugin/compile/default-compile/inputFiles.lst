@@ -1,4 +1,5 @@
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\database\DatabaseManager.java
+D:\AirAuctions\src\main\java\com\ftxeven\airauctions\command\subcommand\RemoveSubCommand.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\player\PlayerListingsManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\command\subcommand\PlayerSubCommand.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\gui\ItemComponent.java
@@ -59,6 +60,7 @@ D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\hook\impl\ItemsAdderHo
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\util\SoundUtil.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\service\AuctionService.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\player\ListingHistoryManager.java
+D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\main\RemoveListingManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\gui\util\GuiListingUtil.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\core\manager\target\TargetHistoryManager.java
 D:\AirAuctions\src\main\java\com\ftxeven\airauctions\AirAuctions.java

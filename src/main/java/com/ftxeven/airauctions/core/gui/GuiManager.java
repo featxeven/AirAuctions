@@ -1,16 +1,13 @@
 package com.ftxeven.airauctions.core.gui;
 
 import com.ftxeven.airauctions.AirAuctions;
-import com.ftxeven.airauctions.core.manager.main.CategoryManager;
+import com.ftxeven.airauctions.core.manager.main.*;
 import com.ftxeven.airauctions.core.manager.confirm.*;
 import com.ftxeven.airauctions.core.manager.player.CancelListingManager;
 import com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager;
 import com.ftxeven.airauctions.core.manager.player.ListingHistoryManager;
-import com.ftxeven.airauctions.core.manager.main.AuctionHouseManager;
 import com.ftxeven.airauctions.core.manager.player.PlayerListingsManager;
-import com.ftxeven.airauctions.core.manager.main.PreviewShulkerManager;
 import com.ftxeven.airauctions.core.gui.util.GuiSlotMapper;
-import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
 import com.ftxeven.airauctions.core.manager.target.TargetHistoryManager;
 import com.ftxeven.airauctions.core.manager.target.TargetListingsManager;
 import org.bukkit.entity.Player;
@@ -63,6 +60,7 @@ public final class GuiManager {
         reg("cancel_listing", new CancelListingManager(plugin));
         reg("target_listings", new TargetListingsManager(plugin));
         reg("target_history", new TargetHistoryManager(plugin));
+        reg("remove_listing", new ConfirmRemoveManager(plugin));
     }
 
     private CustomGuiManager getManagerByInv(Inventory inv) {

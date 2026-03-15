@@ -22,6 +22,7 @@ com\ftxeven\airauctions\util\MessageUtil$TitleState.class
 com\ftxeven\airauctions\core\manager\main\AuctionHouseManager$Holder.class
 com\ftxeven\airauctions\command\subcommand\SellSubCommand.class
 com\ftxeven\airauctions\core\manager\main\CategoryManager.class
+com\ftxeven\airauctions\core\manager\main\RemoveListingManager.class
 com\ftxeven\airauctions\core\model\PendingListing.class
 com\ftxeven\airauctions\database\dao\AuctionHistories.class
 com\ftxeven\airauctions\core\manager\confirm\ConfirmPurchaseManager.class
@@ -29,6 +30,7 @@ com\ftxeven\airauctions\core\manager\confirm\ConfirmPurchaseShulkerManager$Confi
 com\ftxeven\airauctions\util\SchedulerUtil$1.class
 com\ftxeven\airauctions\core\manager\main\PreviewShulkerManager$PreviewShulkerHolder.class
 com\ftxeven\airauctions\core\hook\impl\ItemsAdderHook.class
+com\ftxeven\airauctions\command\subcommand\RemoveSubCommand.class
 com\ftxeven\airauctions\database\DatabaseManager.class
 com\ftxeven\airauctions\config\FilterManager$FilterCategory.class
 com\ftxeven\airauctions\core\gui\PageableHolder.class
@@ -81,6 +83,7 @@ com\ftxeven\airauctions\core\service\StatsService$CachedStat.class
 com\ftxeven\airauctions\core\gui\GuiDefinition.class
 com\ftxeven\airauctions\core\manager\main\PreviewShulkerManager.class
 com\ftxeven\airauctions\core\model\PlayerAuctionProfile.class
+com\ftxeven\airauctions\core\manager\main\RemoveListingManager$RemoveListingHolder.class
 com\ftxeven\airauctions\core\hook\impl\NexoHook.class
 com\ftxeven\airauctions\core\manager\target\TargetHistoryManager$TargetHistoryHolder.class
 com\ftxeven\airauctions\util\PlaceholderUtil.class
@@ -93,6 +96,7 @@ com\ftxeven\airauctions\core\hook\HookManager.class
 com\ftxeven\airauctions\util\SoundUtil.class
 com\ftxeven\airauctions\command\subcommand\PlayerSubCommand.class
 com\ftxeven\airauctions\util\SchedulerUtil.class
+com\ftxeven\airauctions\core\manager\main\RemoveListingManager$RemoveListingHolder$1.class
 com\ftxeven\airauctions\core\gui\GuiDefinition$GuiItem.class
 com\ftxeven\airauctions\core\manager\player\PlayerListingsManager$PlayerHolder.class
 com\ftxeven\airauctions\database\dao\PlayerRecords.class

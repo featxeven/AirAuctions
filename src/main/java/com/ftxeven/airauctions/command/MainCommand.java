@@ -28,6 +28,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     private final ExpiredSubCommand expiredSub;
     private final HistorySubCommand historySub;
     private final OpenSubCommand openSub;
+    private final RemoveSubCommand removeSub;
 
     public MainCommand(AirAuctions plugin) {
         this.plugin = plugin;
@@ -38,6 +39,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         this.expiredSub = new ExpiredSubCommand(plugin);
         this.historySub = new HistorySubCommand(plugin);
         this.openSub = new OpenSubCommand(plugin);
+        this.removeSub = new RemoveSubCommand(plugin);
     }
 
     @Override
@@ -80,6 +82,10 @@ public class MainCommand implements CommandExecutor, TabCompleter {
             }
             if (isTrigger(subArg, "open")) {
                 if (checkPerm(player, "open")) openSub.execute(player, label, args);
+                return true;
+            }
+            if (isTrigger(subArg, "remove")) {
+                if (checkPerm(player, "remove")) removeSub.execute(player, label, args);
                 return true;
             }
 
@@ -125,6 +131,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                 addIfAllowed(sender, suggestions, "view-player", "player");
                 addIfAllowed(sender, suggestions, "search", "search");
                 addIfAllowed(sender, suggestions, "open", "open");
+                addIfAllowed(sender, suggestions, "remove", "remove");
             }
 
             return suggestions.stream()
@@ -202,7 +209,15 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     }
 
     private @Nullable String findKeyByTrigger(String subArg) {
-        return Stream.of("sell", "listings", "expired", "history", "view-player", "search", "open")
+        return Stream.of(
+                "sell",
+                        "listings",
+                        "expired",
+                        "history",
+                        "view-player",
+                        "search",
+                        "open",
+                        "remove")
                 .filter(k -> subArg.equalsIgnoreCase(plugin.config().getSubcommandName(k, k)))
                 .findFirst().orElse(null);
     }

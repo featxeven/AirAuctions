@@ -184,6 +184,10 @@ commands:
       name: "open"
       usage: "/%label% %sublabel% <gui-id> <filter> <sort>"
       usage-others: "/%label% %sublabel% <gui-id> <filter> <sort> [player]"
+    remove:
+      enabled: true
+      name: "remove"
+      usage: "/%label% %sublabel% <id>"
 
 # ----------------------------------
 # RESTRICTIONS
