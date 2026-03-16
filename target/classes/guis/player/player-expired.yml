@@ -1,3 +1,6 @@
+# Check the documentation for more information:
+# https://airdevelopment.gitbook.io/docs/airauctions/configuration/gui
+
 # - true = buttons are always shown
 # - false = buttons only appear when next/previous page is available
 always-show-buttons: false
@@ -63,6 +66,17 @@ buttons:
     actions:
       - "[sound] ui.button.click 1 1.5"
     cooldown: 5
+
+  collect-all:
+    slots: [51]
+    material: HOPPER_MINECART
+    display-name: "<#ff5f6d><bold>Collect All</bold></#ff5f6d>"
+    lore:
+      - "<gray>Click to collect all expired</gray>"
+      - "<gray>items at once.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.5"
+    cooldown: 0.2
 
 # Custom items
 items:

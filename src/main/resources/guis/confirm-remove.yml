@@ -1,3 +1,6 @@
+# Check the documentation for more information:
+# https://airdevelopment.gitbook.io/docs/airauctions/configuration/gui
+
 # - true = Opens Remove Confirm GUI
 # - false = Sends confirmation message in chat
 enabled: true

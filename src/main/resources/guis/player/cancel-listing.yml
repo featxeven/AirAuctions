@@ -1,3 +1,6 @@
+# Check the documentation for more information:
+# https://airdevelopment.gitbook.io/docs/airauctions/configuration/gui
+
 # GUI title and size
 title: "<gradient:#5efce8:#736efe><bold>Cancel Listing</bold></gradient>"
 rows: 3

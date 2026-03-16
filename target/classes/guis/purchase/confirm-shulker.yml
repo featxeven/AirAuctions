@@ -1,3 +1,6 @@
+# Check the documentation for more information:
+# https://airdevelopment.gitbook.io/docs/airauctions/configuration/gui
+
 # Opens on Auction House GUI
 auction-house:
   # - true = Opens this GUI when item is a Shulker Box

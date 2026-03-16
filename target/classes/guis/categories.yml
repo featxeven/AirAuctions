@@ -1,3 +1,6 @@
+# Check the documentation for more information:
+# https://airdevelopment.gitbook.io/docs/airauctions/configuration/gui
+
 # - true = Opens Category GUI instead of Main GUI
 # - false = Opens Main GUI instead
 enabled: true

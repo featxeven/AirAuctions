@@ -1,3 +1,6 @@
+# Check the documentation for more information:
+# https://airdevelopment.gitbook.io/docs/airauctions/configuration/gui
+
 # - true = buttons are always shown
 # - false = buttons only appear when next/previous page is available
 always-show-buttons: false

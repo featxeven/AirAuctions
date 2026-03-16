@@ -128,10 +128,14 @@ auctions:
   cancel:
     error:
       inventory-full: "%prefix% <#ff5f6d>Inventory full! Clear space to reclaim this.</#ff5f6d>"
+      inventory-full-all: "%prefix% <#ff5f6d>Inventory full! Clear space to reclaim these items.</#ff5f6d>"
+      nothing-to-reclaim: "%prefix% <#ff5f6d>You have no expired items to reclaim.</#ff5f6d>"
 
-    success: "%prefix% <green>Listing withdrawn.</green> <gray>(Returned <white>%amount%x %item%</white>)</gray>"
     moved-to-expired: "%prefix% <yellow>Listing ended.</yellow> <gray>Claim your items from <white>Expired Listings</white>."
+    success: "%prefix% <green>Listing withdrawn.</green> <gray>(Returned <white>%amount%x %item%</white>)</gray>"
+    success-all: "%prefix% <green>Listings withdrawn.</green> <gray>(Returned a total of %total% items)</gray>"
     inventory-full-dropped: "%prefix% <#ff5f6d>Reclaimed item dropped on the ground (Inventory Full).</#ff5f6d>"
+    inventory-full-dropped-all: "%prefix% <#ff5f6d>Reclaimed items dropped on the ground (Inventory Full).</#ff5f6d>"
 
   remove:
     error:

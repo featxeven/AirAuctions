@@ -190,6 +190,7 @@ public final class ExpiredListingsManager implements GuiManager.CustomGuiManager
             case "next-page" -> openMenu(viewer, holder.filter(), humanPage + 1, holder.sort());
             case "previous-page" -> openMenu(viewer, holder.filter(), humanPage - 1, holder.sort());
             case "refresh" -> plugin.scheduler().runTask(() -> refreshWithValidation(viewer, holder));
+            case "collect-all" -> handleCollectAll(viewer, holder);
         }
     }
 
@@ -202,6 +203,62 @@ public final class ExpiredListingsManager implements GuiManager.CustomGuiManager
                 },
                 (p, ctx) -> openMenu(p, holder.filter(), Integer.parseInt(ctx.getOrDefault("page", "1")), holder.sort())
         );
+    }
+
+    private void handleCollectAll(Player viewer, ExpiredHolder holder) {
+        List<AuctionListing> expired = plugin.core().auctions().getExpiredBySeller(viewer.getUniqueId());
+
+        if (expired.isEmpty()) {
+            MessageUtil.send(viewer, plugin.lang().get("auctions.cancel.error.nothing-to-reclaim"), Map.of());
+            return;
+        }
+
+        boolean dropEnabled = plugin.config().dropItemsWhenFull();
+
+        if (!dropEnabled) {
+            int emptySlots = 0;
+            for (ItemStack is : viewer.getInventory().getStorageContents()) {
+                if (is == null || is.getType().isAir()) emptySlots++;
+            }
+
+            if (expired.size() > emptySlots) {
+                MessageUtil.send(viewer, plugin.lang().get("auctions.cancel.error.inventory-full-all"), Map.of());
+                return;
+            }
+        }
+
+        int collectedCount = 0;
+        boolean droppedAny = false;
+
+        for (AuctionListing listing : expired) {
+            if (plugin.core().auctions().collectExpired(viewer, listing.id())) {
+                collectedCount++;
+
+                Map<Integer, ItemStack> overflow = viewer.getInventory().addItem(listing.item());
+
+                if (!overflow.isEmpty()) {
+                    if (dropEnabled) {
+                        overflow.values().forEach(item ->
+                                viewer.getWorld().dropItemNaturally(viewer.getLocation(), item));
+                    } else {
+                        overflow.values().forEach(item ->
+                                viewer.getWorld().dropItemNaturally(viewer.getLocation(), item));
+                    }
+                    droppedAny = true;
+                }
+            }
+        }
+
+        if (collectedCount > 0) {
+            MessageUtil.send(viewer, plugin.lang().get("auctions.cancel.success-all"),
+                    Map.of("total", String.valueOf(collectedCount)));
+
+            if (droppedAny) {
+                MessageUtil.send(viewer, plugin.lang().get("auctions.cancel.inventory-full-dropped-all"), Map.of());
+            }
+
+            refreshWithValidation(viewer, holder);
+        }
     }
 
     private void openMenu(Player viewer, String filter, int page, String sort) {
