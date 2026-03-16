@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="refactor: added multi-line support for messages">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_13_2026_2_35_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_13_2026_2_35_PM__Changes_.xml" afterDir="false" />
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="Added 2 new placeholders ..._gui_filter% &amp; ...gui_sort%">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-house.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/auction-search.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/auction-search.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/categories.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/categories.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/confirm-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/confirm-listing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/confirm-remove.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/confirm-remove.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/cancel-listing.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/cancel-listing.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-expired.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-expired.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-history.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/player/player-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/player/player-listings.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/preview-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm-shulker.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm-shulker.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/purchase/confirm.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-history.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/guis/target/target-listings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,22 +78,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1771648637894</updated>
-    </task>
-    <task id="LOCAL-00011" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771860432537</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1771860432538</updated>
-    </task>
-    <task id="LOCAL-00012" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771863883549</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1771863883549</updated>
     </task>
     <task id="LOCAL-00013" summary="bug fixes">
       <option name="closed" value="true" />
@@ -485,7 +455,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773593210090</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="added new button collect-all on expired listings gui">
+      <option name="closed" value="true" />
+      <created>1773639750138</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1773639750139</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Added 2 new placeholders ..._gui_filter% &amp; ...gui_sort%">
+      <option name="closed" value="true" />
+      <created>1773640685730</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1773640685730</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -515,8 +501,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="changed %seller% for success-broadcast message" />
-    <MESSAGE value="fixed %id% for auction history stack" />
     <MESSAGE value="added target-history gui &amp; new arg target:%target% for [open] action" />
     <MESSAGE value="added sub-command validations" />
     <MESSAGE value="fixed item priority actions" />
@@ -540,6 +524,8 @@
     <MESSAGE value="added -1 to auctions.expire-time" />
     <MESSAGE value="fixed item displayname" />
     <MESSAGE value="target and player history now allow null templates" />
-    <option name="LAST_COMMIT_MESSAGE" value="target and player history now allow null templates" />
+    <MESSAGE value="added new button collect-all on expired listings gui" />
+    <MESSAGE value="Added 2 new placeholders ..._gui_filter% &amp; ...gui_sort%" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added 2 new placeholders ..._gui_filter% &amp; ...gui_sort%" />
   </component>
 </project>

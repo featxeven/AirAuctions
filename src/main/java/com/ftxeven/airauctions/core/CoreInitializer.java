@@ -13,6 +13,7 @@ import com.ftxeven.airauctions.config.*;
 import com.ftxeven.airauctions.util.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.command.*;
 import org.bukkit.plugin.PluginManager;
 
@@ -35,6 +36,8 @@ public final class CoreInitializer {
     public void initialize() {
         plugin.setSchedulerUtil(new SchedulerUtil(plugin));
         logServerType();
+
+        Metrics metrics = new Metrics(plugin, 133357);
 
         plugin.setConfigManager(new ConfigManager(plugin));
         plugin.setLangManager(new LangManager(plugin));
