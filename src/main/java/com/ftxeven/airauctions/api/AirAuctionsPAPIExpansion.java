@@ -14,11 +14,22 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class AirAuctionsPAPIExpansion extends PlaceholderExpansion {
 
     private final AirAuctions plugin;
+    private final List<ThreadLocal<? extends PageableHolder>> guiContexts = List.of(
+            AuctionHouseManager.CONSTRUCTION_CONTEXT,
+            PlayerListingsManager.CONSTRUCTION_CONTEXT,
+            TargetListingsManager.CONSTRUCTION_CONTEXT,
+            TargetHistoryManager.CONSTRUCTION_CONTEXT,
+            ExpiredListingsManager.CONSTRUCTION_CONTEXT,
+            AuctionSearchManager.CONSTRUCTION_CONTEXT,
+            ListingHistoryManager.CONSTRUCTION_CONTEXT
+    );
 
     public AirAuctionsPAPIExpansion(AirAuctions plugin) {
         this.plugin = plugin;
@@ -84,35 +95,30 @@ public class AirAuctionsPAPIExpansion extends PlaceholderExpansion {
             };
         }
 
-        if (pLow.equals("player_gui_page") || pLow.equals("player_gui_pages")) {
-            boolean isPage = pLow.endsWith("gui_page");
+        if (pLow.startsWith("player_gui_")) {
 
-            var ahCtx = AuctionHouseManager.CONSTRUCTION_CONTEXT.get();
-            if (ahCtx != null) return String.valueOf(isPage ? ahCtx.page() + 1 : ahCtx.totalPages());
+            PageableHolder activeHolder = guiContexts.stream()
+                    .map(tl -> (PageableHolder) tl.get())
+                    .filter(Objects::nonNull)
+                    .findFirst()
+                    .orElseGet(() -> {
+                        if (player.getOpenInventory().getTopInventory().getHolder() instanceof PageableHolder holder) {
+                            return holder;
+                        }
+                        return null;
+                    });
 
-            var plCtx = PlayerListingsManager.CONSTRUCTION_CONTEXT.get();
-            if (plCtx != null) return String.valueOf(isPage ? plCtx.page() + 1 : plCtx.totalPages());
-
-            var taCtx = TargetListingsManager.CONSTRUCTION_CONTEXT.get();
-            if (taCtx != null) return String.valueOf(isPage ? taCtx.page() + 1 : taCtx.totalPages());
-
-            var thiCtx = TargetHistoryManager.CONSTRUCTION_CONTEXT.get();
-            if (thiCtx != null) return String.valueOf(isPage ? thiCtx.page() + 1 : thiCtx.totalPages());
-
-            var exCtx = ExpiredListingsManager.CONSTRUCTION_CONTEXT.get();
-            if (exCtx != null) return String.valueOf(isPage ? exCtx.page() + 1 : exCtx.totalPages());
-
-            var seCtx = AuctionSearchManager.CONSTRUCTION_CONTEXT.get();
-            if (seCtx != null) return String.valueOf(isPage ? seCtx.page() + 1 : seCtx.totalPages());
-
-            var hiCtx = ListingHistoryManager.CONSTRUCTION_CONTEXT.get();
-            if (hiCtx != null) return String.valueOf(isPage ? hiCtx.page() + 1 : hiCtx.totalPages());
-
-            if (player.getOpenInventory().getTopInventory().getHolder() instanceof PageableHolder holder) {
-                return String.valueOf(isPage ? holder.page() + 1 : holder.totalPages());
+            if (activeHolder == null) {
+                return (pLow.endsWith("page") || pLow.endsWith("pages")) ? "1" : "";
             }
 
-            return "1";
+            return switch (pLow) {
+                case "player_gui_page" -> String.valueOf(activeHolder.page() + 1);
+                case "player_gui_pages" -> String.valueOf(activeHolder.totalPages());
+                case "player_gui_filter" -> plugin.filters().getDisplayName(activeHolder.filter());
+                case "player_gui_sort" -> plugin.config().getSortingDisplayName(activeHolder.sort());
+                default -> null;
+            };
         }
 
         return null;
