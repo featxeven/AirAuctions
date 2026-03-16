@@ -7,7 +7,9 @@ import com.ftxeven.airauctions.core.gui.PageableHolder;
 import com.ftxeven.airauctions.core.manager.main.AuctionHouseManager;
 import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
 import com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager;
+import com.ftxeven.airauctions.core.manager.player.ListingHistoryManager;
 import com.ftxeven.airauctions.core.manager.player.PlayerListingsManager;
+import com.ftxeven.airauctions.core.manager.target.TargetHistoryManager;
 import com.ftxeven.airauctions.core.manager.target.TargetListingsManager;
 import com.ftxeven.airauctions.core.model.AuctionListing;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -72,6 +74,13 @@ public final class GuiListingUtil {
         } else if (holder instanceof TargetListingsManager.TargetHolder targetHolder) {
             targetHolder.setPage(page);
             targetHolder.setTotalPages(totalPages);
+        }
+        else if (holder instanceof ListingHistoryManager.HistoryHolder historyHolder) {
+            historyHolder.setPage(page);
+            historyHolder.setTotalPages(totalPages);
+        } else if (holder instanceof TargetHistoryManager.TargetHistoryHolder targetHistoryHolder) {
+            targetHistoryHolder.setPage(page);
+            targetHistoryHolder.setTotalPages(totalPages);
         }
 
         holder.displayedListings().clear();

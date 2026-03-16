@@ -149,7 +149,7 @@ public final class CancelListingManager implements GuiManager.CustomGuiManager {
             } else {
                 Map<String, String> ph = Map.of(
                         "amount", String.valueOf(listing.item().getAmount()),
-                        "item", plugin.itemTranslations().translate(listing.item().getType())
+                        "item", plugin.itemTranslations().getName(listing.item())
                 );
                 MessageUtil.send(viewer, plugin.lang().get("auctions.cancel.moved-to-expired"), ph);
             }

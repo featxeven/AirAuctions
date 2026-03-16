@@ -110,8 +110,10 @@ public final class ConfigManager {
 
     public String getLocale() { return s("lang", "en_US"); }
     public boolean confirmAuction() { return b("auctions.confirm-auction"); }
-    public boolean broadcastToSelf() { return config.getBoolean("auctions.broadcast-to-self", false); }
     public int confirmationExpireTime() { return i("auctions.confirmation-expire-time", 60); }
+    public boolean confirmRemove() { return b("auctions.confirm-remove"); }
+    public int removeExpireTime() { return i("auctions.remove-expire-time", 60); }
+    public boolean broadcastToSelf() { return config.getBoolean("auctions.broadcast-to-self", false); }
     public int historyLimit() { return i("auctions.history-item-limit", 50); }
     public int expiredLimit() { return i("auctions.expired-item-limit", 50); }
     public int auctionCooldown() { return i("auctions.auction-cooldown", 5); }

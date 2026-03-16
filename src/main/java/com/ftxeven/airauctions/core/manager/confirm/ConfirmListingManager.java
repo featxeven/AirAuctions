@@ -10,6 +10,7 @@ import com.ftxeven.airauctions.util.PlaceholderUtil;
 import com.ftxeven.airauctions.core.gui.util.GuiItemFinder;
 import com.ftxeven.airauctions.core.gui.util.GuiListingUtil;
 import com.ftxeven.airauctions.core.gui.util.GuiSlotMapper;
+import com.ftxeven.airauctions.util.TimeUtil;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -111,6 +112,9 @@ public final class ConfirmListingManager implements GuiManager.CustomGuiManager 
         ItemStack previewItem = pending.item().clone();
         previewItem.setAmount(pending.amount());
 
+        int expireSeconds = plugin.config().getExpireTime(viewer);
+        long previewExpiry = (expireSeconds == -1) ? -1L : pending.timestamp() + (expireSeconds * 1000L);
+
         AuctionListing previewListing = new AuctionListing(
                 -1,
                 viewer.getUniqueId(),
@@ -118,7 +122,7 @@ public final class ConfirmListingManager implements GuiManager.CustomGuiManager 
                 pending.price(),
                 currencyId,
                 pending.timestamp(),
-                pending.timestamp() + 3600000L
+                previewExpiry
         );
 
         GuiSlotMapper.fill(plugin, inv, definition, viewer, displayPh,
@@ -160,7 +164,7 @@ public final class ConfirmListingManager implements GuiManager.CustomGuiManager 
             return;
         }
 
-        if (isLimitReached(player) || isExpiredLimitReached(player)) {
+        if (isLimitReached(player) || isExpiredLimitReached(player) || isStillOnCooldown(player)) {
             player.closeInventory();
             return;
         }
@@ -176,7 +180,7 @@ public final class ConfirmListingManager implements GuiManager.CustomGuiManager 
         }
 
         int expireSeconds = plugin.config().getExpireTime(player);
-        long expiryTime = System.currentTimeMillis() + (expireSeconds * 1000L);
+        long expiryTime = (expireSeconds == -1) ? -1L : System.currentTimeMillis() + (expireSeconds * 1000L);
 
         plugin.core().auctions().listEntry(player, itemInHand, pending.price(), pending.amount(), expiryTime, currencyId);
 
@@ -186,6 +190,22 @@ public final class ConfirmListingManager implements GuiManager.CustomGuiManager 
                 "price", plugin.core().economy().formats().format(pending.price(), currencyId),
                 "fee", plugin.core().economy().formats().format(fee, currencyId)
         ));
+    }
+
+    private boolean isStillOnCooldown(Player player) {
+        int cooldown = plugin.config().auctionCooldown();
+        if (cooldown <= 0) return false;
+
+        Long last = plugin.core().auctions().getLastListingTimes().get(player.getUniqueId());
+        if (last == null) return false;
+
+        long remaining = (long) cooldown - ((System.currentTimeMillis() - last) / 1000L);
+        if (remaining > 0) {
+            MessageUtil.send(player, plugin.lang().get("auctions.sell.error.cooldown"),
+                    Map.of("time", TimeUtil.formatSeconds(plugin, remaining)));
+            return true;
+        }
+        return false;
     }
 
     private boolean isLimitReached(Player player) {

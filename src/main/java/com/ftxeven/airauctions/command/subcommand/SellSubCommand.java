@@ -179,7 +179,7 @@ public class SellSubCommand {
         }
 
         int expireSeconds = plugin.config().getExpireTime(player);
-        long expiryTime = System.currentTimeMillis() + (expireSeconds * 1000L);
+        long expiryTime = expireSeconds == -1 ? -1L : System.currentTimeMillis() + (expireSeconds * 1000L);
 
         plugin.core().auctions().listEntry(player, item, price, amount, expiryTime, currencyId);
 

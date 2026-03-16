@@ -13,6 +13,6 @@ public record AuctionListing(
         long expiryAt) {
 
     public boolean isTimedOut() {
-        return System.currentTimeMillis() >= expiryAt;
+        return expiryAt != -1 && expiryAt < System.currentTimeMillis();
     }
 }

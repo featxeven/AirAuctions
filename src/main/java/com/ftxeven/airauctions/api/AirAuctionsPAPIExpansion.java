@@ -5,6 +5,7 @@ import com.ftxeven.airauctions.core.gui.PageableHolder;
 import com.ftxeven.airauctions.core.manager.player.ExpiredListingsManager;
 import com.ftxeven.airauctions.core.manager.player.ListingHistoryManager;
 import com.ftxeven.airauctions.core.manager.player.PlayerListingsManager;
+import com.ftxeven.airauctions.core.manager.target.TargetHistoryManager;
 import com.ftxeven.airauctions.core.manager.target.TargetListingsManager;
 import com.ftxeven.airauctions.core.manager.main.AuctionHouseManager;
 import com.ftxeven.airauctions.core.manager.main.AuctionSearchManager;
@@ -94,6 +95,9 @@ public class AirAuctionsPAPIExpansion extends PlaceholderExpansion {
 
             var taCtx = TargetListingsManager.CONSTRUCTION_CONTEXT.get();
             if (taCtx != null) return String.valueOf(isPage ? taCtx.page() + 1 : taCtx.totalPages());
+
+            var thiCtx = TargetHistoryManager.CONSTRUCTION_CONTEXT.get();
+            if (thiCtx != null) return String.valueOf(isPage ? thiCtx.page() + 1 : thiCtx.totalPages());
 
             var exCtx = ExpiredListingsManager.CONSTRUCTION_CONTEXT.get();
             if (exCtx != null) return String.valueOf(isPage ? exCtx.page() + 1 : exCtx.totalPages());

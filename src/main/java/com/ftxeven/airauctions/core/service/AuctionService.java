@@ -17,8 +17,8 @@ public final class AuctionService {
     private final Map<Integer, AuctionListing> activeListings = new ConcurrentHashMap<>();
     private final Map<UUID, Set<Integer>> sellerMap = new ConcurrentHashMap<>();
     private final Map<UUID, PendingListing> pendingChatConfirmations = new ConcurrentHashMap<>();
+    private final Map<UUID, Integer> pendingRemoveConfirmations = new ConcurrentHashMap<>();
     private final Map<UUID, Long> lastListingTimes = new ConcurrentHashMap<>();
-
     public enum PurchaseResult { SUCCESS, NOT_FOUND, CANNOT_AFFORD, OWN_ITEM, INVENTORY_FULL }
 
     public AuctionService(AirAuctions plugin) { this.plugin = plugin; }
@@ -37,6 +37,7 @@ public final class AuctionService {
     public void clearPlayerData(UUID uuid) {
         pendingChatConfirmations.remove(uuid);
         lastListingTimes.remove(uuid);
+        pendingRemoveConfirmations.remove(uuid);
     }
 
     public void processExpiration(AuctionListing listing) {
@@ -46,13 +47,25 @@ public final class AuctionService {
         plugin.scheduler().runAsync(() -> plugin.database().listings().markAsExpired(listing.id()));
     }
 
+    public void forceDeleteListing(AuctionListing listing) {
+        if (listing == null) return;
+
+        activeListings.remove(listing.id());
+        Set<Integer> ids = sellerMap.get(listing.sellerUuid());
+        if (ids != null) {
+            ids.remove(listing.id());
+        }
+
+        plugin.scheduler().runAsync(() -> plugin.database().listings().deleteListingSync(listing.id()));
+    }
+
     public List<AuctionListing> getActive(String filter) {
         String target = (filter == null || filter.isBlank()) ? "All" : filter;
         long now = System.currentTimeMillis();
 
         return activeListings.values().stream()
                 .filter(l -> {
-                    if (l.expiryAt() < now) {
+                    if (l.expiryAt() != -1 && l.expiryAt() < now) {
                         processExpiration(l);
                         return false;
                     }
@@ -75,13 +88,26 @@ public final class AuctionService {
             AuctionListing l = activeListings.get(id);
             if (l == null) continue;
 
-            if (l.expiryAt() < now) {
+            if (l.expiryAt() != -1 && l.expiryAt() < now) {
                 processExpiration(l);
                 continue;
             }
             listings.add(l);
         }
         return listings;
+    }
+
+    public void checkExpirations(UUID sellerUuid) {
+        Set<Integer> ids = sellerMap.get(sellerUuid);
+        if (ids == null || ids.isEmpty()) return;
+
+        long now = System.currentTimeMillis();
+        for (int id : ids) {
+            AuctionListing l = activeListings.get(id);
+            if (l != null && l.expiryAt() != -1 && l.expiryAt() < now) {
+                processExpiration(l);
+            }
+        }
     }
 
     public PurchaseResult buyEntry(Player buyer, int id) {
@@ -118,22 +144,20 @@ public final class AuctionService {
                 sellerMap.computeIfAbsent(uuid, k -> ConcurrentHashMap.newKeySet()).add(id);
 
                 plugin.scheduler().runTask(() -> {
-                    String broadcastMsg = plugin.lang().get("auctions.sell.success-broadcast");
+                    String broadcastMsg = String.valueOf(plugin.lang().get("auctions.sell.success-broadcast"));
                     if (broadcastMsg.isEmpty()) return;
 
                     Map<String, String> ph = Map.of(
                             "seller", seller.getName(),
                             "amount", String.valueOf(amount),
-                            "item", plugin.itemTranslations().translate(toStore.getType()),
+                            "item", plugin.itemTranslations().getName(toStore),
                             "price", plugin.core().economy().formats().format(price, currencyId)
                     );
 
                     boolean broadcastToSelf = plugin.config().broadcastToSelf();
 
                     for (Player online : Bukkit.getOnlinePlayers()) {
-                        if (!broadcastToSelf && online.getUniqueId().equals(uuid)) {
-                            continue;
-                        }
+                        if (!broadcastToSelf && online.getUniqueId().equals(uuid)) continue;
                         MessageUtil.send(online, broadcastMsg, ph);
                     }
                 });
@@ -178,7 +202,7 @@ public final class AuctionService {
 
         Map<String, String> ph = Map.of(
                 "amount", String.valueOf(listing.item().getAmount()),
-                "item", plugin.itemTranslations().translate(listing.item().getType()),
+                "item", plugin.itemTranslations().getName(listing.item()),
                 "price", plugin.core().economy().formats().format(listing.price(), listing.currencyId()),
                 "profit", plugin.core().economy().formats().format(profit, listing.currencyId()),
                 "buyer", buyer.getName()
@@ -186,13 +210,13 @@ public final class AuctionService {
 
         MessageUtil.send(buyer, plugin.lang().get("auctions.buy.success"), ph);
 
-        Map<Integer, org.bukkit.inventory.ItemStack> overflow = buyer.getInventory().addItem(listing.item().clone());
+        Map<Integer, ItemStack> overflow = buyer.getInventory().addItem(listing.item().clone());
         if (!overflow.isEmpty()) {
             overflow.values().forEach(item -> buyer.getWorld().dropItemNaturally(buyer.getLocation(), item));
             MessageUtil.send(buyer, plugin.lang().get("auctions.buy.inventory-full-dropped"), ph);
         }
 
-        Player seller = org.bukkit.Bukkit.getPlayer(listing.sellerUuid());
+        Player seller = Bukkit.getPlayer(listing.sellerUuid());
         if (seller != null && seller.isOnline()) {
             MessageUtil.send(seller, plugin.lang().get("auctions.sell.sold"), ph);
         }
@@ -201,7 +225,7 @@ public final class AuctionService {
     public void finalizeCancellation(Player viewer, AuctionListing listing) {
         Map<String, String> ph = Map.of(
                 "amount", String.valueOf(listing.item().getAmount()),
-                "item", plugin.itemTranslations().translate(listing.item().getType())
+                "item", plugin.itemTranslations().getName(listing.item())
         );
 
         Map<Integer, ItemStack> overflow = viewer.getInventory().addItem(listing.item().clone());
@@ -239,24 +263,13 @@ public final class AuctionService {
         return list;
     }
 
-    public void checkExpirations(UUID sellerUuid) {
-        Set<Integer> ids = sellerMap.get(sellerUuid);
-        if (ids == null || ids.isEmpty()) return;
-
-        long now = System.currentTimeMillis();
-        for (int id : ids) {
-            AuctionListing l = activeListings.get(id);
-            if (l != null && l.expiryAt() < now) {
-                processExpiration(l);
-            }
-        }
-    }
     public int getExpiredCount(UUID uuid) {
         return plugin.database().listings().getExpiredCountSync(uuid);
     }
     public int getTotalActiveCount() { return activeListings.size(); }
 
     public Map<UUID, PendingListing> getPendingChatConfirmations() { return pendingChatConfirmations; }
+    public Map<UUID, Integer> getPendingRemoveConfirmations() { return pendingRemoveConfirmations; }
     public Map<UUID, Long> getLastListingTimes() { return lastListingTimes; }
     public Collection<AuctionListing> getCache() { return activeListings.values(); }
 }
