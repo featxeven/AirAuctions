@@ -70,12 +70,11 @@ public final class FilterManager {
     }
 
     public String getDisplayName(String categoryKey) {
-        if (categoryKey.equalsIgnoreCase("all")) return "All";
         return categories.stream()
                 .filter(c -> c.internalKey().equalsIgnoreCase(categoryKey))
                 .map(FilterCategory::displayName)
                 .findFirst()
-                .orElse(categoryKey);
+                .orElseGet(() -> categoryKey.equalsIgnoreCase("all") ? "All" : categoryKey);
     }
 
     public List<String> getOrderedCategoryKeys() {
