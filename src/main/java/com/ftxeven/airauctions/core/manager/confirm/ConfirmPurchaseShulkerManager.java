@@ -37,8 +37,8 @@ public final class ConfirmPurchaseShulkerManager implements GuiManager.CustomGui
     }
 
     public void loadDefinition() {
-        File file = new File(plugin.getDataFolder(), "guis/purchase/confirm-shulker.yml");
-        if (!file.exists()) plugin.saveResource("guis/purchase/confirm-shulker.yml", false);
+        File file = new File(plugin.getDataFolder(), "guis/confirm/confirm-purchase-shulker.yml");
+        if (!file.exists()) plugin.saveResource("guis/confirm/confirm-purchase-shulker.yml", false);
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 

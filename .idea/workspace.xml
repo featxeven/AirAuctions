@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="added bstats">
+    <list default="true" id="f92e4b55-b51f-41ed-a4d1-4941a367e7d1" name="Changes" comment="search now check for item translation instead of bukkit material">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_13_2026_2_35_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/CoreCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ftxeven/airauctions/command/CoreCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/CoreCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ftxeven/airauctions/command/CoreCommand.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,22 +80,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1771648637894</updated>
-    </task>
-    <task id="LOCAL-00014" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771900993537</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1771900993537</updated>
-    </task>
-    <task id="LOCAL-00015" summary="bug fixes">
-      <option name="closed" value="true" />
-      <created>1771962408029</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1771962408029</updated>
     </task>
     <task id="LOCAL-00016" summary="bug fixes">
       <option name="closed" value="true" />
@@ -474,7 +457,23 @@
       <option name="project" value="LOCAL" />
       <updated>1773641926180</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="fixed all filter display-name">
+      <option name="closed" value="true" />
+      <created>1774235768340</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1774235768340</updated>
+    </task>
+    <task id="LOCAL-00064" summary="search now check for item translation instead of bukkit material">
+      <option name="closed" value="true" />
+      <created>1774236170779</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1774236170779</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -504,8 +503,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="added sub-command validations" />
-    <MESSAGE value="fixed item priority actions" />
     <MESSAGE value="added target-history section in preview-shulker gui" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="removed ce" />
@@ -529,6 +526,8 @@
     <MESSAGE value="added new button collect-all on expired listings gui" />
     <MESSAGE value="Added 2 new placeholders ..._gui_filter% &amp; ...gui_sort%" />
     <MESSAGE value="added bstats" />
-    <option name="LAST_COMMIT_MESSAGE" value="added bstats" />
+    <MESSAGE value="fixed all filter display-name" />
+    <MESSAGE value="search now check for item translation instead of bukkit material" />
+    <option name="LAST_COMMIT_MESSAGE" value="search now check for item translation instead of bukkit material" />
   </component>
 </project>

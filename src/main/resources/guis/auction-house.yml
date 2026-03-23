@@ -26,7 +26,7 @@ auction-item:
     - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - ""
-    - "buy: <#5efce8>Left-Click</#5efce8> <gray>to purchase item</gray>"
+    - "buy: <#5efce8>Left-Click</#5efce8> <gray>to confirm item</gray>"
     - "view-player: <gold>Right-Click</gold> <gray>to view more listings from %seller%</gray>"
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
@@ -40,7 +40,7 @@ auction-item:
   shift-actions:
     - "[sound] ui.button.click 1 2"
     - "[preview]"
-  # If false, confirm-purchase GUI will be disabled
+  # If false, confirm-confirm GUI will be disabled
   apply-confirm: true
 
 # GUI buttons

@@ -17,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -38,8 +37,8 @@ public final class ConfirmRemoveManager implements GuiManager.CustomGuiManager {
     }
 
     public void loadDefinition() {
-        File file = new File(plugin.getDataFolder(), "guis/confirm-remove.yml");
-        if (!file.exists()) plugin.saveResource("guis/confirm-remove.yml", false);
+        File file = new File(plugin.getDataFolder(), "guis/confirm/confirm-remove.yml");
+        if (!file.exists()) plugin.saveResource("guis/confirm/confirm-remove.yml", false);
 
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         ConfigurationSection section = cfg.getConfigurationSection("remove-listing");

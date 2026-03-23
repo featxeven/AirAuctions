@@ -26,7 +26,7 @@ auction-item:
     - " <#736efe>»</#736efe> <gray>Expires:</gray> <white>%expire%</white>"
     - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
     - ""
-    - "buy: <#5efce8>Click</#5efce8> <gray>to purchase item</gray>"
+    - "buy: <#5efce8>Click</#5efce8> <gray>to confirm item</gray>"
     - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
   item-flags:
     - HIDE_ATTRIBUTES
@@ -36,7 +36,7 @@ auction-item:
   shift-actions:
     - "[sound] ui.button.click 1 2"
     - "[preview]"
-  # If false, cancel-auction GUI will be disabled
+  # If false, confirm-purchase GUI will be disabled
   apply-confirm: true
 
 # Slot Available Item (based on limit permission)

@@ -11,12 +11,17 @@ import java.util.stream.Collectors;
 public class SearchService {
 
     private final AirAuctions plugin;
+    private static final PlainTextComponentSerializer PLAIN = PlainTextComponentSerializer.plainText();
 
     public SearchService(AirAuctions plugin) {
         this.plugin = plugin;
     }
 
     public List<AuctionListing> search(String query, String categoryFilter) {
+        if (query == null || query.isEmpty()) {
+            return plugin.core().auctions().getActive(categoryFilter);
+        }
+
         String cleanQuery = query.toLowerCase().trim();
 
         return plugin.core().auctions().getActive(categoryFilter).stream()
@@ -27,21 +32,21 @@ public class SearchService {
     private boolean matches(ItemStack item, String query) {
         if (item == null) return false;
 
-        String displayName = "";
         if (item.hasItemMeta()) {
             var meta = item.getItemMeta();
             if (meta != null && meta.hasDisplayName()) {
                 var component = meta.displayName();
                 if (component != null) {
-                    displayName = PlainTextComponentSerializer.plainText()
-                            .serialize(component)
-                            .toLowerCase();
+                    String displayName = PLAIN.serialize(component).toLowerCase();
+                    if (displayName.contains(query)) return true;
                 }
             }
         }
 
-        String materialName = item.getType().name().replace("_", " ").toLowerCase();
+        String translatedName = plugin.itemTranslations().translate(item.getType()).toLowerCase();
+        if (translatedName.contains(query)) return true;
 
-        return displayName.contains(query) || materialName.contains(query);
+        String rawName = item.getType().name().replace("_", " ").toLowerCase();
+        return rawName.contains(query);
     }
 }

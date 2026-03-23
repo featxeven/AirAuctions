@@ -34,8 +34,8 @@ public final class ConfirmPurchaseManager implements GuiManager.CustomGuiManager
     }
 
     public void loadDefinition() {
-        File file = new File(plugin.getDataFolder(), "guis/purchase/confirm.yml");
-        if (!file.exists()) plugin.saveResource("guis/purchase/confirm.yml", false);
+        File file = new File(plugin.getDataFolder(), "guis/confirm/confirm-purchase.yml");
+        if (!file.exists()) plugin.saveResource("guis/confirm/confirm-purchase.yml", false);
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 

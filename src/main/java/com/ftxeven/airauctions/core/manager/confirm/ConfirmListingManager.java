@@ -40,8 +40,8 @@ public final class ConfirmListingManager implements GuiManager.CustomGuiManager 
     }
 
     public void loadDefinition() {
-        File file = new File(plugin.getDataFolder(), "guis/confirm-listing.yml");
-        if (!file.exists()) plugin.saveResource("guis/confirm-listing.yml", false);
+        File file = new File(plugin.getDataFolder(), "guis/confirm/confirm-auction.yml");
+        if (!file.exists()) plugin.saveResource("guis/confirm/confirm-auction.yml", false);
 
         YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         ConfigurationSection section = cfg.getConfigurationSection("confirm-listing");

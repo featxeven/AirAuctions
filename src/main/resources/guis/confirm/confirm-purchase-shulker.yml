@@ -4,7 +4,7 @@
 # Opens on Auction House GUI
 auction-house:
   # - true = Opens this GUI when item is a Shulker Box
-  # - false = Fallbacks to confirm.yml > auction-house section GUI
+  # - false = Fallbacks to confirm-purchase.yml > auction-house section GUI
   enabled: true
 
   # GUI title and size
@@ -15,7 +15,7 @@ auction-house:
   # This define where the item auction slot will be placed
   auction-slot: [4]
 
-  # This is how auction item will be displayed inside auction-slots
+  # This is how auction item will be displayed inside auction-slot
   auction-item:
     lore:
       - "%lore%"
@@ -46,7 +46,7 @@ auction-house:
       display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
       lore:
         - "<gray>By clicking here, you agree</gray>"
-        - "<gray>to purchase this shulker for:</gray>"
+        - "<gray>to confirm this shulker for:</gray>"
         - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
         - ""
@@ -81,7 +81,7 @@ auction-house:
 # Opens on Auction Search GUI
 auction-search:
   # - true = Opens this GUI when item is a Shulker Box
-  # - false = Fallbacks to confirm.yml > auction-search section GUI
+  # - false = Fallbacks to confirm-purchase.yml > auction-search section GUI
   enabled: true
 
   # GUI title and size
@@ -92,7 +92,7 @@ auction-search:
   # This define where the item auction slot will be placed
   auction-slot: [4]
 
-  # This is how auction item will be displayed inside auction-slots
+  # This is how auction item will be displayed inside auction-slot
   auction-item:
     lore:
       - "%lore%"
@@ -123,7 +123,7 @@ auction-search:
       display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
       lore:
         - "<gray>By clicking here, you agree</gray>"
-        - "<gray>to purchase this shulker for:</gray>"
+        - "<gray>to confirm this shulker for:</gray>"
         - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
         - ""
@@ -158,7 +158,7 @@ auction-search:
 # Opens on Target Listings GUI
 target-listings:
   # - true = Opens this GUI when item is a Shulker Box
-  # - false = Fallbacks to confirm.yml > target-listing section GUI
+  # - false = Fallbacks to confirm-purchase.yml > target-listing section GUI
   enabled: true
 
   # GUI title and size
@@ -169,7 +169,7 @@ target-listings:
   # This define where the item auction slot will be placed
   auction-slot: [4]
 
-  # This is how auction item will be displayed inside auction-slots
+  # This is how auction item will be displayed inside auction-slot
   auction-item:
     lore:
       - "%lore%"
@@ -200,7 +200,7 @@ target-listings:
       display-name: "<#85E52A><bold>CONFIRM PURCHASE</bold></#85E52A>"
       lore:
         - "<gray>By clicking here, you agree</gray>"
-        - "<gray>to purchase this shulker for:</gray>"
+        - "<gray>to confirm this shulker for:</gray>"
         - ""
         - " <#736efe>»</#736efe> <gold><bold>%price%</bold></gold>"
         - ""

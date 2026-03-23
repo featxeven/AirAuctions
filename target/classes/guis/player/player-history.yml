@@ -30,7 +30,6 @@ auction-item-bought:
   item-flags:
     - HIDE_ATTRIBUTES
   shift-actions:
-    - "[sound] ui.button.click 1 2"
     - "[preview]"
 
 # This is how auction item (sold) will be displayed inside auction-slots
@@ -50,7 +49,6 @@ auction-item-sold:
   item-flags:
     - HIDE_ATTRIBUTES
   shift-actions:
-    - "[sound] ui.button.click 1 2"
     - "[preview]"
 
 # GUI buttons

@@ -218,7 +218,7 @@ public final class AuctionSearchManager implements GuiManager.CustomGuiManager {
 
     public boolean isInvalidPurchase(Player viewer, AuctionListing listing) {
         if (!plugin.config().purchaseOwn() && listing.sellerUuid().equals(viewer.getUniqueId())) {
-            MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.cannot-purchase-own"), Map.of());
+            MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.cannot-confirm-own"), Map.of());
             return true;
         }
         if (!plugin.core().economy().canAfford(viewer, listing.currencyId(), listing.price())) {
@@ -249,7 +249,7 @@ public final class AuctionSearchManager implements GuiManager.CustomGuiManager {
     private void handlePurchaseError(Player viewer, com.ftxeven.airauctions.core.service.AuctionService.PurchaseResult result, AuctionListing listing) {
         switch (result) {
             case NOT_FOUND -> MessageUtil.send(viewer, plugin.lang().get("errors.item-unavailable"), Map.of());
-            case OWN_ITEM -> MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.cannot-purchase-own"), Map.of());
+            case OWN_ITEM -> MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.cannot-confirm-own"), Map.of());
             case CANNOT_AFFORD -> {
                 double missing = listing.price() - plugin.core().economy().getBalance(viewer, listing.currencyId());
                 MessageUtil.send(viewer, plugin.lang().get("auctions.buy.error.insufficient-funds"), Map.of("amount", plugin.core().economy().formats().format(missing, listing.currencyId())));
