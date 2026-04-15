@@ -1,0 +1,67 @@
+# ╔══════════════════════════════════════════════════════╗
+# ║         AIRAUCTIONS — EXPANSIONS & ECONOMY           ║
+# ║  docs: https://airdevelopment.gitbook.io/docs/       ║
+# ╚══════════════════════════════════════════════════════╝
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  ECONOMY
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+economy:
+  # --- Currency ---
+  # The key here must match one of the providers defined below
+  default-currency: "vault"
+
+  providers:
+    vault:
+      type: VAULT
+      display: "<green>$%amount%</green>"
+      allow-decimals: true
+
+    exp:
+      type: EXP
+      display: "<green>%amount% XP Points</green>"
+      allow-decimals: false
+
+    # Custom PLACEHOLDER provider example. Duplicate this block to add more currencies
+    crystals:
+      type: PLACEHOLDER
+      display: "<gold>%amount% Crystals</gold>"
+      # The currency must support decimals to enable this
+      allow-decimals: false
+      settings:
+        balance-placeholder: "%mycurrency_balance%"
+        give-command: "mycurrency give %player% %amount%"
+        take-command: "mycurrency take %player% %amount%"
+
+  # --- Number Display ---
+  number-format: SHORT                        # SHORT (1k) | FORMATTED (1,000) | RAW (1000)
+  format-short-suffix: ["", "k", "M", "B", "T", "Q"]
+  allow-format-short-in-command: true         # Allow shorthand (e.g. 1k) in commands instead of full numbers
+
+  # --- Price Constraints ---
+  min-auction-price: 5             # Minimum listing price
+  max-auction-price: 10000000      # Maximum listing price (-1 = no limit)
+
+  # --- Listing Fee ---
+  # Charged when a player runs /ah sell.
+  listing-fee:
+    enabled: true
+    type: PERCENTAGE               # PERCENTAGE of asking price | FIXED flat cost per listing
+
+    # Default values when no matching permission node is found.
+    # Note: min-fee and max-fee are ignored when type is FIXED.
+    default-value: 10             # 10% or $10 depending on type
+    min-fee: 1                    # Minimum charge (prevents near-zero fees)
+    max-fee: 1000                 # Maximum charge (-1 = no cap)
+
+  # --- Sales Tax ---
+  # Deducted from the seller's earnings when a sale completes.
+  sales-tax:
+    enabled: true
+    type: PERCENTAGE               # PERCENTAGE of asking price | FIXED flat amount
+
+    # Default values when no matching permission node is found.
+    # Note: min-fee and max-fee are ignored when type is FIXED.
+    default-value: 10             # 10% or $10 depending on type
+    min-fee: 1                    # Minimum tax (prevents near-zero deductions)
+    max-fee: 1000                 # Maximum tax (-1 = no cap)
