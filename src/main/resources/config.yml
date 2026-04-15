@@ -1,74 +1,77 @@
-# ----------------------------------
-# AirAuctions Configuration
-# ----------------------------------
+# ╔══════════════════════════════════════════════════════╗
+# ║           AIRAUCTIONS — MAIN CONFIGURATION           ║
+# ║  docs: https://airdevelopment.gitbook.io/docs/       ║
+# ╚══════════════════════════════════════════════════════╝
 
-# ----------------------------------
-# GENERAL
-# ----------------------------------
-# Global options
-notify-updates: true               # Notify admins when there is a new update
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  GENERAL
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+notify-updates: true               # Notify admins when a new update is available
 lang: "en_US"                      # Locale file name (lang/messages/KEY.yml)
-error-on-excess-args: true         # Show error message if too many arguments are provided (for commands)
+error-on-excess-args: true         # Show an error if too many arguments are passed to a command
 
-# Time formatting used across the plugin and in placeholders
-time-format:
-  # Modes: DETAILED | SEQUENTIAL | CUSTOM
-  # DETAILED   - show all relevant units ("2 days 3 hours 4 minutes 20 seconds")
-  # SEQUENTIAL - show one unit at a time (used for progressive messages)
-  # CUSTOM     - show up to 'granularity' units (useful for short displays)
-  mode: CUSTOM
-  granularity: 2   # Only used when mode = CUSTOM (1 = largest only, 4 = full breakdown)
-
-# Date formatting used for GUIs
-# Common patterns:
-# dd/MM/yy      -> 08/03/26
-# dd MMM        -> 08 Mar
-# MMMM dd, yyyy -> March 08, 2026
-# E, dd MMM     -> Sun, 08 Mar
-date-format: "dd/MM/yy"
-
-# true:  Always reopens GUI when using certain buttons (useful to update GUI title with placeholders)
-# false: Updates only auction slots
+# true:  Always reopens the GUI when using certain buttons (useful for placeholder-driven titles)
+# false: Only refreshes the auction slots
 force-update-gui: true
 
-# true:  "" lines are hidden UNLESS visible lines appear below them.
-# false: Show all lines regardless if they are empty ("").
+# true:  Empty ("") lines are hidden UNLESS a visible line follows them
+# false: All lines are shown regardless of content
 skip-empty-lines: true
 
-# ----------------------------------
-# AUCTIONS
-# ----------------------------------
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  FORMATTING
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Time formatting used across the plugin and in placeholders
+# Modes:
+#   DETAILED   - all relevant units  ("2 days 3 hours 4 minutes 20 seconds")
+#   SEQUENTIAL - one unit at a time  (used for progressive messages)
+#   CUSTOM     - up to N units       (useful for compact displays)
+time-format:
+  mode: CUSTOM
+  granularity: 2   # Only used when mode = CUSTOM (1 = largest unit only, 4 = full breakdown)
+
+# Date formatting used in GUIs
+# Examples:
+#   dd/MM/yy      -> 08/03/26
+#   dd MMM        -> 08 Mar
+#   MMMM dd, yyyy -> March 08, 2026
+#   E, dd MMM     -> Sun, 08 Mar
+date-format: "dd/MM/yy"
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  AUCTIONS
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 auctions:
-  # --- General Settings ---
-  max-listings: 3                  # Max listings per player (bypass with airauctions.bypass.limit.<#>)
-  history-item-limit: 50           # Max entries stored in player auction history GUI (-1 to disable)
-  expired-item-limit: 50           # Max entries a player can store in expired auctions GUI (-1 to disable)
-  auction-cooldown: 5              # Seconds between creating new listings (-1 to disable)
-  purge-time: -1                   # Seconds before an expired item is deleted from DB (-1 to disable)
-  expire-time: 86400               # Duration in seconds before a listing expires (bypass with airauctions.bypass.expire-time.<#> or use -1)
-  broadcast-to-self: false         # If true, the seller also receives the global 'new listing' broadcast.
+  # --- Limits & Timers ---
+  max-listings: 3                  # Max active listings per player (bypass: airauctions.bypass.limit.<#>)
+  history-item-limit: 50           # Max entries in player history GUI         (-1 = unlimited)
+  expired-item-limit: 50           # Max entries in player expired GUI          (-1 = unlimited)
+  auction-cooldown: 5              # Seconds between creating new listings      (-1 = disabled)
+  expire-time: 86400               # Seconds before a listing expires           (-1 = never, bypass: airauctions.bypass.expire-time.<#>)
+  purge-time: -1                   # Seconds before an expired item is deleted from DB (-1 = disabled)
 
-  # --- Listing Process ---
-  confirm-auction: true            # Enable confirmation before listing an item
-  confirmation-expire-time: 60     # Seconds before confirmation request expires if Confirm GUI is disabled (-1 to disable)
+  # --- Listing ---
+  confirm-auction: true            # Require confirmation before listing an item
+  confirmation-expire-time: 60     # Seconds before a pending confirmation expires (-1 = disabled)
+  broadcast-to-self: false         # If true, the seller also receives the global new-listing broadcast
 
-  # --- Remove Process ---
-  confirm-remove: true             # Enable confirmation before removing an item
-  remove-expire-time: 60           # Seconds before confirmation request expires if Confirm GUI is disabled (-1 to disable)
-
-  # Amount Requirement:
-  # REQUIRED: Player MUST choose an amount via command.
-  # OPTIONAL: Uses item in hand amount if no amount is specified.
-  # DISABLED: Ignores the amount argument and always lists the entire stack in hand.
+  # Amount argument behaviour when running /ah sell:
+  #   REQUIRED - player MUST specify an amount
+  #   OPTIONAL - uses the in-hand stack size if no amount is given
+  #   DISABLED - always lists the entire stack; amount argument is ignored
   amount-type: OPTIONAL
 
-  # --- Purchasing & Cancellation ---
-  purchase-own: false              # Allows the player to buy their own auctions
-  drop-items-when-full: true       # Drop purchased items on floor if inventory is full
+  # --- Removal ---
+  confirm-remove: true             # Require confirmation before removing a listing
+  remove-expire-time: 60           # Seconds before a pending remove confirmation expires (-1 = disabled)
+
+  # --- Purchasing ---
+  purchase-own: false              # Allow players to buy their own listings
+  drop-items-when-full: true       # Drop purchased items on the ground if inventory is full
 
   # --- Sorting ---
-  # Define the available sorting modes used in the GUIs.
-  # The order here determines the order they appear on the GUIs (You can also remove modes).
+  # Defines available sort modes and their display names.
+  # Order here controls the order they appear in GUIs. Unused modes can be removed.
   sorting:
     newest-date: "Newest date"
     oldest-date: "Oldest date"
@@ -77,77 +80,11 @@ auctions:
     alphabetical: "Alphabetical"
     amount: "Amount"
 
-# ----------------------------------
-# ECONOMY
-# ----------------------------------
-economy:
-  # Default currency to use
-  default-currency: "vault"
-
-  # Define your currency providers here
-  # You can use 'VAULT', 'EXP' (internal) or 'PLACEHOLDER' (external)
-  providers:
-    vault:
-      type: VAULT
-      display: "<green>$%amount%</green>"
-      allow-decimals: true
-
-    exp:
-      type: EXP
-      display: "<green>%amount% XP Points</green>"
-      allow-decimals: false
-
-    # You can add your own currencies.
-    crystals:
-      type: PLACEHOLDER
-      display: "<gold>%amount% Crystals</gold>"
-      # The currency must support decimals to enable this
-      allow-decimals: false
-      # For PLACEHOLDER type, these settings are required
-      settings:
-        balance-placeholder: "%mycurrency_balance%"
-        give-command: "mycurrency give %player% %amount%"
-        take-command: "mycurrency take %player% %amount%"
-        # Enable if the placeholder works for offline players
-        offline-support: false
-
-  number-format: SHORT             # SHORT (1k) | FORMATTED (1,000) | RAW (1000)
-  format-short-suffix: ["", "k", "M", "B", "T", "Q"]
-  allow-format-short-in-command: true # Allow '1k' instead of '1000' in commands
-
-  # --- Listing price constraints ---
-  min-auction-price: 5             # Minimum price to list an item
-  max-auction-price: 10000000      # Maximum price to list an item (-1 to disable)
-
-  # --- Listing Fees & Taxes ---
-  # Fees are taken when a player RUNS the /ah sell command.
-  # Taxes are taken from the profit when the item is actually BOUGHT.
-  listing-fee:
-    enabled: true
-    # Use 'PERCENTAGE' of the asking price, or 'FIXED' for a flat cost per item.
-    type: PERCENTAGE
-
-    # Default values if no specific permission is found
-    default-value: 10             # 10% fee or $10 fixed. IF FIXED, it will ignore the other 2 options from below
-    min-fee: 1                    # Minimum amount to charge (prevents $0.01 fees)
-    max-fee: 1000                 # Maximum amount to charge (-1 to disable)
-
-  sales-tax:
-    enabled: true
-    # This is deducted from the seller's earnings upon a successful sale.
-    # Use 'PERCENTAGE' of the asking price, or 'FIXED' for a flat cost per item.
-    type: PERCENTAGE
-
-    # Default values if no specific permission is found
-    default-value: 10             # 10% tax or $10 fixed, IF FIXED, it will ignore the other 2 options from below
-    min-fee: 1                    # Minimum amount to tax (prevents $0.01 tax)
-    max-fee: 1000                 # Maximum amount to tax (-1 to disable)
-
-# ----------------------------------
-# COMMAND & SUBCOMMANDS
-# ----------------------------------
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  COMMANDS
+#  Requires a server restart for name/alias changes to apply
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 commands:
-  # Requires restart to reflect changes
   main:
     name: "auctionhouse"
     aliases: [ah, auctions]
@@ -189,34 +126,36 @@ commands:
       name: "remove"
       usage: "/%label% %sublabel% <id>"
 
-# ----------------------------------
-# RESTRICTIONS
-# ----------------------------------
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  RESTRICTIONS
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 restrictions:
-  blocked-gamemodes:               # Gamemodes where players cannot auction items (bypass with airauctions.bypass.gamemodes)
+  # Gamemodes in which players cannot create listings (bypass: airauctions.bypass.gamemodes)
+  blocked-gamemodes:
     - CREATIVE
     - SPECTATOR
 
-  disabled-worlds:                 # Worlds where players cannot auction items (bypass with airauctions.bypass.worlds)
+  # Worlds in which players cannot create listings (bypass: airauctions.bypass.worlds)
+  disabled-worlds:
     - "disabled_world"
 
-  allow-damaged-items: true        # Allows the player to auction damaged items (bypass with airauctions.bypass.damageditems)
-  max-query-length: 32             # Maximum characters allowed in a search query
+  allow-damaged-items: true        # Allow listing of damaged items (bypass: airauctions.bypass.damageditems)
+  max-query-length: 32             # Maximum character length for search queries
 
   # --- Item Blacklist ---
-  # Define what items cannot be listed on the auction house. (bypass with airauctions.bypass.blacklist)
-  # If 'as-whitelist' is true, ONLY items matching these rules can be listed.
+  # Defines which items cannot be listed. (bypass: airauctions.bypass.blacklist)
+  # Set as-whitelist: true to invert — only matching items will be allowed.
   item-blacklist:
     as-whitelist: false
 
-    # Match by Bukkit Material names (e.g., BARRIER, BEDROCK)
+    # Match by Bukkit Material name
     materials: []
     #  - COMMAND_BLOCK
     #  - BEDROCK
     #  - BARRIER
 
-    # Match by Display Name or Lore (supports partial matches, ignores colors)
-    # Syntax for lores: "line_index:text" or just "text" to search all lines.
+    # Match by display name or lore (partial match, color-insensitive)
+    # Lore syntax: "line_index:text" to target a specific line, or "text" to search all lines
     names: []
     #  - "Soulbound Item"
     #  - "Quest Item"
@@ -224,14 +163,14 @@ restrictions:
     #  - "0:Not for Sale"
     #  - "Soulbound"
 
-    # Match by Enchantment and Level
-    # Syntax: "ENCHANT_NAME" (any level) or "ENCHANT_NAME:LEVEL"
+    # Match by enchantment (any level) or enchantment + level
+    # Syntax: "ENCHANT_NAME" or "ENCHANT_NAME:LEVEL"
     enchantments: []
     #  - "BINDING_CURSE"
     #  - "VANISHING_CURSE:1"
 
-    # Match by NBT data, Custom Model Data, or Item Model
-    # Syntax for models: "DATA" (any material) or "MATERIAL:DATA"
+    # Match by NBT key, Custom Model Data, or Item Model
+    # Model syntax: "DATA" (any material) or "MATERIAL:DATA"
     nbt-keys: []
     #  - "undroppable"
     #  - "unique_id"
@@ -242,13 +181,12 @@ restrictions:
     #  - "custom:mymodel/admin_pickaxe"
     #  - "minecraft:broken_shield"
 
-    # Match Nexo, ItemsAdder  items
+    # Match Nexo or ItemsAdder items by their plugin ID
     special-items: []
     #  - "nexo:item_id"
     #  - "itemsadder:item_id"
 
-    # Match exact item stacks (advanced)
-    # Used for items that need specific data/material combinations.
+    # Match exact item stacks by combining multiple criteria (advanced)
     specific-items: []
     #  example_restriction:
     #    material: STICK
