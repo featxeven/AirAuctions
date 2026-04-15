@@ -1,0 +1,231 @@
+# ╔══════════════════════════════════════════════════════╗
+# ║              AUCTION HOUSE — MAIN MENU               ║
+# ║  docs: https://airdevelopment.gitbook.io/docs/       ║
+# ╚══════════════════════════════════════════════════════╝
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  LAYOUT
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+layout:
+  title: "<gradient:#5efce8:#736efe><bold>Marketplace</bold></gradient> <gray>»</gray> <white>%filter%</white> <dark_gray>(%page%/%pages%)</dark_gray>"
+  rows: 6
+  auction-slots: [10-16, 19-25, 28-34]
+  # true: always show next/previous buttons
+  # false: only show next/previous buttons when available
+  always-show-buttons: false
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  LISTING DISPLAY
+#  How each auction item is rendered inside auction-slots
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+listing:
+  lore:
+    - "%lore%"
+    - "<dark_gray>Auction ID: %id%"
+    - ""
+    - "<gray>Listing Information:</gray>"
+    - " <#736efe>»</#736efe> <gray>Seller:</gray>   <white>%seller%</white>"
+    - " <#736efe>»</#736efe> <gray>Price:</gray>    %price%"
+    - " <#736efe>»</#736efe> <gray>Amount:</gray>   <white>x%amount%</white>"
+    - " <#736efe>»</#736efe> <gray>Expires:</gray>  <white>%expire%</white>"
+    - " <#736efe>»</#736efe> <gray>Category:</gray> <white>%filter%</white>"
+    - ""
+    - "buy: <#5efce8>Left-Click</#5efce8> <gray>to confirm purchase</gray>"
+    - "view-player: <gold>Right-Click</gold> <gray>to view more from %seller%</gray>"
+    - "preview: <#f9f047>Shift-Click</#f9f047> <gray>to preview contents</gray>"
+    - "remove: <dark_red>Middle-Click</dark_red> <gray>to remove listing</gray>"
+
+  item-flags:
+    - HIDE_ATTRIBUTES
+
+  apply-confirm:
+    # true: opens purchase confirm GUI before purchasing
+    buy:
+      enabled: true
+    # true: opens remove confirm GUI before removing
+    remove:
+      enabled: true
+
+  actions:
+    left:
+      - "[sound] ui.button.click 1 2"
+      - "[buy]"
+    right:
+      - "[requirement] %player% != %seller%"
+      - "[open] gui:target_active sort:%sort% filter:%filter% target:%seller%"
+    shift:
+      - "[sound] ui.button.click 1 2"
+      - "[preview]"
+    middle:
+      - "[sound] ui.button.click 1 2"
+      - "[remove]"
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  BUTTONS
+#  Special items with fixed actions in the GUI
+#  You can still customize their appearance.
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+buttons:
+  next-page:
+    slots: 26
+    material: SPECTRAL_ARROW
+    display-name: "<#5efce8>Next Page</#5efce8>"
+    lore:
+      - "<gray>Navigate to next page</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+
+  previous-page:
+    slots: 18
+    material: SPECTRAL_ARROW
+    display-name: "<#5efce8>Previous Page</#5efce8>"
+    lore:
+      - "<gray>Return to previous page</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+
+  refresh:
+    slots: 49
+    material: SUNFLOWER
+    display-name: "<#f9f047><bold>Refresh Market</bold></#f9f047>"
+    lore:
+      - "<gray>Update the current listings</gray>"
+      - "<gray>to see the newest items.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.5"
+    cooldown: 5
+
+  # Order and sections are defined in data/filters.yml
+  filter:
+    slot: 47
+    material: COMPARATOR
+    display-name: "<gradient:#5efce8:#736efe><bold>Filter Categories</bold></gradient>"
+    lore:
+      - "<gray>Currently showing:</gray>"
+      - ""
+      - "%filter%"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to cycle filters</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+    list:
+      # false: single line
+      # true: vertical list
+      enabled: true
+      format:
+        selected: "<#5efce8>⏵ %name%"
+        unselected: "<dark_gray>  %name%"
+
+  # Order and sections are defined in config.yml
+  sort:
+    slot: 51
+    material: HOPPER
+    display-name: "<gradient:#5efce8:#736efe><bold>Sort Listings</bold></gradient>"
+    lore:
+      - "<gray>Current sorting:</gray>"
+      - ""
+      - "%sort%"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to cycle modes</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+    cooldown: 0.2
+    list:
+      # false: single line
+      # true: vertical list
+      enabled: true
+      format:
+        selected: "<#5efce8>⏵ %name%"
+        unselected: "<dark_gray>  %name%"
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#  ITEMS
+#  Static decorative items
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+items:
+  # Decorative
+  filler:
+    slots: [0-2, 6-9, 17, 27, 35-44]
+    material: BLACK_STAINED_GLASS_PANE
+    hide-tooltip: true
+
+  no-next-page:
+    slots: 26
+    material: ARROW
+    display-name: "<dark_gray>Next Page</dark_gray>"
+    lore:
+      - "<#ff5f6d>Last page reached</#ff5f6d>"
+
+  no-previous-page:
+    slots: 18
+    material: ARROW
+    display-name: "<dark_gray>Previous Page</dark_gray>"
+    lore:
+      - "<#ff5f6d>First page reached</#ff5f6d>"
+
+  # Header
+  marketplace:
+    slots: 3
+    material: COPPER_INGOT
+    glow: true
+    display-name: "<#5efce8><bold>Marketplace</bold></#5efce8>"
+    lore:
+      - "<dark_gray>Global Terminal</dark_gray>"
+      - ""
+      - " <#736efe>»</#736efe> <gray>Status:</gray> <#5efce8>Currently Viewing</#5efce8>"
+
+  listings:
+    slots: 4
+    material: IRON_INGOT
+    display-name: "<#bdc3c7><bold>Your Listings</bold></#bdc3c7>"
+    lore:
+      - "<dark_gray>Management</dark_gray>"
+      - ""
+      - "<gray>Manage your active sales</gray>"
+      - "<gray>and check your limits.</gray>"
+      - ""
+      - "<#5efce8>Click</#5efce8> <gray>to view listings</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+      - "[open] gui:player_listings filter:%filter% sort:%sort%"
+
+  history:
+    slots: 5
+    material: GOLD_INGOT
+    display-name: "<#ffbd3f><bold>Sales History</bold></#ffbd3f>"
+    lore:
+      - "<dark_gray>Transaction Logs</dark_gray>"
+      - ""
+      - "<gray>View your past successful</gray>"
+      - "<gray>sales and purchases.</gray>"
+      - ""
+      - "<#ffbd3f>Click</#ffbd3f> <gray>to view history</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+      - "[open] gui:player_history filter:%filter% sort:%sort%"
+
+  # Footer
+  categories:
+    slots: 45
+    material: BOOK
+    glow: true
+    display-name: "<#d459ff><bold>Browse Categories</bold></#d459ff>"
+    lore:
+      - "<gray>Open the category menu to</gray>"
+      - "<gray>find specific item types.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 1.2"
+      - "[open] gui:categories sort:%sort% filter:%filter%"
+
+  close:
+    slots: 53
+    material: BARRIER
+    display-name: "<#ff5f6d><bold>Close Menu</bold></#ff5f6d>"
+    lore:
+      - "<gray>Return to game.</gray>"
+    actions:
+      - "[sound] ui.button.click 1 0.8"
+      - "[close]"
