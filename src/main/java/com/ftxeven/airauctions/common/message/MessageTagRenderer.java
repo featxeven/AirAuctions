@@ -108,7 +108,8 @@ public final class MessageTagRenderer {
     private void showBossBar(CommandSender target, MessageTag.BossBar tag) {
         long refStart = animations.currentTick();
         boolean animated = animations.isAnimated(tag.text());
-        BossBar bar = BossBar.bossBar(deserialize(animations.resolve(tag.text(), refStart)), tag.initialProgress(), tag.color(), tag.overlay());
+        String initialText = animations.resolve(tag.text(), refStart);
+        BossBar bar = BossBar.bossBar(deserialize(initialText), tag.initialProgress(), tag.color(), tag.overlay());
         target.showBossBar(bar);
 
         if (!animated && !tag.countdown()) {
@@ -116,14 +117,24 @@ public final class MessageTagRenderer {
             return;
         }
 
+        String[] lastText = animated ? new String[]{initialText} : null;
+
         animations.scheduleRedrawLoop(target, refStart, tag.durationTicks(), elapsed -> {
             if (animated) {
-                bar.name(deserialize(animations.resolve(tag.text(), refStart)));
+                redrawName(bar, tag, refStart, lastText);
             }
             if (tag.countdown()) {
                 bar.progress(Math.max(0f, tag.initialProgress() * (1f - (float) elapsed / tag.durationTicks())));
             }
         }, () -> target.hideBossBar(bar));
+    }
+
+    private void redrawName(BossBar bar, MessageTag.BossBar tag, long refStart, String[] lastText) {
+        String resolved = animations.resolve(tag.text(), refStart);
+        if (!resolved.equals(lastText[0])) {
+            bar.name(deserialize(resolved));
+            lastText[0] = resolved;
+        }
     }
 
     private Duration ticks(long amount) {
@@ -132,7 +143,7 @@ public final class MessageTagRenderer {
 
     private Component deserialize(String text) {
         try {
-            return MiniText.mini().deserialize(text);
+            return MiniText.parse(text);
         } catch (Exception e) {
             logger.warning("Could not parse MiniMessage text '" + text + "': " + e.getMessage());
             return Component.text(text);
