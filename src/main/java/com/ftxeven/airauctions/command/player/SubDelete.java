@@ -170,7 +170,7 @@ public final class SubDelete implements SubCommand {
         placeholders.put("id", info.id());
         placeholders.put("seller", services.players().name(info.seller()));
         placeholders.put("amount", String.valueOf(info.amount()));
-        placeholders.put("item", ItemDisplay.name(info.item(), configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", info.item(), configs.lang());
         services.economy().formatInto(placeholders, "price", info.economy(), price);
         return placeholders;
     }

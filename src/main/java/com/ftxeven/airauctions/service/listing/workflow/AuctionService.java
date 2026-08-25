@@ -277,11 +277,9 @@ public final class AuctionService {
     // Messaging
 
     private void announcePurchased(Listing.Info info, Player buyer, int amount, int remainingAfter, Quote quote, ItemDelivery.Result delivery) {
-        String itemName = ItemDisplay.name(info.item(), configs.lang());
-
         Map<String, String> buyerPlaceholders = new HashMap<>();
         buyerPlaceholders.put("amount", String.valueOf(amount));
-        buyerPlaceholders.put("item", itemName);
+        ItemDisplay.formatInto(buyerPlaceholders, "item", info.item(), configs.lang());
         buyerPlaceholders.put("seller", players.name(info.seller()));
         economy.formatInto(buyerPlaceholders, "price", info.economy(), quote.price());
         messenger.send(buyer, configs.lang().get("auctions.purchase.success"), buyerPlaceholders);
@@ -291,7 +289,7 @@ public final class AuctionService {
 
         Map<String, String> sellerPlaceholders = new HashMap<>();
         sellerPlaceholders.put("amount", String.valueOf(amount));
-        sellerPlaceholders.put("item", itemName);
+        ItemDisplay.formatInto(sellerPlaceholders, "item", info.item(), configs.lang());
         sellerPlaceholders.put("buyer", buyer.getName());
         economy.formatInto(sellerPlaceholders, "payout", info.economy(), quote.payout());
         economy.formatInto(sellerPlaceholders, "tax", info.economy(), quote.tax(), EconomyService.ChargeKind.TAX);

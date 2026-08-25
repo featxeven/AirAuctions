@@ -130,7 +130,7 @@ public final class ListingService {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("seller", seller.getName());
         placeholders.put("amount", String.valueOf(amount));
-        placeholders.put("item", ItemDisplay.name(item, configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", item, configs.lang());
         economy.formatInto(placeholders, "price", economyId, price);
         economy.formatInto(placeholders, "fee", economyId, fee);
         return placeholders;
@@ -228,7 +228,7 @@ public final class ListingService {
     private Map<String, String> cancelPlaceholders(Listing.Info info, int amount) {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("amount", String.valueOf(amount));
-        placeholders.put("item", ItemDisplay.name(info.item(), configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", info.item(), configs.lang());
         return placeholders;
     }
 
@@ -255,7 +255,7 @@ public final class ListingService {
         }
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("amount", String.valueOf(info.amount()));
-        placeholders.put("item", ItemDisplay.name(info.item(), configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", info.item(), configs.lang());
         placeholders.put("admin", adminDisplayName(admin));
         messenger.send(info.seller(), configs.lang().get("listings.delete.notify-seller"), placeholders);
     }
@@ -264,7 +264,7 @@ public final class ListingService {
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("id", info.id());
         placeholders.put("amount", String.valueOf(info.amount()));
-        placeholders.put("item", ItemDisplay.name(info.item(), configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", info.item(), configs.lang());
         placeholders.put("seller", players.name(info.seller()));
         messenger.send(admin, configs.lang().get("listings.delete.success"), placeholders);
     }

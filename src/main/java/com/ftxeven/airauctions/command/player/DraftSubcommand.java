@@ -381,9 +381,9 @@ public abstract class DraftSubcommand<E> implements SubCommand {
     }
 
     private void sendExpired(Player player, PendingListing<E> context) {
-        Map<String, String> placeholders = Map.of(
-                "amount", String.valueOf(context.amount()),
-                "item", ItemDisplay.name(context.snapshot(), configs.lang()));
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("amount", String.valueOf(context.amount()));
+        ItemDisplay.formatInto(placeholders, "item", context.snapshot(), configs.lang());
         messenger.send(player, configs.lang().get(langPrefix + ".confirmation.expired"), placeholders);
     }
 
@@ -391,7 +391,7 @@ public abstract class DraftSubcommand<E> implements SubCommand {
         EconomyService economy = services.economy();
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("amount", String.valueOf(context.amount()));
-        placeholders.put("item", ItemDisplay.name(context.snapshot(), configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", context.snapshot(), configs.lang());
         economy.formatInto(placeholders, "price", context.provider().id(), context.price());
         economy.formatInto(placeholders, "fee", context.provider().id(), economy.fee(player, context.provider(), context.price()));
         return placeholders;

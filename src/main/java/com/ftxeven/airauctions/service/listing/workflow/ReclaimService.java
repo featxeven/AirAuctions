@@ -63,7 +63,7 @@ public final class ReclaimService {
 
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("amount", String.valueOf(amount));
-        placeholders.put("item", ItemDisplay.name(info.item(), configs.lang()));
+        ItemDisplay.formatInto(placeholders, "item", info.item(), configs.lang());
         messenger.send(player, configs.lang().get(kind.key("success")), placeholders);
         if (delivery == ItemDelivery.Result.DROPPED) {
             messenger.send(player, configs.lang().get(kind.key("dropped")));
