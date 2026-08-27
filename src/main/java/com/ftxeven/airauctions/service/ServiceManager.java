@@ -51,7 +51,8 @@ public final class ServiceManager {
         players = new PlayerService(plugin.cache(), plugin.database(), economy);
 
         metadata = new ListingMetadataService(plugin.configs(), matcher);
-        listings = new ListingService(plugin.database(), plugin.cache(), plugin.configs(), economy, metadata, players, plugin.messenger());
+        listings = new ListingService(plugin.database(), plugin.cache(), plugin.configs(), economy, metadata, players,
+                plugin.messenger(), plugin.getLogger());
         history = new HistoryService(plugin.database(), plugin.cache(), plugin.configs());
         validator = new ListingValidator(plugin.configs(), players, matcher, listings);
         search = new SearchService(plugin.configs());

@@ -28,6 +28,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 public final class ListingService {
 
@@ -38,9 +39,10 @@ public final class ListingService {
     private final ListingMetadataService metadata;
     private final PlayerService players;
     private final Messenger messenger;
+    private final Logger logger;
 
     public ListingService(DatabaseManager database, CacheManager cache, ConfigManager configs, EconomyService economy,
-                          ListingMetadataService metadata, PlayerService players, Messenger messenger) {
+                          ListingMetadataService metadata, PlayerService players, Messenger messenger, Logger logger) {
         this.database = database;
         this.cache = cache;
         this.configs = configs;
@@ -48,6 +50,7 @@ public final class ListingService {
         this.metadata = metadata;
         this.players = players;
         this.messenger = messenger;
+        this.logger = logger;
     }
 
     // Lookup
@@ -57,25 +60,23 @@ public final class ListingService {
     }
 
     public List<String> findRecentIds(int limit) {
-        return database.listings().findRecentIds(limit);
+        return cache.listings().recentIds(limit);
     }
 
     public List<Listing> findAll(ListingQuery query) {
-        return database.listings().findAll(bounded(query));
+        return cache.listings().findAll(bounded(query));
     }
 
     public PageResult<Listing> query(ListingQuery query) {
-        ListingQuery asOf = bounded(query);
-        return cache.listings().queryPage(query, () -> database.listings().query(asOf));
+        return cache.listings().query(bounded(query));
     }
 
     public FacetCounts facets(ListingQuery query) {
-        ListingQuery asOf = bounded(query);
-        return cache.listings().queryFacets(query, () -> database.listings().facets(asOf));
+        return cache.listings().facets(bounded(query));
     }
 
     public int count(UUID owner, ListingScope scope) {
-        return database.listings().count(bounded(ListingQuery.owned(owner, scope)));
+        return cache.listings().count(bounded(ListingQuery.owned(owner, scope)));
     }
 
     // combined count across every non-history scope (active + expired + storage)
@@ -92,7 +93,7 @@ public final class ListingService {
     }
 
     public List<Listing.Info> dueToExpire() {
-        return database.listings().findDueToExpire(Instant.now());
+        return cache.listings().dueToExpire(Instant.now());
     }
 
     public boolean belongsToScope(Listing listing, ListingScope scope) {
@@ -117,8 +118,7 @@ public final class ListingService {
     @SuppressWarnings("unchecked")
     public <T extends Listing> T create(T listing) {
         T created = (T) database.listings().create(listing);
-        cache.listings().warm(created);
-        cache.listings().invalidateQueries();
+        cache.listings().index(created);
         return created;
     }
 
@@ -139,16 +139,18 @@ public final class ListingService {
     // Stock
 
     public OptionalInt reduceStock(String id, int amount) {
-        OptionalInt remaining = database.listings().reduceAuctionAmount(id, amount);
-        remaining.ifPresent(ignored -> cache.listings().invalidate(id));
+        OptionalInt remaining = cache.listings().tryReduceStock(id, amount);
+        remaining.ifPresent(ignored -> persistAsync(
+                () -> database.listings().reduceAuctionAmount(id, amount), "stock reduction for listing " + id));
         return remaining;
     }
 
     // Bidding
 
     public OptionalInt placeBid(String id, UUID bidder, double offer, Instant newExpiresAt) {
-        OptionalInt totalBidders = database.listings().placeBid(id, bidder, offer, newExpiresAt);
-        totalBidders.ifPresent(ignored -> cache.listings().invalidate(id));
+        OptionalInt totalBidders = cache.listings().tryPlaceBid(id, bidder, offer, newExpiresAt);
+        totalBidders.ifPresent(ignored -> persistAsync(
+                () -> database.listings().placeBid(id, bidder, offer, newExpiresAt), "bid on listing " + id));
         return totalBidders;
     }
 
@@ -157,19 +159,17 @@ public final class ListingService {
     }
 
     public void markBidReminderShown(String id) {
-        database.listings().incrementBidReminders(id);
-        cache.listings().invalidate(id);
+        cache.listings().incrementBidReminders(id);
+        persistAsync(() -> database.listings().incrementBidReminders(id), "reminder counter for listing " + id);
     }
 
     // Status transitions
 
     public Optional<Instant> transition(String id, ListingStatus status) {
-        Instant endedAt = Instant.now();
-        if (!database.listings().updateStatus(id, status, endedAt)) {
-            return Optional.empty();
-        }
-        cache.listings().invalidate(id);
-        return Optional.of(endedAt);
+        Optional<Instant> endedAt = cache.listings().tryTransition(id, status);
+        endedAt.ifPresent(instant -> persistAsync(
+                () -> database.listings().updateStatus(id, status, instant), "status update for listing " + id));
+        return endedAt;
     }
 
     // Cancellation
@@ -236,8 +236,8 @@ public final class ListingService {
 
     public void delete(Listing listing) {
         String id = listing.info().id();
-        database.listings().delete(id);
-        cache.listings().invalidate(id);
+        cache.listings().remove(id);
+        persistAsync(() -> database.listings().delete(id), "deletion of listing " + id);
     }
 
     public ItemDelivery.Result deliver(Player player, Listing listing) {
@@ -338,32 +338,45 @@ public final class ListingService {
             return;
         }
         Instant cutoff = Instant.now().minusSeconds(purgeDelaySeconds);
-        for (Listing.Info due : database.listings().findDueToPurge(scope, cutoff)) {
-            database.listings().delete(due.id());
-            cache.listings().invalidate(due.id());
+        List<String> due = cache.listings().dueToPurge(scope, cutoff);
+        for (String id : due) {
+            cache.listings().remove(id);
+        }
+        if (!due.isEmpty()) {
+            persistAsync(() -> due.forEach(id -> database.listings().delete(id)), "purge of " + due.size() + " " + scope + " listings");
         }
     }
 
     // Maintenance
 
     public int resyncMetadata(ListingMetadataResolver resolver) {
-        int updated = database.listings().resyncMetadata(resolver);
+        int updated = cache.listings().resyncMetadata(resolver);
         if (updated > 0) {
-            cache.listings().invalidateAll();
+            persistAsync(() -> database.listings().resyncMetadata(resolver), "metadata resync");
         }
         return updated;
     }
 
     public int countBySeller(Collection<UUID> sellers) {
-        return database.listings().countBySeller(sellers);
+        return cache.listings().countBySeller(sellers);
     }
 
     public int deleteBySeller(Collection<UUID> sellers) {
-        int removed = database.listings().deleteBySeller(sellers);
+        int removed = cache.listings().removeBySeller(sellers);
         if (removed > 0) {
-            cache.listings().invalidateAll();
+            persistAsync(() -> database.listings().deleteBySeller(sellers), "bulk deletion for " + sellers.size() + " sellers");
         }
         return removed;
+    }
+
+    private void persistAsync(Runnable task, String description) {
+        Scheduler.runAsync(() -> {
+            try {
+                task.run();
+            } catch (Exception e) {
+                logger.warning("Could not persist " + description + " (in-memory state is unaffected): " + e.getMessage());
+            }
+        });
     }
 
     // Results

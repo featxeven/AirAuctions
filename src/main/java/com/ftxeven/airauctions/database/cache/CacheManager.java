@@ -35,7 +35,9 @@ public final class CacheManager {
                 ? new RedisCacheSync(plugin, buildJedisPool(redis), redis, serverId)
                 : CacheSync.disabled();
 
-        listings = new ListingCache(database.listings(), sync, Duration.ofMinutes(5));
+        listings = new ListingCache(database.listings(), sync);
+        listings.loadAll();
+
         players = new PlayerCache(database.players(), sync, Duration.ofMinutes(5));
         history = new HistoryCache();
 
@@ -62,9 +64,11 @@ public final class CacheManager {
     }
 
     private void resync() {
-        listings.invalidateAll();
-        players.invalidateAll();
-        history.invalidateAll();
+        Scheduler.runAsync(() -> {
+            listings.reload();
+            players.invalidateAll();
+            history.invalidateAll();
+        });
     }
 
     private JedisPool buildJedisPool(StorageConfig.Redis redis) {

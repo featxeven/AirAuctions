@@ -14,19 +14,18 @@ import java.util.List;
 
 public final class AdminCommand implements CommandExecutor, TabCompleter {
 
-    private final Messenger messenger;
-    private final ConfigManager configs;
     private final CommandRegistry registry;
     private final CommandDispatcher dispatcher;
+    private final AirAuctions plugin;
 
     public AdminCommand(AirAuctions plugin) {
-        this.messenger = plugin.messenger();
-        this.configs = plugin.configs();
+        this.plugin = plugin;
+
         this.registry = new CommandRegistry()
-                .register(new SubReload(plugin, messenger, configs))
-                .register(new SubVersion(plugin, messenger, configs))
-                .register(new SubSimulate(messenger, configs, plugin.services(), plugin.getLogger()));
-        this.dispatcher = new CommandDispatcher(messenger, configs);
+                .register(new SubReload(plugin, plugin.messenger(), plugin.configs()))
+                .register(new SubVersion(plugin, plugin.messenger(), plugin.configs()))
+                .register(new SubSimulate(plugin.messenger(), plugin.configs(), plugin.services(), plugin.getLogger()));
+        this.dispatcher = new CommandDispatcher(plugin.messenger(), plugin.configs());
     }
 
     @Override
@@ -41,6 +40,6 @@ public final class AdminCommand implements CommandExecutor, TabCompleter {
     }
 
     private void sendUsage(CommandSender sender) {
-        messenger.send(sender, configs.lang().get("general.commands.usage"));
+        plugin.messenger().send(sender, plugin.configs().lang().get("general.commands.usage"));
     }
 }
