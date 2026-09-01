@@ -150,7 +150,12 @@ public final class LangConfig {
         ConfigurationSection yaml = YamlConfiguration.loadConfiguration(file);
         Map<String, String> map = new LinkedHashMap<>();
         for (String key : yaml.getKeys(false)) {
-            map.put(key, yaml.getString(key, key));
+            if (yaml.isString(key)) {
+                map.put(key, yaml.getString(key, key));
+            } else {
+                plugin.getLogger().warning("Item key '" + key + "' in " + file.getName() + " is not a string, using the key itself as its display name");
+                map.put(key, key);
+            }
         }
         return Map.copyOf(map);
     }

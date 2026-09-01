@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 import java.util.logging.Logger;
 
 public final class Messenger {
@@ -33,10 +34,10 @@ public final class Messenger {
 
     public void send(CommandSender target, List<String> lines, Map<String, String> placeholders) {
         MessageTagRenderer.TitleBuffer titleBuffer = new MessageTagRenderer.TitleBuffer();
+        UnaryOperator<String> resolve = text -> Placeholders.apply(target, text, placeholders);
         for (String rawLine : lines) {
-            String substituted = Placeholders.apply(target, rawLine, placeholders);
-            String leftover = tagParser.scan(substituted, tag -> tagRenderer.render(target, tag, titleBuffer));
-            sendChatLine(target, leftover);
+            String leftover = tagParser.scan(rawLine, resolve, tag -> tagRenderer.render(target, tag, titleBuffer));
+            sendChatLine(target, resolve.apply(leftover));
         }
         tagRenderer.flushTitle(target, titleBuffer);
     }
@@ -90,9 +91,9 @@ public final class Messenger {
     // Plain text
 
     public String plain(String line, Map<String, String> placeholders) {
-        String substituted = Placeholders.apply(null, line, placeholders);
-        String stripped = tagParser.strip(substituted);
-        String resolved = animations.resolve(stripped);
+        String leftover = tagParser.strip(line);
+        String substituted = Placeholders.apply(null, leftover, placeholders);
+        String resolved = animations.resolve(substituted);
         return MiniText.plain(deserialize(resolved));
     }
 

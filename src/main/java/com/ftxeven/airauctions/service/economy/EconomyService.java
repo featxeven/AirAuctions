@@ -64,35 +64,32 @@ public final class EconomyService {
     // Formatting
 
     public String format(String economyId, double amount) {
-        Optional<EconomyProvider> provider = economy.get(economyId);
-        ExpansionsConfig.Economy config = configs.expansions().economy();
-        boolean allowDecimals = provider.map(EconomyProvider::allowDecimals).orElse(true);
-        String number = NumberConverter.format(amount, config.numberFormat(), config.numberFormatSuffixes(), allowDecimals);
-        return provider.map(p -> p.format(number)).orElse(number);
+        String number = formattedNumber(economyId, amount, configs.expansions().economy().numberFormat());
+        return economy.get(economyId).map(p -> p.format(number)).orElse(number);
     }
 
-    // Writes %key%/%key_plain% for a plain amount that's always present
+    // Writes %key%, %key_plain%, %key_number%  and %key_raw% for an amount that's always present
     public void formatInto(Map<String, String> placeholders, String key, String economyId, double amount) {
-        put(placeholders, key, format(economyId, amount));
+        putAmount(placeholders, key, economyId, OptionalDouble.of(amount), null);
     }
 
-    // Writes %key%/%key_plain% for a fee/tax charge
+    // Writes the same 4 placeholders for a fee/tax charge
     public void formatInto(Map<String, String> placeholders, String key, String economyId, ChargeResult charge) {
         formatInto(placeholders, key, economyId, charge.amount(), charge.kind());
     }
 
-    // Writes %key%/%key_plain% for a fee/tax amount recomputed outside a ChargeResult
+    // Writes the same 4 placeholders for a fee/tax amount recomputed outside a ChargeResult
     public void formatInto(Map<String, String> placeholders, String key, String economyId, double amount, ChargeKind kind) {
         OptionalDouble present = amount <= 0 ? OptionalDouble.empty() : OptionalDouble.of(amount);
         formatInto(placeholders, key, economyId, present, kind.emptyPlaceholderKey());
     }
 
-    // Writes %key%/%key_plain% for an amount that might not exist yet
+    // Writes the same 4 placeholders for an amount that might not exist yet
     public void formatInto(Map<String, String> placeholders, String key, String economyId, OptionalDouble amount, String emptyLangKey) {
-        put(placeholders, key, amount.isPresent() ? format(economyId, amount.getAsDouble()) : emptyText(emptyLangKey));
+        putAmount(placeholders, key, economyId, amount, emptyLangKey);
     }
 
-    // Writes %economy% (+ %economy_plain%) and %economy_id% for a resolved provider
+    // writes %economy% (+ %economy_plain%) and %economy_id% for a resolved provider
     public void formatEconomy(Map<String, String> placeholders, EconomyProvider provider) {
         formatEconomy(placeholders, provider.id(), provider.displayName());
     }
@@ -105,12 +102,41 @@ public final class EconomyService {
 
     private void formatEconomy(Map<String, String> placeholders, String economyId, String displayName) {
         placeholders.put("economy_id", economyId);
-        put(placeholders, "economy", displayName);
+        putText(placeholders, "economy", displayName);
     }
 
-    private void put(Map<String, String> placeholders, String key, String formatted) {
+    // for an already-formatted text value - %key%/%key_plain%.
+    private void putText(Map<String, String> placeholders, String key, String formatted) {
         placeholders.put(key, formatted);
         placeholders.put(key + "_plain", MiniText.plain(formatted));
+    }
+
+    // for a numeric amount - %key%/%key_plain%/%key_number%/%key_raw%
+    private void putAmount(Map<String, String> placeholders, String key, String economyId, OptionalDouble amount, String emptyLangKey) {
+        if (amount.isEmpty()) {
+            String emptyPlain = MiniText.plain(emptyText(emptyLangKey));
+            placeholders.put(key, emptyText(emptyLangKey));
+            placeholders.put(key + "_plain", emptyPlain);
+            placeholders.put(key + "_number", emptyPlain);
+            placeholders.put(key + "_raw", emptyPlain);
+            return;
+        }
+
+        double value = amount.getAsDouble();
+        ExpansionsConfig.Economy config = configs.expansions().economy();
+        String number = formattedNumber(economyId, value, config.numberFormat());
+        String raw = formattedNumber(economyId, value, ExpansionsConfig.NumberFormat.RAW);
+        String formatted = economy.get(economyId).map(p -> p.format(number)).orElse(number);
+
+        placeholders.put(key, formatted);
+        placeholders.put(key + "_plain", MiniText.plain(formatted));
+        placeholders.put(key + "_number", number);
+        placeholders.put(key + "_raw", raw);
+    }
+
+    private String formattedNumber(String economyId, double amount, ExpansionsConfig.NumberFormat mode) {
+        boolean allowDecimals = economy.get(economyId).map(EconomyProvider::allowDecimals).orElse(true);
+        return NumberConverter.format(amount, mode, configs.expansions().economy().numberFormatSuffixes(), allowDecimals);
     }
 
     private String emptyText(String langKey) {

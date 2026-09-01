@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +22,10 @@ public final class MessageTagParser {
     }
 
     public String scan(String line, Consumer<MessageTag> consumer) {
+        return scan(line, UnaryOperator.identity(), consumer);
+    }
+
+    public String scan(String line, UnaryOperator<String> resolvePlaceholders, Consumer<MessageTag> consumer) {
         StringBuilder result = new StringBuilder();
         int pos = 0;
         Matcher matcher = TAG_START.matcher(line);
@@ -33,7 +38,7 @@ public final class MessageTagParser {
                 pos = matcher.end();
                 continue;
             }
-            consumer.accept(parsed.tag());
+            consumer.accept(resolveText(parsed.tag(), resolvePlaceholders));
             pos = parsed.endIndex();
         }
         result.append(line, pos, line.length());
@@ -42,6 +47,19 @@ public final class MessageTagParser {
 
     public String strip(String line) {
         return scan(line, tag -> { });
+    }
+
+    private MessageTag resolveText(MessageTag tag, UnaryOperator<String> resolvePlaceholders) {
+        return switch (tag) {
+            case MessageTag.Sound sound -> sound;
+            case MessageTag.ActionBar actionBar -> new MessageTag.ActionBar(resolvePlaceholders.apply(actionBar.text()));
+            case MessageTag.Title title -> new MessageTag.Title(
+                    resolvePlaceholders.apply(title.text()), title.fadeInTicks(), title.stayTicks(), title.fadeOutTicks());
+            case MessageTag.Subtitle subtitle -> new MessageTag.Subtitle(resolvePlaceholders.apply(subtitle.text()));
+            case MessageTag.BossBar bossBar -> new MessageTag.BossBar(
+                    resolvePlaceholders.apply(bossBar.text()), bossBar.durationTicks(), bossBar.color(),
+                    bossBar.overlay(), bossBar.initialProgress(), bossBar.countdown());
+        };
     }
 
     private record ParsedTag(MessageTag tag, int endIndex) {}
@@ -129,12 +147,22 @@ public final class MessageTagParser {
                     i += 2;
                     continue;
                 }
-                return new QuotedResult(text.toString(), i);
+                if (isTagTerminator(line, i + 1)) {
+                    return new QuotedResult(text.toString(), i);
+                }
             }
             text.append(c);
             i++;
         }
         return null;
+    }
+
+    private boolean isTagTerminator(String line, int afterQuote) {
+        if (afterQuote >= line.length()) {
+            return true; // truncated tag
+        }
+        char next = line.charAt(afterQuote);
+        return next == '>' || next == ':';
     }
 
     private String paramOr(List<String> params, int index) {
