@@ -1,8 +1,8 @@
 package com.ftxeven.airauctions.util;
 
-import com.ftxeven.airauctions.common.animation.AnimationManager;
-import com.ftxeven.airauctions.common.message.MessageTagParser;
-import com.ftxeven.airauctions.common.message.MessageTagRenderer;
+import com.ftxeven.airauctions.core.animation.AnimationManager;
+import com.ftxeven.airauctions.core.message.MessageTagParser;
+import com.ftxeven.airauctions.core.message.MessageTagRenderer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;

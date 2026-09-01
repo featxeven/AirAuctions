@@ -1,7 +1,7 @@
 package com.ftxeven.airauctions.listener;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.GuiManager;
 import com.ftxeven.airauctions.permission.Permissions;
 import com.ftxeven.airauctions.service.ServiceManager;
 import com.ftxeven.airauctions.util.Messenger;

@@ -2,10 +2,10 @@ package com.ftxeven.airauctions.command;
 
 import com.ftxeven.airauctions.config.ConfigManager;
 import com.ftxeven.airauctions.config.MainConfig;
-import com.ftxeven.airauctions.common.command.DurationUnits;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabSource;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabSourceRegistry;
-import com.ftxeven.airauctions.common.gui.GuiManager;
+import com.ftxeven.airauctions.core.command.DurationUnits;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabSource;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabSourceRegistry;
+import com.ftxeven.airauctions.core.gui.GuiManager;
 import com.ftxeven.airauctions.service.ServiceManager;
 
 import java.util.ArrayList;

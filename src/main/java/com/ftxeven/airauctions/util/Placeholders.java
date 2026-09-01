@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.util;
 
-import com.ftxeven.airauctions.common.message.ReferenceExpander;
+import com.ftxeven.airauctions.core.message.ReferenceExpander;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

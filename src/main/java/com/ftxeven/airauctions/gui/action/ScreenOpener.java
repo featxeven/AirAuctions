@@ -1,13 +1,13 @@
 package com.ftxeven.airauctions.gui.action;
 
-import com.ftxeven.airauctions.common.gui.GuiSession;
-import com.ftxeven.airauctions.common.gui.OpenOptions;
-import com.ftxeven.airauctions.common.gui.action.ActionContext;
-import com.ftxeven.airauctions.common.gui.action.ForwardNavigation;
-import com.ftxeven.airauctions.common.gui.flag.FlagGate;
-import com.ftxeven.airauctions.common.gui.nav.GuiContext;
-import com.ftxeven.airauctions.common.gui.nav.ScreenKey;
-import com.ftxeven.airauctions.common.gui.nav.ScreenState;
+import com.ftxeven.airauctions.core.gui.GuiSession;
+import com.ftxeven.airauctions.core.gui.OpenOptions;
+import com.ftxeven.airauctions.core.gui.action.ActionContext;
+import com.ftxeven.airauctions.core.gui.action.ForwardNavigation;
+import com.ftxeven.airauctions.core.gui.flag.FlagGate;
+import com.ftxeven.airauctions.core.gui.nav.GuiContext;
+import com.ftxeven.airauctions.core.gui.nav.ScreenKey;
+import com.ftxeven.airauctions.core.gui.nav.ScreenState;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

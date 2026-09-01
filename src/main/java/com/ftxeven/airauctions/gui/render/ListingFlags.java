@@ -1,7 +1,7 @@
 package com.ftxeven.airauctions.gui.render;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.GuiManager;
 import com.ftxeven.airauctions.database.query.ListingQuery;
 import com.ftxeven.airauctions.economy.EconomyProvider;
 import com.ftxeven.airauctions.gui.impl.BuyAmountGui;

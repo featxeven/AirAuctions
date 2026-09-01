@@ -1,10 +1,10 @@
 package com.ftxeven.airauctions.gui;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.animation.AnimationManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.config.GuiConfig;
-import com.ftxeven.airauctions.common.gui.input.InputRegistry;
+import com.ftxeven.airauctions.core.animation.AnimationManager;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.config.GuiConfig;
+import com.ftxeven.airauctions.core.gui.input.InputRegistry;
 import com.ftxeven.airauctions.gui.action.*;
 import com.ftxeven.airauctions.gui.action.ConfirmGate;
 import com.ftxeven.airauctions.gui.config.LayoutConfig;
@@ -12,7 +12,7 @@ import com.ftxeven.airauctions.gui.impl.*;
 import com.ftxeven.airauctions.gui.render.ListingFlags;
 import com.ftxeven.airauctions.gui.render.ListingPlaceholders;
 import com.ftxeven.airauctions.gui.render.PlayerHeadResolver;
-import com.ftxeven.airauctions.common.hook.HookRegistry;
+import com.ftxeven.airauctions.core.hook.HookRegistry;
 import com.ftxeven.airauctions.model.Listing;
 import com.ftxeven.airauctions.model.PlayerData;
 import com.ftxeven.airauctions.service.Eligibility;

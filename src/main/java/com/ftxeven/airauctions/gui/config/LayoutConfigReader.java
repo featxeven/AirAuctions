@@ -1,10 +1,10 @@
 package com.ftxeven.airauctions.gui.config;
 
-import com.ftxeven.airauctions.common.gui.config.AliasExpander;
-import com.ftxeven.airauctions.common.gui.config.ItemConfig;
-import com.ftxeven.airauctions.common.gui.config.ItemConfigReader;
-import com.ftxeven.airauctions.common.gui.config.SharedConfig;
-import com.ftxeven.airauctions.common.gui.config.SlotParser;
+import com.ftxeven.airauctions.core.gui.config.AliasExpander;
+import com.ftxeven.airauctions.core.gui.config.ItemConfig;
+import com.ftxeven.airauctions.core.gui.config.ItemConfigReader;
+import com.ftxeven.airauctions.core.gui.config.SharedConfig;
+import com.ftxeven.airauctions.core.gui.config.SlotParser;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.Nullable;
 

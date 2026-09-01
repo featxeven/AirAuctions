@@ -1,21 +1,17 @@
 package com.ftxeven.airauctions.config;
 
-import com.ftxeven.airauctions.common.command.DurationUnits.DurationUnit;
-import com.ftxeven.airauctions.common.command.DynamicCommand;
-import com.ftxeven.airauctions.common.command.RootCommand;
-import com.ftxeven.airauctions.common.command.Shortcuts.Shortcut;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabPosition;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabPosition.CopyPosition;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabPosition.EntriesPosition;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabPosition.TabEntry;
+import com.ftxeven.airauctions.core.command.DurationUnits.DurationUnit;
+import com.ftxeven.airauctions.core.command.DynamicCommand;
+import com.ftxeven.airauctions.core.command.RootCommand;
+import com.ftxeven.airauctions.core.command.Shortcuts.Shortcut;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabPosition;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabPosition.CopyPosition;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabPosition.EntriesPosition;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabPosition.TabEntry;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public final class CommandsConfig extends BaseConfig {
@@ -56,6 +52,15 @@ public final class CommandsConfig extends BaseConfig {
 
     public Map<String, DynamicCommand> subcommands() {
         return subcommands;
+    }
+
+    public Optional<DynamicCommand> findSubcommand(String id) {
+        return Optional.ofNullable(subcommands.get(id));
+    }
+
+    /** the subcommand config for id, or a disabled placeholder if it's missing */
+    public DynamicCommand findSubcommandOrDisabled(String id) {
+        return findSubcommand(id).orElseGet(() -> DynamicCommand.disabled(id));
     }
 
     // Section readers

@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.gui.render;
 
-import com.ftxeven.airauctions.common.gui.render.MaterialResolver;
+import com.ftxeven.airauctions.core.gui.render.MaterialResolver;
 import com.ftxeven.airauctions.model.PlayerData;
 import com.ftxeven.airauctions.service.player.PlayerService;
 import com.ftxeven.airauctions.service.simulation.PlayerPool;

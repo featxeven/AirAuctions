@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.config;
 
-import com.ftxeven.airauctions.common.animation.Animation;
+import com.ftxeven.airauctions.core.animation.Animation;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.java.JavaPlugin;
 

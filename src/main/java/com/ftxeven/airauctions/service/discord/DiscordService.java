@@ -2,7 +2,7 @@ package com.ftxeven.airauctions.service.discord;
 
 import com.ftxeven.airauctions.config.ConfigManager;
 import com.ftxeven.airauctions.config.ExpansionsConfig;
-import com.ftxeven.airauctions.common.command.CommandDispatch;
+import com.ftxeven.airauctions.core.command.CommandDispatch;
 import com.ftxeven.airauctions.model.Listing;
 import com.ftxeven.airauctions.service.economy.EconomyService;
 import com.ftxeven.airauctions.service.player.PlayerService;

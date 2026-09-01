@@ -1,9 +1,9 @@
 package com.ftxeven.airauctions.gui.action;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiSession;
-import com.ftxeven.airauctions.common.gui.action.ActionContext;
-import com.ftxeven.airauctions.common.gui.action.ActionRegistry;
+import com.ftxeven.airauctions.core.gui.GuiSession;
+import com.ftxeven.airauctions.core.gui.action.ActionContext;
+import com.ftxeven.airauctions.core.gui.action.ActionRegistry;
 import org.jetbrains.annotations.Nullable;
 
 /**

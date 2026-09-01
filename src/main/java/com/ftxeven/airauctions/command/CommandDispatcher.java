@@ -1,8 +1,8 @@
 package com.ftxeven.airauctions.command;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.command.CommandDispatch;
-import com.ftxeven.airauctions.common.command.CommandRegistry;
+import com.ftxeven.airauctions.core.command.CommandDispatch;
+import com.ftxeven.airauctions.core.command.CommandRegistry;
 import com.ftxeven.airauctions.util.Messenger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

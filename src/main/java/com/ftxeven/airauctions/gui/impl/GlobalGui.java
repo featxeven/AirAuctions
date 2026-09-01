@@ -1,7 +1,7 @@
 package com.ftxeven.airauctions.gui.impl;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiSession;
+import com.ftxeven.airauctions.core.gui.GuiSession;
 import com.ftxeven.airauctions.gui.ListingGuiManager;
 import com.ftxeven.airauctions.model.ListingScope;
 import com.ftxeven.airauctions.service.ServiceManager;

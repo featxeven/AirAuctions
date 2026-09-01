@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.service.listing.match;
 
-import com.ftxeven.airauctions.common.hook.HookRegistry;
+import com.ftxeven.airauctions.core.hook.HookRegistry;
 import com.ftxeven.airauctions.model.MatchRules;
 import com.ftxeven.airauctions.util.MiniText;
 import net.kyori.adventure.text.Component;

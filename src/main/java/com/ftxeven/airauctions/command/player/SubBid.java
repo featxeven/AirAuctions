@@ -2,10 +2,10 @@ package com.ftxeven.airauctions.command.player;
 
 import com.ftxeven.airauctions.config.ConfigManager;
 import com.ftxeven.airauctions.config.MainConfig;
-import com.ftxeven.airauctions.common.command.CommandDispatch;
-import com.ftxeven.airauctions.common.command.DurationUnits;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabCompleteEngine;
-import com.ftxeven.airauctions.common.gui.GuiManager;
+import com.ftxeven.airauctions.core.command.CommandDispatch;
+import com.ftxeven.airauctions.core.command.DurationUnits;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabCompleteEngine;
+import com.ftxeven.airauctions.core.gui.GuiManager;
 import com.ftxeven.airauctions.economy.EconomyProvider;
 import com.ftxeven.airauctions.gui.impl.ListingDraft;
 import com.ftxeven.airauctions.service.ServiceManager;
@@ -17,10 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.OptionalLong;
+import java.util.*;
 
 public final class SubBid extends DraftSubcommand<Integer> {
 
@@ -85,7 +82,11 @@ public final class SubBid extends DraftSubcommand<Integer> {
     // a bare "300" or a chain of unit segments like "2h45m"
     private Integer parseSeconds(String raw) {
         OptionalLong parsedTicks = durationUnits.parse(raw, durationFilter());
-        return parsedTicks.isPresent() ? (int) (parsedTicks.getAsLong() / 20) : null;
+        if (parsedTicks.isEmpty()) {
+            return null;
+        }
+        OptionalInt seconds = DurationUnits.wholeSeconds(parsedTicks.getAsLong());
+        return seconds.isPresent() ? seconds.getAsInt() : null;
     }
 
     private static int clamp(int seconds, BidService.DurationBounds bounds) {

@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.gui.action;
 
-import com.ftxeven.airauctions.common.gui.action.DeferredNavigationAction;
+import com.ftxeven.airauctions.core.gui.action.DeferredNavigationAction;
 import com.ftxeven.airauctions.gui.BaseGui;
 import com.ftxeven.airauctions.gui.impl.SearchGui;
 import com.ftxeven.airauctions.service.ServiceManager;

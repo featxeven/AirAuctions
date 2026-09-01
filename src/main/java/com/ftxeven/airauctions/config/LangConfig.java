@@ -1,7 +1,7 @@
 package com.ftxeven.airauctions.config;
 
-import com.ftxeven.airauctions.common.animation.AnimationTag;
-import com.ftxeven.airauctions.common.message.ReferenceExpander;
+import com.ftxeven.airauctions.core.animation.AnimationTag;
+import com.ftxeven.airauctions.core.message.ReferenceExpander;
 import com.ftxeven.airauctions.util.Placeholders;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;

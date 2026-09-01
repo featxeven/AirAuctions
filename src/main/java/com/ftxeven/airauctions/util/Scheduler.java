@@ -20,10 +20,6 @@ public final class Scheduler {
     private Scheduler() {
     }
 
-    public static boolean isFolia() {
-        return FOLIA;
-    }
-
     public static ScheduledTask runGlobal(Runnable task) {
         return Bukkit.getGlobalRegionScheduler().run(PLUGIN, t -> task.run());
     }

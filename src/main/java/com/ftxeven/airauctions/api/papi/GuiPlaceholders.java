@@ -1,9 +1,9 @@
 package com.ftxeven.airauctions.api.papi;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.GuiSession;
-import com.ftxeven.airauctions.common.gui.nav.GuiContext;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.GuiSession;
+import com.ftxeven.airauctions.core.gui.nav.GuiContext;
 import com.ftxeven.airauctions.gui.BaseGui;
 import com.ftxeven.airauctions.gui.render.FilterOptions;
 import com.ftxeven.airauctions.service.player.PlayerService;

@@ -17,7 +17,7 @@ import com.ftxeven.airauctions.service.ActionResult;
 import com.ftxeven.airauctions.service.Eligibility;
 import com.ftxeven.airauctions.service.economy.EconomyService;
 import com.ftxeven.airauctions.service.player.PlayerService;
-import com.ftxeven.airauctions.common.command.CommandDispatch;
+import com.ftxeven.airauctions.core.command.CommandDispatch;
 import com.ftxeven.airauctions.util.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,8 +1,8 @@
 package com.ftxeven.airauctions.gui.action;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.action.ActionContext;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.action.ActionContext;
 import com.ftxeven.airauctions.gui.BaseGui;
 import com.ftxeven.airauctions.gui.impl.PlaceBidGui;
 import com.ftxeven.airauctions.model.Listing;

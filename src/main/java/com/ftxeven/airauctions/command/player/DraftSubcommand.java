@@ -2,12 +2,12 @@ package com.ftxeven.airauctions.command.player;
 
 import com.ftxeven.airauctions.config.ConfigManager;
 import com.ftxeven.airauctions.config.MainConfig;
-import com.ftxeven.airauctions.common.command.CommandDispatch;
-import com.ftxeven.airauctions.common.command.DynamicCommand;
+import com.ftxeven.airauctions.core.command.CommandDispatch;
+import com.ftxeven.airauctions.core.command.DynamicCommand;
 import com.ftxeven.airauctions.command.SubCommand;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabCompleteEngine;
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.OpenOptions;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabCompleteEngine;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.OpenOptions;
 import com.ftxeven.airauctions.economy.EconomyProvider;
 import com.ftxeven.airauctions.gui.impl.DraftGui;
 import com.ftxeven.airauctions.gui.impl.ListingDraft;
@@ -90,8 +90,7 @@ public abstract class DraftSubcommand<E> implements SubCommand {
     }
 
     protected final DynamicCommand config() {
-        DynamicCommand command = configs.commands().subcommands().get(key);
-        return command != null ? command : new DynamicCommand(false, key, List.of(), "", "", Map.of(), Map.of());
+        return configs.commands().findSubcommandOrDisabled(key);
     }
 
     // SubCommand - dispatch

@@ -2,9 +2,7 @@ package com.ftxeven.airauctions.command.admin;
 
 import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.command.CommandDispatcher;
-import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.command.CommandRegistry;
-import com.ftxeven.airauctions.util.Messenger;
+import com.ftxeven.airauctions.core.command.CommandRegistry;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

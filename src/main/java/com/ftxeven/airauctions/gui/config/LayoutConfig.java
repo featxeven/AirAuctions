@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.gui.config;
 
-import com.ftxeven.airauctions.common.gui.config.ItemConfig;
+import com.ftxeven.airauctions.core.gui.config.ItemConfig;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;

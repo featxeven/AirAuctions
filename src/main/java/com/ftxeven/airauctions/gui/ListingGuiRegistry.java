@@ -1,8 +1,8 @@
 package com.ftxeven.airauctions.gui;
 
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.config.AliasExpander;
-import com.ftxeven.airauctions.common.gui.config.GuiConfig;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.config.AliasExpander;
+import com.ftxeven.airauctions.core.gui.config.GuiConfig;
 import com.ftxeven.airauctions.gui.config.LayoutConfig;
 import com.ftxeven.airauctions.gui.config.LayoutConfigReader;
 import org.bukkit.configuration.ConfigurationSection;

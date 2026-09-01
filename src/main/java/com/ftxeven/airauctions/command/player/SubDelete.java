@@ -1,11 +1,11 @@
 package com.ftxeven.airauctions.command.player;
 
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.command.DynamicCommand;
+import com.ftxeven.airauctions.core.command.DynamicCommand;
 import com.ftxeven.airauctions.command.SubCommand;
-import com.ftxeven.airauctions.common.command.tabcomplete.TabCompleteEngine;
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.OpenOptions;
+import com.ftxeven.airauctions.core.command.tabcomplete.TabCompleteEngine;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.OpenOptions;
 import com.ftxeven.airauctions.gui.impl.ConfirmGui;
 import com.ftxeven.airauctions.model.Listing;
 import com.ftxeven.airauctions.model.ListingScope;
@@ -26,7 +26,6 @@ import java.util.Optional;
 public final class SubDelete implements SubCommand {
 
     private static final String KEY = "delete";
-    private static final DynamicCommand DISABLED = new DynamicCommand(false, KEY, List.of(), "", "", Map.of(), Map.of());
 
     private final ConfigManager configs;
     private final Messenger messenger;
@@ -196,8 +195,7 @@ public final class SubDelete implements SubCommand {
     }
 
     private DynamicCommand config() {
-        DynamicCommand command = configs.commands().subcommands().get(KEY);
-        return command != null ? command : DISABLED;
+        return configs.commands().findSubcommandOrDisabled(KEY);
     }
 
     // Internal types

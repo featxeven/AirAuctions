@@ -1,6 +1,6 @@
 package com.ftxeven.airauctions.listener;
 
-import com.ftxeven.airauctions.common.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.GuiManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

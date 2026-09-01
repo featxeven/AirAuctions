@@ -1,10 +1,10 @@
 package com.ftxeven.airauctions.gui.action;
 
-import com.ftxeven.airauctions.common.gui.action.ActionTokens;
+import com.ftxeven.airauctions.core.gui.action.ActionTokens;
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
-import com.ftxeven.airauctions.common.gui.action.ActionContext;
-import com.ftxeven.airauctions.common.gui.action.ActionRegistry;
+import com.ftxeven.airauctions.core.gui.GuiManager;
+import com.ftxeven.airauctions.core.gui.action.ActionContext;
+import com.ftxeven.airauctions.core.gui.action.ActionRegistry;
 import com.ftxeven.airauctions.database.query.ListingQuery;
 import com.ftxeven.airauctions.gui.BaseGui;
 import com.ftxeven.airauctions.gui.impl.BuyAmountGui;

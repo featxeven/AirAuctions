@@ -3,10 +3,10 @@ package com.ftxeven.airauctions;
 import com.ftxeven.airauctions.api.papi.AirAuctionsExpansion;
 import com.ftxeven.airauctions.command.CommandManager;
 import com.ftxeven.airauctions.config.ConfigManager;
-import com.ftxeven.airauctions.common.animation.AnimationManager;
-import com.ftxeven.airauctions.common.gui.GuiManager;
+import com.ftxeven.airauctions.core.animation.AnimationManager;
+import com.ftxeven.airauctions.core.gui.GuiManager;
 import com.ftxeven.airauctions.gui.ListingGuiManager;
-import com.ftxeven.airauctions.common.hook.HookRegistry;
+import com.ftxeven.airauctions.core.hook.HookRegistry;
 import com.ftxeven.airauctions.database.cache.CacheManager;
 import com.ftxeven.airauctions.database.DatabaseManager;
 import com.ftxeven.airauctions.economy.EconomyRegistry;
@@ -38,8 +38,7 @@ public final class AirAuctions extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        getLogger().info(
-                "Running on " + (Scheduler.isFolia() ? "Folia" : "Paper") + " - " + Bukkit.getVersion());
+        getLogger().info("Running on " + Bukkit.getName() + " - " + Bukkit.getVersion());
 
         configs = new ConfigManager(this);
         if (!configs.load()) {
