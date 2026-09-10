@@ -53,11 +53,14 @@ items:
 
   offer:
     slots: 8
+    material: BLACK_STAINED_GLASS_PANE
+    hide-tooltip: true
     priority:
       - conditions:
           - "%economy_id% == vault"
           - "%player% != %seller%"
         material: EMERALD
+        hide-tooltip: false
         display-name: "<aqua><bold>Offer</bold>"
         lore:
           - "<gray>Your offer: %your_offer%"
@@ -71,6 +74,7 @@ items:
           - "%economy_id% == exp"
           - "%player% != %seller%"
         material: EXPERIENCE_BOTTLE
+        hide-tooltip: false
         display-name: "<aqua><bold>Offer</bold>"
         lore:
           - "<gray>Your offer: %your_offer%"
