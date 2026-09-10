@@ -147,34 +147,6 @@ subcommands:
         sources: [ONLINE_PLAYERS:20]
         requires: airauctions.command.player
 
-  open:
-    enabled: true
-    name: "open"
-    aliases: []
-    usage: "/%label% %sublabel% <gui-id> <player> [category] [type] [economy] [sort] [target]"
-    tab-complete:
-      1:
-        sources: [GUI_IDS]
-        requires: airauctions.command.open
-      2:
-        sources: [ONLINE_PLAYERS:20]
-        requires: airauctions.command.open
-      3:
-        sources: [FILTER_CATEGORIES]
-        requires: airauctions.command.open
-      4:
-        sources: [FILTER_TYPES]
-        requires: airauctions.command.open
-      5:
-        sources: [FILTER_ECONOMIES]
-        requires: airauctions.command.open
-      6:
-        sources: [SORT]
-        requires: airauctions.command.open
-      7:
-        sources: [ONLINE_PLAYERS:20]
-        requires: airauctions.command.open
-
   delete:
     enabled: true
     name: "delete"

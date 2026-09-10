@@ -51,7 +51,6 @@ permissions:
       airauctions.command.bid: true
       airauctions.command.delete: true
       airauctions.command.slots: true
-      airauctions.command.open: true
       airauctions.command.storage: true
       airauctions.command.storage.others: true
       airauctions.command.listings: true
@@ -77,10 +76,6 @@ permissions:
 
   airauctions.command.slots:
     description: Allows giving or taking extra listing slots from players.
-    default: op
-
-  airauctions.command.open:
-    description: Allows opening a specific GUI.
     default: op
 
   airauctions.command.storage:

@@ -60,7 +60,7 @@ public final class CommandManager {
     }
 
     private TabCompleteEngine buildTabCompleteEngine(DurationUnits durationUnits) {
-        TabSourceRegistry sources = TabSources.build(plugin.services(), plugin.configs(), plugin.guis(), durationUnits);
+        TabSourceRegistry sources = TabSources.build(plugin.services(), durationUnits);
         ConditionEvaluator conditions = new ConditionEvaluator(plugin.getLogger()::warning);
         return new TabCompleteEngine(sources, conditions);
     }

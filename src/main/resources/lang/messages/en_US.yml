@@ -24,6 +24,7 @@ general:
     usage:
       - "<ref:prefix> <white>Available commands:"
       - "  <yellow>/airauctions reload <dark_gray>- <gray>Reload all configuration files"
+      - "  <yellow>/airauctions open <gui-id> <player> [category] [type] [economy] [sort] [target] <dark_gray>- <gray>Open a specific GUI"
       - "  <yellow>/airauctions simulate <...> <dark_gray>- <gray>Manage simulated listings"
       - "  <yellow>/airauctions version <dark_gray>- <gray>Display plugin version"
 

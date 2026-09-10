@@ -22,7 +22,8 @@ public final class AdminCommand implements CommandExecutor, TabCompleter {
         this.registry = new CommandRegistry()
                 .register(new SubReload(plugin, plugin.messenger(), plugin.configs()))
                 .register(new SubVersion(plugin, plugin.messenger(), plugin.configs()))
-                .register(new SubSimulate(plugin.messenger(), plugin.configs(), plugin.services(), plugin.getLogger()));
+                .register(new SubSimulate(plugin.messenger(), plugin.configs(), plugin.services(), plugin.getLogger()))
+                .register(new SubOpen(plugin.configs(), plugin.messenger(), plugin.services(), plugin.guis()));
         this.dispatcher = new CommandDispatcher(plugin.messenger(), plugin.configs());
     }
 
