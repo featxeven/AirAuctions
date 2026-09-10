@@ -29,26 +29,12 @@ public final class ItemConfigReader {
         }
         String context = "GUI '" + guiId + "', item '" + key + "'";
 
-        Set<Integer> slots = SlotParser.parse(sec.get("slots"), context, logger);
-        slots = validateSlots(slots, rows * 9, context);
+        Set<Integer> slots = SlotParser.parse(sec.get("slots"), rows * 9, context, logger);
         if (slots.isEmpty()) {
             logger.warning("Item '" + key + "' in GUI '" + guiId + "' has no valid slots, it will never render");
         }
 
         return new ItemConfig(key, slots, resolveWithTemplate(sec, shared, expander, context));
-    }
-
-    private Set<Integer> validateSlots(Set<Integer> slots, int inventorySize, String context) {
-        Set<Integer> valid = new LinkedHashSet<>();
-        for (int slot : slots) {
-            if (slot < 0 || slot >= inventorySize) {
-                logger.warning("Slot " + slot + " in " + context + " is out of bounds for a "
-                        + (inventorySize / 9) + "-row inventory (0-" + (inventorySize - 1) + "), skipping");
-            } else {
-                valid.add(slot);
-            }
-        }
-        return valid;
     }
 
     private @Nullable ItemConfig.Template resolveTemplate(@Nullable String templateName, String context, SharedConfig shared) {

@@ -17,6 +17,7 @@ import com.ftxeven.airauctions.service.ServiceManager;
 import com.ftxeven.airauctions.util.Placeholders;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.Nullable;
@@ -273,6 +274,8 @@ public abstract class BaseGui implements GuiRenderer.DynamicRenderer {
     // Pagination + cycler placeholders
 
     protected void writePageResult(GuiSession session, PageResult<?> page, long grandTotal) {
+        guis.placeholders().prewarm(page.items());
+
         Map<String, String> placeholders = session.placeholders();
         placeholders.put("current", String.valueOf(page.totalResults()));
         placeholders.put("total", String.valueOf(grandTotal));
@@ -389,14 +392,19 @@ public abstract class BaseGui implements GuiRenderer.DynamicRenderer {
             return;
         }
 
+        Inventory inventory = session.inventory();
         Iterator<Integer> slots = shulkerSlots.iterator();
         for (ItemStack content : shulkerBox.getInventory().getContents()) {
             if (!slots.hasNext()) {
                 break;
             }
             int slot = slots.next();
+            if (slot < 0 || slot >= inventory.getSize()) {
+                continue;
+            }
             if (content != null && !content.getType().isAir()) {
-                session.inventory().setItem(slot, content.clone());
+                inventory.setItem(slot, content.clone());
+                session.claim(slot);
             }
         }
     }

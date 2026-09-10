@@ -57,6 +57,7 @@ public final class GuiRenderer {
         Inventory inventory = session.inventory();
         inventory.clear();
         session.clearDynamicSlots();
+        session.clearClaims();
 
         DynamicRenderer dynamic = dynamicRenderers.get(session.definition().id());
 

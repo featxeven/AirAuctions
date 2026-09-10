@@ -10,12 +10,7 @@ import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 
 public final class GuiSession {
@@ -40,6 +35,7 @@ public final class GuiSession {
     private long lastAnyClickAt = 0;
 
     private final Map<Integer, DynamicSlot> dynamicSlots = new HashMap<>();
+    private final Set<Integer> claimedSlots = new HashSet<>();
 
     private volatile boolean active = true;
     private volatile boolean awaitingInput = false;
@@ -71,6 +67,14 @@ public final class GuiSession {
 
     public void clearDynamicSlots() {
         dynamicSlots.clear();
+    }
+
+    public void claim(int slot) {
+        claimedSlots.add(slot);
+    }
+
+    public void clearClaims() {
+        claimedSlots.clear();
     }
 
     public record DynamicSlot(String key, Map<String, String> placeholders, ItemResolver.ResolvedFields resolved) {}

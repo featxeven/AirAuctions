@@ -138,7 +138,8 @@ public final class TabCompleteEngine {
     private List<String> resolveSources(List<String> tokens, TabSource.Context context) {
         List<String> resolved = new ArrayList<>();
         for (String token : tokens) {
-            resolved.addAll(isComposite(token) ? resolveComposite(token, context) : resolveSingle(token, context));
+            String substituted = CommandArgs.substitute(token, context.args());
+            resolved.addAll(isComposite(substituted) ? resolveComposite(substituted, context) : resolveSingle(substituted, context));
         }
         return resolved;
     }

@@ -4,6 +4,7 @@
 # --------------------------------------------------
 # SHORTCUTS
 # Maps a short alias to a full command string.
+#
 # Requires restart to reflect changes.
 # --------------------------------------------------
 shortcuts:

@@ -33,19 +33,20 @@ public final class LayoutConfigReader {
         this.itemReader = new ItemConfigReader(logger);
     }
 
-    public LayoutConfig read(@Nullable ConfigurationSection sec, SharedConfig shared, AliasExpander expander, String context) {
+    public LayoutConfig read(@Nullable ConfigurationSection sec, SharedConfig shared, AliasExpander expander, int rows, String context) {
         if (sec == null) {
             return LayoutConfig.EMPTY;
         }
+        int inventorySize = rows * 9;
 
         return new LayoutConfig(
                 readCycler(sec.getConfigurationSection("filters"), expander, context + " filters"),
                 readCycler(sec.getConfigurationSection("sorts"), expander, context + " sorts"),
-                sec.isSet("listing-slots") ? SlotParser.parse(sec.get("listing-slots"), context + " listing-slots", logger) : null,
+                sec.isSet("listing-slots") ? SlotParser.parse(sec.get("listing-slots"), inventorySize, context + " listing-slots", logger) : null,
                 readListingRender(sec.getConfigurationSection("listing"), shared, expander, context + " listing"),
-                sec.isSet("bidder-slots") ? SlotParser.parse(sec.get("bidder-slots"), context + " bidder-slots", logger) : null,
+                sec.isSet("bidder-slots") ? SlotParser.parse(sec.get("bidder-slots"), inventorySize, context + " bidder-slots", logger) : null,
                 sec.isConfigurationSection("bidder") ? itemReader.readTemplateRef(sec.getConfigurationSection("bidder"), shared, expander, context + " bidder") : null,
-                sec.isSet("shulker-slots") ? SlotParser.parse(sec.get("shulker-slots"), context + " shulker-slots", logger) : null,
+                sec.isSet("shulker-slots") ? SlotParser.parse(sec.get("shulker-slots"), inventorySize, context + " shulker-slots", logger) : null,
                 readAvailableSlots(sec.getConfigurationSection("available-slots"), shared, expander, context + " available-slots")
         );
     }

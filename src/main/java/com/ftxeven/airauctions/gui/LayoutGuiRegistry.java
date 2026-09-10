@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-public final class ListingGuiRegistry {
+public final class LayoutGuiRegistry {
 
     private final Logger logger;
     private final GuiManager guis;
     private final LayoutConfigReader layoutReader;
     private final Map<ConfigurationSection, LayoutConfig> cache = new ConcurrentHashMap<>();
 
-    public ListingGuiRegistry(JavaPlugin plugin, GuiManager guis) {
+    public LayoutGuiRegistry(JavaPlugin plugin, GuiManager guis) {
         this.logger = plugin.getLogger();
         this.guis = guis;
         this.layoutReader = new LayoutConfigReader(logger);
@@ -30,9 +30,9 @@ public final class ListingGuiRegistry {
         AliasExpander expander = new AliasExpander(guis.shared().aliases(), logger);
         for (String id : guis.ids()) {
             guis.definition(id).ifPresent(config -> {
-                cacheSection(config.layout(), config.id(), expander);
+                cacheSection(config.layout(), config.id(), config.settings().rows(), expander);
                 for (GuiConfig.ContextOverride override : config.contexts().values()) {
-                    cacheSection(override.layout(), config.id(), expander);
+                    cacheSection(override.layout(), config.id(), override.settings().rows(), expander);
                 }
             });
         }
@@ -49,12 +49,12 @@ public final class ListingGuiRegistry {
             return LayoutConfig.EMPTY;
         }
         return cache.computeIfAbsent(section, s ->
-                layoutReader.read(s, guis.shared(), new AliasExpander(guis.shared().aliases(), logger), "GUI '" + config.id() + "' layout"));
+                layoutReader.read(s, guis.shared(), new AliasExpander(guis.shared().aliases(), logger), config.settings().rows(), "GUI '" + config.id() + "' layout"));
     }
 
-    private void cacheSection(@Nullable ConfigurationSection section, String guiId, AliasExpander expander) {
+    private void cacheSection(@Nullable ConfigurationSection section, String guiId, int rows, AliasExpander expander) {
         if (section != null) {
-            cache.computeIfAbsent(section, s -> layoutReader.read(s, guis.shared(), expander, "GUI '" + guiId + "' layout"));
+            cache.computeIfAbsent(section, s -> layoutReader.read(s, guis.shared(), expander, rows, "GUI '" + guiId + "' layout"));
         }
     }
 }

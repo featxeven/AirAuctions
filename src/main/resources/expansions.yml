@@ -7,7 +7,7 @@
 economy:
 
   # --- Number display ---
-  number-format: SHORT               # SHORT (1.25M) | FORMATTED (1,250,000) | RAW (1250000)
+  number-format: FORMATTED           # SHORT (1.25M) | FORMATTED (1,250,000) | RAW (1250000)
   number-format-suffixes: ["", "k", "M", "B", "T", "Q"]
   allow-shorthand-input: true        # Allow shorthand in commands (e.g. /ah sell 1.5k instead of 1500)
 

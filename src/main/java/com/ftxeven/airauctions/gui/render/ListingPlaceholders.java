@@ -30,6 +30,32 @@ public final class ListingPlaceholders {
         this.services = services;
     }
 
+    // Batch player-name resolution
+
+    public void prewarm(List<?> items) {
+        if (items.isEmpty()) {
+            return;
+        }
+        Set<UUID> uuids = new HashSet<>();
+        for (Object item : items) {
+            switch (item) {
+                case Listing listing -> {
+                    uuids.add(listing.info().seller());
+                    if (listing instanceof Listing.Bid bid && bid.currentBidder() != null) {
+                        uuids.add(bid.currentBidder());
+                    }
+                }
+                case HistoryEntry entry -> {
+                    uuids.add(entry.info().seller());
+                    uuids.add(entry.info().buyer());
+                }
+                case BidEntry entry -> uuids.add(entry.bidder());
+                default -> { /* nothing to prewarm for this item type */ }
+            }
+        }
+        services.players().findAll(uuids);
+    }
+
     // Active / expired / storage
 
     public Map<String, String> forListing(Listing listing) {

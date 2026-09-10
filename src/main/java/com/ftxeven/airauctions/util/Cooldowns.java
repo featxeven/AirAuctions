@@ -32,10 +32,6 @@ public final class Cooldowns<K> {
         return Math.max(0, cooldownSeconds - elapsedSeconds);
     }
 
-    public double checkAndStart(K key, double cooldownSeconds) {
-        return checkAndStart(key, cooldownSeconds, System.currentTimeMillis());
-    }
-
     public double checkAndStart(K key, double cooldownSeconds, long nowMillis) {
         if (cooldownSeconds <= 0) {
             return -1;

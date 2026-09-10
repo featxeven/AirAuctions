@@ -1,5 +1,7 @@
 package com.ftxeven.airauctions.core.gui.config;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +32,32 @@ public final class SlotParser {
             logger.warning("Invalid slots value in " + context + ", expected a number, range string, or list");
         }
         return slots;
+    }
+
+    public static Set<Integer> parse(Object raw, int inventorySize, String context, Logger logger) {
+        return validate(parse(raw, context, logger), inventorySize, context, logger);
+    }
+
+    public static Set<Integer> validate(Set<Integer> slots, int inventorySize, String context, Logger logger) {
+        Set<Integer> valid = new LinkedHashSet<>();
+        for (int slot : slots) {
+            if (slot < 0 || slot >= inventorySize) {
+                logger.warning("Slot " + slot + " in " + context + " is out of bounds for a "
+                        + (inventorySize / 9) + "-row inventory (0-" + (inventorySize - 1) + "), skipping");
+            } else {
+                valid.add(slot);
+            }
+        }
+        return valid;
+    }
+
+    public static @Nullable Integer validateSingle(int slot, int inventorySize, String context, Logger logger) {
+        if (slot < 0 || slot >= inventorySize) {
+            logger.warning("Slot " + slot + " in " + context + " is out of bounds for a "
+                    + (inventorySize / 9) + "-row inventory (0-" + (inventorySize - 1) + "), ignoring");
+            return null;
+        }
+        return slot;
     }
 
     private static void parseInto(Set<Integer> target, String text, String context, Logger logger) {

@@ -34,12 +34,12 @@ public final class ListingGuiManager {
     private static final Set<String> LAYOUT_REPLACE_KEYS = Set.of("listing");
 
     private final GuiManager guis;
-    private final ListingGuiRegistry registry;
+    private final LayoutGuiRegistry registry;
     private final ListingFlags flags;
     private final ListingPlaceholders placeholders;
     private final Messenger messenger;
 
-    private ListingGuiManager(GuiManager guis, ListingGuiRegistry registry, ListingFlags flags,
+    private ListingGuiManager(GuiManager guis, LayoutGuiRegistry registry, ListingFlags flags,
                               ListingPlaceholders placeholders, Messenger messenger) {
         this.guis = guis;
         this.registry = registry;
@@ -67,7 +67,7 @@ public final class ListingGuiManager {
         guis.onStaleClick((viewer, session) ->
                 messenger.send(viewer, configs.lang().get("errors.item.unavailable"), session.placeholders()));
 
-        ListingGuiRegistry registry = new ListingGuiRegistry(plugin, guis);
+        LayoutGuiRegistry registry = new LayoutGuiRegistry(plugin, guis);
         registry.load();
 
         ListingGuiManager manager = new ListingGuiManager(guis, registry, new ListingFlags(configs, services, guis),

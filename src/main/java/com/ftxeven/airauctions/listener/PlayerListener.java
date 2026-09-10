@@ -46,16 +46,6 @@ public final class PlayerListener implements Listener {
         services.confirmations().clear(uuid);
     }
 
-    @EventHandler
-    public void onChat(AsyncChatEvent event) {
-        guis.input().handleChat(event);
-    }
-
-    @EventHandler
-    public void onSign(UncheckedSignChangeEvent event) {
-        guis.input().handleSign(event);
-    }
-
     private void notifyIfOutdated(Player player) {
         if (!configs.main().general().notifyUpdates() || !Version.isOutdated() || !player.hasPermission(Permissions.ADMIN)) {
             return;

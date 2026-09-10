@@ -205,10 +205,8 @@ public final class ItemBuilder {
             }
         }
 
-        int start = 0;
         int end = withoutEmpty.size();
-        while (start < end && withoutEmpty.get(start).isBlank()) start++;
-        while (end > start && withoutEmpty.get(end - 1).isBlank()) end--;
-        return withoutEmpty.subList(start, end);
+        while (end > 0 && withoutEmpty.get(end - 1).isBlank()) end--;
+        return withoutEmpty.subList(0, end);
     }
 }

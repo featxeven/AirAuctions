@@ -13,8 +13,6 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public final class Scheduler {
-
-    private static final boolean FOLIA = foliaPresent();
     private static final Plugin PLUGIN = JavaPlugin.getProvidingPlugin(Scheduler.class);
 
     private Scheduler() {
@@ -110,14 +108,5 @@ public final class Scheduler {
 
     private static long clampDelay(long delay) {
         return Math.max(1L, delay);
-    }
-
-    private static boolean foliaPresent() {
-        try {
-            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
-            return true;
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
     }
 }
