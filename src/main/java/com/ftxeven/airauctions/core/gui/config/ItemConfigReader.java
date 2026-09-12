@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,8 +36,12 @@ public final class ItemConfigReader {
         return new ItemConfig(key, slots, resolveWithTemplate(sec, shared, expander, context));
     }
 
-    private @Nullable ItemConfig.Template resolveTemplate(@Nullable String templateName, String context, SharedConfig shared) {
+    private @Nullable ItemConfig.Template resolveTemplate(@Nullable String templateName, String context, @Nullable SharedConfig shared) {
         if (templateName == null) {
+            return null;
+        }
+        if (shared == null) {
+            logger.warning("Template '" + templateName + "' referenced by " + context + " but templates aren't available in this context");
             return null;
         }
         ItemConfig.Template template = shared.templates().get(templateName);
@@ -50,21 +53,17 @@ public final class ItemConfigReader {
 
     public ItemConfig.Template readTemplate(ConfigurationSection sec, AliasExpander expander, String context) {
         ItemConfig.Fields fields = readFields(sec, expander, context);
-        List<ItemConfig.PriorityTier> priority = readPriority(sec, expander, context);
+        List<ItemConfig.PriorityTier> priority = readPriority(sec, null, expander, context);
         return new ItemConfig.Template(fields, priority);
     }
 
-    public ItemConfig.Template readTemplateRef(ConfigurationSection sec, SharedConfig shared, AliasExpander expander, String context) {
-        return resolveWithTemplate(sec, shared, expander, context);
-    }
-
     private ItemConfig.Template resolveWithTemplate(ConfigurationSection sec, SharedConfig shared, AliasExpander expander, String context) {
-        ItemConfig.Fields direct = readFields(sec, expander, context);
+        ItemConfig.Fields direct = readFields(sec, shared, expander, context);
         ItemConfig.Template template = resolveTemplate(sec.getString("template", null), context, shared);
 
         ItemConfig.Fields fields = template != null ? template.fields().overlay(direct) : direct;
         List<ItemConfig.PriorityTier> priority = sec.isList("priority")
-                ? readPriority(sec, expander, context)
+                ? readPriority(sec, shared, expander, context)
                 : (template != null ? template.priority() : List.of());
 
         return new ItemConfig.Template(fields, priority);
@@ -72,6 +71,10 @@ public final class ItemConfigReader {
 
     // raw keys read here (material/display-name/lore/...) must match ItemConfig.FIELD_KEYS
     public ItemConfig.Fields readFields(ConfigurationSection sec, AliasExpander expander, String context) {
+        return readFields(sec, null, expander, context);
+    }
+
+    private ItemConfig.Fields readFields(ConfigurationSection sec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
         if (sec == null) {
             return ItemConfig.Fields.EMPTY;
         }
@@ -82,7 +85,7 @@ public final class ItemConfigReader {
                 : null;
 
         ItemConfig.Fields.Animation animation = sec.isConfigurationSection("animation")
-                ? readAnimation(sec.getConfigurationSection("animation"), expander, context)
+                ? readAnimation(sec.getConfigurationSection("animation"), shared, expander, context)
                 : null;
 
         return new ItemConfig.Fields(
@@ -108,7 +111,14 @@ public final class ItemConfigReader {
         );
     }
 
-    private List<ItemConfig.PriorityTier> readPriority(ConfigurationSection itemSec, AliasExpander expander, String context) {
+    // resolves a Fields block that may itself reference a shared template
+    private ItemConfig.Fields readFieldsWithTemplate(ConfigurationSection sec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
+        ItemConfig.Fields direct = readFields(sec, shared, expander, context);
+        ItemConfig.Template template = resolveTemplate(sec.getString("template", null), context, shared);
+        return template != null ? template.fields().overlay(direct) : direct;
+    }
+
+    private List<ItemConfig.PriorityTier> readPriority(ConfigurationSection itemSec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
         if (!itemSec.isList("priority")) {
             return List.of();
         }
@@ -118,16 +128,16 @@ public final class ItemConfigReader {
                 logger.warning("Priority tier #" + index + " in " + context + " has no conditions, skipping");
                 return null;
             }
-            return new ItemConfig.PriorityTier(conditions, readFields(entry, expander, context + " priority tier #" + index));
+            return new ItemConfig.PriorityTier(conditions, readFieldsWithTemplate(entry, shared, expander, context + " priority tier #" + index));
         });
     }
 
-    private ItemConfig.Fields.Animation readAnimation(ConfigurationSection sec, AliasExpander expander, String context) {
+    private ItemConfig.Fields.Animation readAnimation(ConfigurationSection sec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
         int interval = Math.max(1, sec.getInt("interval", 10));
         boolean loop = sec.getBoolean("loop", true);
 
         List<ItemConfig.Fields> frames = readNumberedEntries(sec.getMapList("frames"), (entry, index) ->
-                readFields(entry, expander, context + " animation frame #" + index));
+                readFieldsWithTemplate(entry, shared, expander, context + " animation frame #" + index));
 
         if (frames.isEmpty()) {
             logger.warning("Animation in " + context + " has no frames, it will be ignored");
