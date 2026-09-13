@@ -1,7 +1,5 @@
 package com.ftxeven.airauctions.core.gui.config;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,15 +47,6 @@ public final class SlotParser {
             }
         }
         return valid;
-    }
-
-    public static @Nullable Integer validateSingle(int slot, int inventorySize, String context, Logger logger) {
-        if (slot < 0 || slot >= inventorySize) {
-            logger.warning("Slot " + slot + " in " + context + " is out of bounds for a "
-                    + (inventorySize / 9) + "-row inventory (0-" + (inventorySize - 1) + "), ignoring");
-            return null;
-        }
-        return slot;
     }
 
     private static void parseInto(Set<Integer> target, String text, String context, Logger logger) {

@@ -118,17 +118,20 @@ public final class ItemConfigReader {
         return template != null ? template.fields().overlay(direct) : direct;
     }
 
-    private List<ItemConfig.PriorityTier> readPriority(ConfigurationSection itemSec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
-        if (!itemSec.isList("priority")) {
+    private List<ItemConfig.PriorityTier> readPriority(ConfigurationSection sec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
+        if (!sec.isList("priority")) {
             return List.of();
         }
-        return readNumberedEntries(itemSec.getMapList("priority"), (entry, index) -> {
+        return readNumberedEntries(sec.getMapList("priority"), (entry, index) -> {
             List<String> conditions = entry.getStringList("conditions");
             if (conditions.isEmpty()) {
                 logger.warning("Priority tier #" + index + " in " + context + " has no conditions, skipping");
                 return null;
             }
-            return new ItemConfig.PriorityTier(conditions, readFieldsWithTemplate(entry, shared, expander, context + " priority tier #" + index));
+            String tierContext = context + " priority tier #" + index;
+            ItemConfig.Fields fields = readFieldsWithTemplate(entry, shared, expander, tierContext);
+            List<ItemConfig.PriorityTier> nested = readPriority(entry, shared, expander, tierContext);
+            return new ItemConfig.PriorityTier(conditions, fields, nested);
         });
     }
 

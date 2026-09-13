@@ -33,9 +33,10 @@ public record ItemConfig(
         }
     }
 
-    public record PriorityTier(List<String> conditions, Fields fields) {
+    public record PriorityTier(List<String> conditions, Fields fields, List<PriorityTier> priority) {
         public PriorityTier {
             conditions = List.copyOf(conditions);
+            priority = List.copyOf(priority);
         }
     }
 

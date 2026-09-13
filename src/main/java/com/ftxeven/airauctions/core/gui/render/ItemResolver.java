@@ -28,7 +28,7 @@ public final class ItemResolver {
     public @Nullable ResolvedFields resolveFields(ItemConfig.Template template, Player viewer, Map<String, String> placeholders, Function<String, String> flagResolver, long openTick, @Nullable ItemStack baseItem) {
         Function<String, String> resolver = Placeholders.resolver(viewer, placeholders);
 
-        ItemConfig.Fields effective = template.fields();
+        ItemConfig.Fields effective = resolvePriority(template.fields(), template.priority(), resolver);
         for (ItemConfig.PriorityTier tier : template.priority()) {
             if (conditions.evaluate(tier.conditions(), resolver)) {
                 effective = effective.overlay(tier.fields());
@@ -47,6 +47,16 @@ public final class ItemResolver {
             return null;
         }
         return new ResolvedFields(effective, flagResolver, interval < 0 ? null : interval);
+    }
+
+    private ItemConfig.Fields resolvePriority(ItemConfig.Fields base, List<ItemConfig.PriorityTier> tiers, Function<String, String> resolver) {
+        for (ItemConfig.PriorityTier tier : tiers) {
+            if (conditions.evaluate(tier.conditions(), resolver)) {
+                ItemConfig.Fields overlaid = base.overlay(tier.fields());
+                return resolvePriority(overlaid, tier.priority(), resolver);
+            }
+        }
+        return base;
     }
 
     // Stage 2: turn already-resolved fields into an actual ItemStack
