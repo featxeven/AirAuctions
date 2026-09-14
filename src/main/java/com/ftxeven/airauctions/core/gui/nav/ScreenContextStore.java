@@ -12,14 +12,8 @@ public final class ScreenContextStore {
     private final Map<UUID, Map<ScreenKey, ScreenState>> live = new ConcurrentHashMap<>();
     private final Map<UUID, Map<ScreenKey, LockedContext>> locked = new ConcurrentHashMap<>();
 
-    public ScreenState resolve(UUID player, ScreenKey screen) {
-        ScreenState liveState = liveFor(player, screen);
-        LockedContext lockedState = lockedFor(player, screen);
-
-        Map<String, String> attributes = new LinkedHashMap<>(liveState.attributes());
-        attributes.putAll(lockedState.attributes());
-        int page = lockedState.page() != null ? lockedState.page() : liveState.page();
-        return new ScreenState(page, liveState.totalPages(), attributes);
+    public ScreenState liveState(UUID player, ScreenKey screen) {
+        return liveFor(player, screen);
     }
 
     public LockedContext locked(UUID player, ScreenKey screen) {

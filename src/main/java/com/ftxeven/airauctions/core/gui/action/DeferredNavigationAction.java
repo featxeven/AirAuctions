@@ -41,14 +41,15 @@ public abstract class DeferredNavigationAction implements ActionRegistry.Handler
         ForwardNavigation.applyRestore(context, current, currentLive, parsed);
 
         ScreenKey currentScreen = current.screenKey();
-        ScreenKey forwardScreen = ForwardNavigation.resolveForwardScreen(context, defaultTarget(), currentScreen, parsed);
+        ScreenKey forwardScreen = ForwardNavigation.resolveForwardScreen(context,
+                parsed.guiId() != null ? parsed.guiId() : defaultTarget(), currentScreen, parsed);
         ScreenState forward = ForwardNavigation.resolveForwardState(context, forwardScreen, currentLive, parsed);
 
         // re-triggering from the destination itself
         boolean refining = parsed.guiId() == null && current.definition().id().equals(defaultTarget());
         String tail = parsed.guiId() != null ? parsed.guiId() : current.definition().id();
         List<String> ancestorChain = refining ? current.originChain() : current.forwardChain(tail);
-        GuiContext backLink = refining ? current.navBack() : new GuiContext(currentScreen, current.originChain(), current.navBack());
+        GuiContext backLink = refining ? current.navBack() : new GuiContext(currentScreen, current.originChain(), current.flagResolver(), current.navBack());
 
         if (parsed.value() != null) {
             String answer = Placeholders.apply(context.viewer(), parsed.value(), context.placeholders());

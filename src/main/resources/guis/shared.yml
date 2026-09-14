@@ -125,7 +125,7 @@ templates:
     actions:
       any:
         - "[sound] $click"
-        - "[search] page:1 target:current"
+        - "[search] page:1 target:current restore:<page:current>"
 
   # --- Pagination ---
   previous-page:
@@ -143,7 +143,7 @@ templates:
         actions:
           any:
             - "[sound] $page"
-            - "[page] previous"
+            - "[page] to:previous"
         cooldown: 0.2
 
   next-page:
@@ -161,7 +161,7 @@ templates:
         actions:
           any:
             - "[sound] $page"
-            - "[page] next"
+            - "[page] to:next"
         cooldown: 0.2
 
   # --- Sort ---

@@ -25,15 +25,14 @@ public final class ScreenOpener {
         GuiSession current = context.session();
         ScreenKey currentScreen = current.screenKey();
         ScreenKey forwardScreen = new ScreenKey(guiId, currentScreen.target());
-        GuiContext backLink = new GuiContext(currentScreen, current.originChain(), current.navBack());
+        GuiContext backLink = new GuiContext(currentScreen, current.originChain(), current.flagResolver(), current.navBack());
 
         ForwardNavigation.Parsed parsed = ForwardNavigation.parse(args, context);
         ScreenState currentLive = ScreenState.liveStateOf(current);
         ForwardNavigation.applyRestore(context, current, currentLive, parsed);
         ScreenState forward = ForwardNavigation.resolveForwardState(context, forwardScreen, currentLive, parsed);
 
-        OpenOptions options = OpenOptions.forScreen(FlagGate.NO_FLAGS, forwardScreen,
-                forward, backLink, current.forwardChain(), attributes);
+        OpenOptions options = OpenOptions.forScreen(FlagGate.NO_FLAGS, forwardScreen, forward, backLink, current.forwardChain(), attributes);
         context.manager().open(context.viewer(), guiId, new LinkedHashMap<>(current.placeholders()), options);
     }
 }

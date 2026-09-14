@@ -33,7 +33,7 @@ public final class ItemConfigReader {
             logger.warning("Item '" + key + "' in GUI '" + guiId + "' has no valid slots, it will never render");
         }
 
-        return new ItemConfig(key, slots, resolveWithTemplate(sec, shared, expander, context));
+        return new ItemConfig(key, slots, readTemplateRef(sec, shared, expander, context));
     }
 
     private @Nullable ItemConfig.Template resolveTemplate(@Nullable String templateName, String context, @Nullable SharedConfig shared) {
@@ -57,7 +57,7 @@ public final class ItemConfigReader {
         return new ItemConfig.Template(fields, priority);
     }
 
-    private ItemConfig.Template resolveWithTemplate(ConfigurationSection sec, SharedConfig shared, AliasExpander expander, String context) {
+    public ItemConfig.Template readTemplateRef(ConfigurationSection sec, SharedConfig shared, AliasExpander expander, String context) {
         ItemConfig.Fields direct = readFields(sec, shared, expander, context);
         ItemConfig.Template template = resolveTemplate(sec.getString("template", null), context, shared);
 

@@ -9,8 +9,8 @@ import com.ftxeven.airauctions.core.gui.nav.ScreenState;
 import java.util.LinkedHashMap;
 
 
- // [open] gui:<id> <optional params>  -  forward navigation
- // [open] context:true                -  back navigation
+// [open] gui:<id> <optional params>  -  forward navigation
+// [open] context:true                -  back navigation
 
 public final class OpenAction implements ActionRegistry.Handler {
 
@@ -39,7 +39,7 @@ public final class OpenAction implements ActionRegistry.Handler {
         ScreenKey forwardScreen = ForwardNavigation.resolveForwardScreen(context, parsed.guiId(), currentScreen, parsed);
         ScreenState forward = ForwardNavigation.resolveForwardState(context, forwardScreen, currentLive, parsed);
 
-        GuiContext backLink = new GuiContext(currentScreen, current.originChain(), current.navBack());
+        GuiContext backLink = new GuiContext(currentScreen, current.originChain(), current.flagResolver(), current.navBack());
         OpenOptions options = OpenOptions.forScreen(context.flagResolver(), forwardScreen, forward, backLink, current.forwardChain());
         context.manager().open(context.viewer(), forwardScreen.guiId(), new LinkedHashMap<>(current.placeholders()), options);
     }

@@ -299,11 +299,11 @@ public final class GuiManager {
             return;
         }
 
-        ActionContext navContext = context(viewer, current, "<back-navigation>", current.placeholders(), current.flagResolver());
-        ScreenState currentLive = ScreenState.liveStateOf(current);
-        ScreenState restored = ForwardNavigation.resolveForwardState(navContext, back.screen(), currentLive, ForwardNavigation.parse("", navContext));
+        ActionContext navContext = context(viewer, current, "<back-navigation>", current.placeholders(), back.flagResolver());
+        ScreenState destinationLive = liveState(viewer.getUniqueId(), back.screen());
+        ScreenState restored = ForwardNavigation.resolveForwardState(navContext, back.screen(), destinationLive, ForwardNavigation.parse("", navContext));
 
-        OpenOptions options = OpenOptions.forScreen(current.flagResolver(), back.screen(), restored, back.previous(), back.originChain());
+        OpenOptions options = OpenOptions.forScreen(back.flagResolver(), back.screen(), restored, back.previous(), back.originChain());
         open(viewer, back.screen().guiId(), new LinkedHashMap<>(current.placeholders()), options);
     }
 
@@ -406,8 +406,8 @@ public final class GuiManager {
 
     // Per-screen context memory
 
-    public ScreenState knownContext(UUID player, ScreenKey screen) {
-        return context.resolve(player, screen);
+    public ScreenState liveState(UUID player, ScreenKey screen) {
+        return context.liveState(player, screen);
     }
 
     public LockedContext lockedContext(UUID player, ScreenKey screen) {
