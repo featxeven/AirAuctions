@@ -52,7 +52,7 @@ public final class ScreenContextStore {
 
     private LockedContext lockedFor(UUID player, ScreenKey screen) {
         Map<ScreenKey, LockedContext> byScreen = locked.get(player);
-        LockedContext state = byScreen != null ? byScreen.get(screen) : null;
+        LockedContext state = byScreen != null ? byScreen.remove(screen) : null;
         return state != null ? state : LockedContext.EMPTY;
     }
 

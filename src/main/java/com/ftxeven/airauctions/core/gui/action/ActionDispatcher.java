@@ -5,8 +5,12 @@ import com.ftxeven.airauctions.core.gui.flag.FlagGate;
 import com.ftxeven.airauctions.util.Scheduler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.logging.Level;
 
 public final class ActionDispatcher {
 
@@ -25,15 +29,16 @@ public final class ActionDispatcher {
     }
 
     public void run(List<String> lines, ActionContext context) {
+        Function<String, String> snapshot = snapshot(context.flagResolver());
         for (String raw : lines) {
-            if (!runOne(raw, context)) {
+            if (!runOne(raw, context, snapshot)) {
                 return;
             }
         }
     }
 
-    private boolean runOne(String raw, ActionContext context) {
-        Optional<String> gated = flags.apply(raw, context.flagResolver());
+    private boolean runOne(String raw, ActionContext context, Function<String, String> flagSnapshot) {
+        Optional<String> gated = flags.apply(raw, flagSnapshot);
         if (gated.isEmpty()) {
             return true;
         }
@@ -61,8 +66,8 @@ public final class ActionDispatcher {
         try {
             handler.execute(context, parsed.args());
         } catch (Exception e) {
-            context.logger().warning("Action '[" + parsed.key() + "]' failed on item '" + context.itemKey()
-                    + "' in GUI '" + context.guiId() + "': " + e.getMessage());
+            context.logger().log(Level.WARNING, "Action '[" + parsed.key() + "]' failed on item '" + context.itemKey()
+                    + "' in GUI '" + context.guiId() + "'", e);
         }
         return true;
     }
@@ -89,6 +94,12 @@ public final class ActionDispatcher {
         }
 
         String wrapped = args.substring(space + 1).trim();
-        Scheduler.runEntityLater(context.viewer(), () -> runOne(wrapped, context), Math.max(1, ticks));
+
+        Scheduler.runEntityLater(context.viewer(), () -> runOne(wrapped, context, snapshot(context.flagResolver())), Math.max(1, ticks));
+    }
+
+    private static Function<String, String> snapshot(Function<String, String> resolver) {
+        Map<String, String> cache = new HashMap<>();
+        return key -> cache.computeIfAbsent(key, resolver);
     }
 }

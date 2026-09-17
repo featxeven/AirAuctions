@@ -300,8 +300,8 @@ public final class GuiManager {
         }
 
         ActionContext navContext = context(viewer, current, "<back-navigation>", current.placeholders(), back.flagResolver());
-        ScreenState destinationLive = liveState(viewer.getUniqueId(), back.screen());
-        ScreenState restored = ForwardNavigation.resolveForwardState(navContext, back.screen(), destinationLive, ForwardNavigation.parse("", navContext));
+        ScreenState currentLive = ScreenState.liveStateOf(current);
+        ScreenState restored = ForwardNavigation.resolveForwardState(navContext, back.screen(), currentLive, ForwardNavigation.parse("", navContext));
 
         OpenOptions options = OpenOptions.forScreen(back.flagResolver(), back.screen(), restored, back.previous(), back.originChain());
         open(viewer, back.screen().guiId(), new LinkedHashMap<>(current.placeholders()), options);
@@ -446,7 +446,8 @@ public final class GuiManager {
         }
 
         int slot = event.getSlot();
-        boolean dynamicEntry = session.dynamicSlot(slot) != null;
+        GuiSession.DynamicSlot beforeResync = session.dynamicSlot(slot);
+        boolean dynamicEntry = beforeResync != null;
         if (!hasLiveAction(viewer, session, slot, type)) {
             return; // nothing would run for this click
         }
@@ -459,12 +460,14 @@ public final class GuiManager {
         }
 
         GuiSession.DynamicSlot dynamic = session.dynamicSlot(slot);
+        if (dynamicEntry && (dynamic == null || identityChanged(beforeResync, dynamic))) {
+            notifyStaleClick(viewer, session);
+            return;
+        }
+
         ItemConfig item = dynamic == null ? session.itemAt(slot) : null;
         if (dynamic == null && item == null) {
-            if (dynamicEntry) {
-                staleClickHandler.accept(viewer, session);
-            }
-            return;
+            return; // neither a dynamic entry nor a configured static item resolved here
         }
 
         ItemResolver.ResolvedFields resolved = dynamic != null
@@ -508,6 +511,28 @@ public final class GuiManager {
 
         List<String> clickActions = resolved.actions().get(type);
         return clickActions != null && flags.anyApplicable(clickActions, resolved.flagResolver());
+    }
+
+    // A dynamic slot is keyed by position
+    private static boolean identityChanged(GuiSession.DynamicSlot before, @Nullable GuiSession.DynamicSlot after) {
+        String identity = before.entryId();
+        if (identity == null) {
+            return false;
+        }
+        return after == null || !identity.equals(after.entryId());
+    }
+
+    // a stale click's resync can silently correct session.page()/placeholders
+    private void notifyStaleClick(Player viewer, GuiSession session) {
+        if (session.definition().settings().forceReopen()) {
+            open(viewer, session.definition(), session.placeholders(), OpenOptions.silentReopen(session.flagResolver()));
+            GuiSession reopened = sessions.get(viewer.getUniqueId());
+            if (reopened == null) {
+                return;
+            }
+            session = reopened;
+        }
+        staleClickHandler.accept(viewer, session);
     }
 
     // Fires when a click resolves to a dynamic entry that's already gone by the time the

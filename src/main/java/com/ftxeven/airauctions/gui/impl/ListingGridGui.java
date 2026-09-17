@@ -74,7 +74,7 @@ public abstract class ListingGridGui extends BaseGui {
             ItemConfig.Template template = listingRender.forType(null);
             if (template != null) {
                 entries.add(new RenderEntry(template, listing.displayItem(),
-                        guis.placeholders().forListing(listing), guis.flags().forListing(viewer, scope(), listing)));
+                        guis.placeholders().forListing(listing), guis.flags().forListing(viewer, scope(), listing), listing.info().id()));
             }
         }
 

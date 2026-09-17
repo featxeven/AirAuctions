@@ -57,8 +57,8 @@ public final class GuiSession {
         this.inventory = inventory;
     }
 
-    public void dynamicSlot(int slot, String key, Map<String, String> placeholders, ItemResolver.ResolvedFields resolved) {
-        dynamicSlots.put(slot, new DynamicSlot(key, placeholders, resolved));
+    public void dynamicSlot(int slot, String key, Map<String, String> placeholders, ItemResolver.ResolvedFields resolved, @Nullable String entryId) {
+        dynamicSlots.put(slot, new DynamicSlot(key, placeholders, resolved, entryId));
     }
 
     public @Nullable DynamicSlot dynamicSlot(int slot) {
@@ -77,7 +77,7 @@ public final class GuiSession {
         claimedSlots.clear();
     }
 
-    public record DynamicSlot(String key, Map<String, String> placeholders, ItemResolver.ResolvedFields resolved) {}
+    public record DynamicSlot(String key, Map<String, String> placeholders, ItemResolver.ResolvedFields resolved, @Nullable String entryId) {}
 
     private static Map<Integer, ItemConfig> buildSlotIndex(GuiConfig definition) {
         Map<Integer, ItemConfig> index = new HashMap<>();

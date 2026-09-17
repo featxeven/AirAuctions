@@ -131,7 +131,7 @@ public final class GuiRenderer {
                 session.definition().settings().trimLore(), session.definition().id(), session.openTick(), entry.baseItem());
 
         session.inventory().setItem(slot, resolvedItem.stack());
-        session.dynamicSlot(slot, key, entry.placeholders(), resolvedFields);
+        session.dynamicSlot(slot, key, entry.placeholders(), resolvedFields, entry.entryId());
     }
 
     private void rescheduleAnimationTicker(Player viewer, GuiSession session, List<ItemConfig> animated, int minInterval) {
