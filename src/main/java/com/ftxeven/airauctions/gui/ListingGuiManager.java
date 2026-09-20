@@ -31,8 +31,6 @@ public final class ListingGuiManager {
 
     private static final Set<String> RESERVED_PATHS = Set.of(InputRegistry.INPUT_FOLDER);
 
-    private static final Set<String> LAYOUT_REPLACE_KEYS = Set.of("listing");
-
     private final GuiManager guis;
     private final LayoutGuiRegistry registry;
     private final ListingFlags flags;
@@ -59,7 +57,7 @@ public final class ListingGuiManager {
                         configs.main().formatting(),
                         configs.lang()))
                 .reservedPaths(RESERVED_PATHS)
-                .layoutReplaceKeys(LAYOUT_REPLACE_KEYS)
+                .layoutReplaceKeys(LayoutConfig.TEMPLATE_BLOCKS)
                 .build();
         if (guis == null) {
             return null;

@@ -21,6 +21,8 @@ public record LayoutConfig(
 ) {
     public static final LayoutConfig EMPTY = new LayoutConfig(null, null, null, null, null, null, null, null);
 
+    public static final Set<String> TEMPLATE_BLOCKS = Set.of("listing", "bidder");
+
     public LayoutConfig {
         listingSlots = listingSlots != null ? orderedCopy(listingSlots) : null;
         bidderSlots = bidderSlots != null ? orderedCopy(bidderSlots) : null;
