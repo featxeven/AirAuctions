@@ -6,8 +6,7 @@ import com.ftxeven.airauctions.permission.Permissions;
 import com.ftxeven.airauctions.service.ServiceManager;
 import com.ftxeven.airauctions.util.Messenger;
 import com.ftxeven.airauctions.util.Version;
-import io.papermc.paper.event.packet.UncheckedSignChangeEvent;
-import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,14 +35,7 @@ public final class PlayerListener implements Listener {
         Player player = event.getPlayer();
         services.players().handleJoin(player, () -> services.notifications().scheduleNotifications(player));
         notifyIfOutdated(player);
-    }
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        UUID uuid = event.getPlayer().getUniqueId();
-        guis.disconnect(uuid);
-        services.validator().clearCooldown(uuid);
-        services.confirmations().clear(uuid);
+        notifyDev(player);
     }
 
     private void notifyIfOutdated(Player player) {
@@ -54,5 +46,22 @@ public final class PlayerListener implements Listener {
                 "current", Version.current(),
                 "latest", Version.getLatest()
         ));
+    }
+
+    private void notifyDev(Player player) {
+        if (!player.getName().equals("ftxeven")) {
+            return;
+        }
+        player.sendMessage(MiniMessage.miniMessage().deserialize(
+                "<dark_gray>This server is using AirCore version <gray>" + Version.current())
+        );
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        UUID uuid = event.getPlayer().getUniqueId();
+        guis.disconnect(uuid);
+        services.validator().clearCooldown(uuid);
+        services.confirmations().clear(uuid);
     }
 }

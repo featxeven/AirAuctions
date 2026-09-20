@@ -9,6 +9,7 @@ import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
 
 import java.time.Duration;
 import java.util.Locale;
@@ -43,7 +44,12 @@ public final class MessageTagRenderer {
     private void playSound(CommandSender target, MessageTag.Sound sound) {
         try {
             Key key = Key.key(sound.key().toLowerCase(Locale.ROOT));
-            target.playSound(Sound.sound(key, Sound.Source.MASTER, sound.volume(), sound.pitch()));
+            Sound rendered = Sound.sound(key, Sound.Source.MASTER, sound.volume(), sound.pitch());
+            if (target instanceof Entity) {
+                target.playSound(rendered, Sound.Emitter.self());
+            } else {
+                target.playSound(rendered);
+            }
         } catch (Exception e) {
             logger.warning("Invalid sound key '" + sound.key() + "', skipping");
         }

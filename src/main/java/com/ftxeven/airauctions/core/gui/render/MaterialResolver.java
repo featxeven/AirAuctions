@@ -116,11 +116,13 @@ public final class MaterialResolver {
     }
 
     private void applyCachedHead(SkullMeta meta, Optional<CachedHead> cached, @Nullable UUID fallbackUuid, @Nullable String fallbackName) {
-        if (cached.isPresent() && cached.get().hasTexture()) {
+        if (cached.isPresent()) {
             CachedHead head = cached.get();
-            PlayerProfile profile = Bukkit.createProfile(head.uuid(), head.name());
-            profile.setProperty(new ProfileProperty("textures", head.textureValue(), head.textureSignature()));
-            meta.setPlayerProfile(profile);
+            if (head.hasTexture()) {
+                PlayerProfile profile = Bukkit.createProfile(head.uuid(), head.name());
+                profile.setProperty(new ProfileProperty("textures", head.textureValue(), head.textureSignature()));
+                meta.setPlayerProfile(profile);
+            }
             return;
         }
 
