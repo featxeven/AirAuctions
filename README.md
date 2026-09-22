@@ -8,7 +8,7 @@
 | Minecraft version | API version `1.21` or newer |
 | Java | The version required by your Paper build (Java 21+ for 1.21) |
  
-## Optional plugins
+# Optional plugins
  
 | Plugin | Used for |
 | --- | --- |
