@@ -70,7 +70,7 @@ plugins/AirAuctions/
 | `data/filter.yml` | The categories players can filter by | [filter.yml](filter-yml.md) |
 | `data/animations.yml` | Named animated text snippets usable anywhere | [Language & animations](language-and-animations.md) |
 | `lang/**` | Every piece of text the plugin sends, plus item name translations | [Language & animations](language-and-animations.md) |
-| `guis/**` | Every menu: size, title, slots, items, click actions | [GUI configuration](guis.md) |
+| `guis/**` | Every menu: size, title, slots, items, click actions | [AirAuctions menus](guis.md), [GUI framework](gui-framework.md) |
 
 ## Reload vs restart
 

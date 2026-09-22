@@ -16,7 +16,8 @@ commands.
 | [commands.yml](commands-yml.md) | Renaming commands, aliases, shortcuts, tab-completion, duration units |
 | [data/filter.yml](filter-yml.md) | Item categories shown in the browse menu |
 | [Language & animations](language-and-animations.md) | Translating messages, item names, text animations |
-| [GUI configuration](guis.md) | Menu layouts, items, templates, click actions, confirmation screens, input prompts |
+| [GUI framework reference](gui-framework.md) | The generic menu engine shared with other projects: settings, slots, items, templates, actions, flags, conditions, input prompts |
+| [AirAuctions menus](guis.md) | What is specific to this plugin: which file is which screen, listing layouts, filters/sorts, auction actions |
 | [Commands & permissions](commands-and-permissions.md) | Every command and permission node, with recommended setups |
 | [Placeholders](placeholders.md) | PlaceholderAPI placeholders for scoreboards, holograms and chat |
 | [Troubleshooting](troubleshooting.md) | Common errors and how to fix them |

@@ -66,6 +66,6 @@ GUI edit is required - the filter button cycles whatever is defined here.
 - Categories are a **display filter only**; they do not control what may be sold.
   Use the blacklist in [config.yml](config-yml.md) for that.
 - Individual browse menus can hide specific filters via
-  `layout.filters.excluded` - see [GUI configuration](guis.md#filters-and-sorting).
+  `layout.filters.excluded` - see [AirAuctions menus](guis.md#filters-and-sorting).
 - The bundled file is long because it lists vanilla materials one by one. Keeping
   it as a reference and editing in place is usually easier than starting over.

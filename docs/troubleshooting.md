@@ -59,6 +59,9 @@ firing.
 | Input prompts do not open | `input-type: DIALOG` needs clients on 1.21.6+; use `SIGN` or `CHAT` instead |
 
 To reset any GUI to its default, delete the file and run `/airauctions reload`.
+Details: [AirAuctions menus](guis.md) for the auction-specific parts,
+[GUI framework reference](gui-framework.md) for settings, slots, actions and
+conditions.
 
 ## Multi-server issues
 

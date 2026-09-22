@@ -69,7 +69,7 @@ empty string otherwise. Mostly used inside GUI item names and lore.
 Each `filter_*` and `sort_*` placeholder has an `_id` variant
 (`%airauctions_gui_filter_category_id%`) that returns the raw config key instead
 of the display name - useful for conditions in
-[GUI priority tiers](guis.md#priority---conditional-appearance).
+[GUI priority tiers](gui-framework.md#priority---conditional-appearance).
 
 ## Inside AirAuctions GUIs
 
