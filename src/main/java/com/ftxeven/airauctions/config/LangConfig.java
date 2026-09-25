@@ -92,7 +92,7 @@ public final class LangConfig {
         for (String messageKey : defaults.messages().keySet()) {
             if (!custom.messages().containsKey(messageKey)) {
                 plugin.getLogger().warning("Missing message key '" + messageKey + "' in lang/messages/"
-                        + key + ".yml, falling back to " + DEFAULT_LANG);
+                        + key + ".yml");
             }
         }
 

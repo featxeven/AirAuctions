@@ -27,15 +27,38 @@ public final class Placeholders {
         references = expander;
     }
 
+    public static String expandReferences(String line) {
+        return references.expand(line);
+    }
+
     public static String apply(CommandSender viewer, String line, Map<String, String> placeholders) {
-        String result = references.expand(line);
-        if (result.indexOf('%') >= 0) {
-            result = replaceTokens(result, viewer, placeholders);
+        String template = references.expand(line);
+        if (template.indexOf('%') < 0) {
+            return template;
         }
-        if (papiEnabled()) {
-            result = PlaceholderAPI.setPlaceholders(viewer instanceof OfflinePlayer offlinePlayer ? offlinePlayer : null, result);
+
+        boolean papi = papiEnabled();
+        OfflinePlayer context = viewer instanceof OfflinePlayer offlinePlayer ? offlinePlayer : null;
+
+        Matcher matcher = TOKEN.matcher(template);
+        StringBuilder result = null;
+        int last = 0;
+        while (matcher.find()) {
+            String value = resolveToken(matcher.group(1), viewer, placeholders);
+            if (value == null) {
+                continue;
+            }
+            if (result == null) {
+                result = new StringBuilder(template.length() + 16);
+            }
+            result.append(expandPapi(papi, context, template.substring(last, matcher.start()))).append(value);
+            last = matcher.end();
         }
-        return result;
+
+        if (result == null) {
+            return expandPapi(papi, context, template);
+        }
+        return result.append(expandPapi(papi, context, template.substring(last))).toString();
     }
 
     public static Function<String, String> resolver(CommandSender viewer, Map<String, String> placeholders) {
@@ -52,22 +75,11 @@ public final class Placeholders {
         return Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
-    private static String replaceTokens(String line, CommandSender viewer, Map<String, String> placeholders) {
-        Matcher matcher = TOKEN.matcher(line);
-        if (!matcher.find()) {
-            return line;
+    private static String expandPapi(boolean enabled, @Nullable OfflinePlayer context, String text) {
+        if (!enabled || text.indexOf('%') < 0) {
+            return text;
         }
-
-        StringBuilder result = new StringBuilder(line.length());
-        int last = 0;
-        do {
-            String value = resolveToken(matcher.group(1), viewer, placeholders);
-            if (value != null) {
-                result.append(line, last, matcher.start()).append(value);
-                last = matcher.end();
-            }
-        } while (matcher.find());
-        return result.append(line, last, line.length()).toString();
+        return PlaceholderAPI.setPlaceholders(context, text);
     }
 
     private static @Nullable String resolveToken(String key, CommandSender viewer, Map<String, String> placeholders) {

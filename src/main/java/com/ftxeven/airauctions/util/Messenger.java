@@ -36,7 +36,8 @@ public final class Messenger {
         MessageTagRenderer.TitleBuffer titleBuffer = new MessageTagRenderer.TitleBuffer();
         UnaryOperator<String> resolve = text -> Placeholders.apply(target, text, placeholders);
         for (String rawLine : lines) {
-            String leftover = tagParser.scan(rawLine, resolve, tag -> tagRenderer.render(target, tag, titleBuffer));
+            String expanded = Placeholders.expandReferences(rawLine);
+            String leftover = tagParser.scan(expanded, resolve, tag -> tagRenderer.render(target, tag, titleBuffer)); // rawLine -> expanded
             sendChatLine(target, resolve.apply(leftover));
         }
         tagRenderer.flushTitle(target, titleBuffer);
@@ -91,7 +92,8 @@ public final class Messenger {
     // Plain text
 
     public String plain(String line, Map<String, String> placeholders) {
-        String leftover = tagParser.strip(line);
+        String expanded = Placeholders.expandReferences(line);
+        String leftover = tagParser.strip(expanded);
         String substituted = Placeholders.apply(null, leftover, placeholders);
         String resolved = animations.resolve(substituted);
         return MiniText.plain(deserialize(resolved));

@@ -10,24 +10,37 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Optional;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 public final class Scheduler {
+
     private static final Plugin PLUGIN = JavaPlugin.getProvidingPlugin(Scheduler.class);
 
     private Scheduler() {
     }
 
+    private static boolean enabled() {
+        return PLUGIN.isEnabled();
+    }
+
     public static ScheduledTask runGlobal(Runnable task) {
+        if (!enabled()) { task.run(); return null; }
         return Bukkit.getGlobalRegionScheduler().run(PLUGIN, t -> task.run());
     }
 
     public static ScheduledTask runGlobalLater(Runnable task, long delayTicks) {
+        if (!enabled()) { task.run(); return null; }
         return Bukkit.getGlobalRegionScheduler().runDelayed(PLUGIN, t -> task.run(), clampDelay(delayTicks));
     }
 
     public static ScheduledTask runGlobalTimer(Runnable task, long initialDelayTicks, long periodTicks) {
-        return Bukkit.getGlobalRegionScheduler().runAtFixedRate(PLUGIN, t -> task.run(), clampDelay(initialDelayTicks), periodTicks);
+        if (!enabled()) { return null; }
+        return Bukkit.getGlobalRegionScheduler()
+                .runAtFixedRate(PLUGIN, t -> task.run(), clampDelay(initialDelayTicks), clampPeriod(periodTicks));
     }
 
     public static void cancelGlobal() {
@@ -35,40 +48,47 @@ public final class Scheduler {
     }
 
     public static ScheduledTask runAsync(Runnable task) {
+        if (!enabled()) { task.run(); return null; }
         return Bukkit.getAsyncScheduler().runNow(PLUGIN, t -> task.run());
     }
 
     public static ScheduledTask runAsyncLater(Runnable task, long delay, TimeUnit unit) {
+        if (!enabled()) { task.run(); return null; }
         return Bukkit.getAsyncScheduler().runDelayed(PLUGIN, t -> task.run(), delay, unit);
     }
 
     public static ScheduledTask runAsyncTimer(Runnable task, long initialDelay, long period, TimeUnit unit) {
-        return Bukkit.getAsyncScheduler().runAtFixedRate(PLUGIN, t -> task.run(), clampDelay(initialDelay), period, unit);
+        if (!enabled()) { return null; }
+        return Bukkit.getAsyncScheduler()
+                .runAtFixedRate(PLUGIN, t -> task.run(), clampDelay(initialDelay), clampPeriod(period), unit);
     }
 
     public static void cancelAsync() {
         Bukkit.getAsyncScheduler().cancelTasks(PLUGIN);
     }
 
-    // location-based, doesn't follow entities around
     public static ScheduledTask runRegion(Location location, Runnable task) {
+        if (!enabled()) { task.run(); return null; }
         return Bukkit.getRegionScheduler().run(PLUGIN, location, t -> task.run());
     }
 
     public static ScheduledTask runRegionLater(Location location, Runnable task, long delayTicks) {
+        if (!enabled()) { task.run(); return null; }
         return Bukkit.getRegionScheduler().runDelayed(PLUGIN, location, t -> task.run(), clampDelay(delayTicks));
     }
 
     public static ScheduledTask runRegionTimer(Location location, Runnable task, long initialDelayTicks, long periodTicks) {
-        return Bukkit.getRegionScheduler().runAtFixedRate(PLUGIN, location, t -> task.run(), clampDelay(initialDelayTicks), periodTicks);
+        if (!enabled()) { return null; }
+        return Bukkit.getRegionScheduler()
+                .runAtFixedRate(PLUGIN, location, t -> task.run(), clampDelay(initialDelayTicks), clampPeriod(periodTicks));
     }
 
-    // empty if the entity was already retired when called
     public static Optional<ScheduledTask> runEntity(Entity entity, Runnable task) {
         return runEntity(entity, task, null);
     }
 
     public static Optional<ScheduledTask> runEntity(Entity entity, Runnable task, Runnable retired) {
+        if (!enabled()) { task.run(); return Optional.empty(); }
         return Optional.ofNullable(entity.getScheduler().run(PLUGIN, t -> task.run(), retired));
     }
 
@@ -77,15 +97,19 @@ public final class Scheduler {
     }
 
     public static Optional<ScheduledTask> runEntityLater(Entity entity, Runnable task, Runnable retired, long delayTicks) {
-        return Optional.ofNullable(entity.getScheduler().runDelayed(PLUGIN, t -> task.run(), retired, delayTicks));
+        if (!enabled()) { task.run(); return Optional.empty(); }
+        return Optional.ofNullable(entity.getScheduler().runDelayed(PLUGIN, t -> task.run(), retired, clampDelay(delayTicks)));
     }
 
     public static Optional<ScheduledTask> runEntityTimer(Entity entity, Runnable task, long initialDelayTicks, long periodTicks) {
         return runEntityTimer(entity, task, null, initialDelayTicks, periodTicks);
     }
 
-    public static Optional<ScheduledTask> runEntityTimer(Entity entity, Runnable task, Runnable retired, long initialDelayTicks, long periodTicks) {
-        return Optional.ofNullable(entity.getScheduler().runAtFixedRate(PLUGIN, t -> task.run(), retired, clampDelay(initialDelayTicks), periodTicks));
+    public static Optional<ScheduledTask> runEntityTimer(Entity entity, Runnable task, Runnable retired,
+                                                         long initialDelayTicks, long periodTicks) {
+        if (!enabled()) { return Optional.empty(); }
+        return Optional.ofNullable(entity.getScheduler()
+                .runAtFixedRate(PLUGIN, t -> task.run(), retired, clampDelay(initialDelayTicks), clampPeriod(periodTicks)));
     }
 
     public static ScheduledTask runTargetAware(CommandSender target, Runnable task) {
@@ -106,7 +130,28 @@ public final class Scheduler {
                 : runGlobalTimer(task, initialDelayTicks, periodTicks);
     }
 
-    private static long clampDelay(long delay) {
-        return Math.max(1L, delay);
+    /** hands a future's outcome to {@code continuation} on {@code actor}'s own thread */
+    public static <T> void continueOn(CommandSender actor, CompletableFuture<T> future,
+                                      BiConsumer<? super T, ? super Throwable> continuation) {
+        if (future.isDone()) {
+            T value = null;
+            Throwable error = null;
+            try {
+                value = future.join();
+            } catch (CompletionException | CancellationException failure) {
+                error = unwrap(failure);
+            }
+            continuation.accept(value, error);
+            return;
+        }
+        future.whenComplete((value, error) -> runTargetAware(actor, () -> continuation.accept(value, unwrap(error))));
     }
+
+    private static Throwable unwrap(Throwable failure) {
+        return failure instanceof CompletionException && failure.getCause() != null ? failure.getCause() : failure;
+    }
+
+    private static long clampDelay(long delay) { return Math.max(1L, delay); }
+
+    private static long clampPeriod(long period) { return Math.max(1L, period); }
 }

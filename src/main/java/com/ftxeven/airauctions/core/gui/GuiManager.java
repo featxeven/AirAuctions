@@ -355,10 +355,9 @@ public final class GuiManager {
     }
 
     public void shutdown() {
-        for (GuiSession session : sessions.values()) {
-            session.deactivate();
+        for (UUID uuid : List.copyOf(sessions.keySet())) {
+            removeSession(uuid);
         }
-        sessions.clear();
     }
 
     private void forgetContext(UUID uuid) {

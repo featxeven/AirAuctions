@@ -39,7 +39,7 @@ public final class SubSimulate implements SubCommand {
     public String name() { return "simulate"; }
 
     @Override
-    public String permission() { return Permissions.SIMULATE; }
+    public String permission() { return Permissions.ADMIN; }
 
     @Override
     public int minArgs() { return 1; }

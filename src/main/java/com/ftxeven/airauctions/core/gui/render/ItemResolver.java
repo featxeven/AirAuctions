@@ -25,16 +25,13 @@ public final class ItemResolver {
     }
 
     // Stage 1: render condition/priority-tier matching and animation frame selection
-    public @Nullable ResolvedFields resolveFields(ItemConfig.Template template, Player viewer, Map<String, String> placeholders, Function<String, String> flagResolver, long openTick, @Nullable ItemStack baseItem) {
+    public @Nullable ResolvedFields resolveFields(ItemConfig.Template template, Player viewer,
+                                                  Map<String, String> placeholders,
+                                                  Function<String, String> flagResolver,
+                                                  long openTick, @Nullable ItemStack baseItem) {
         Function<String, String> resolver = Placeholders.resolver(viewer, placeholders);
 
         ItemConfig.Fields effective = resolvePriority(template.fields(), template.priority(), resolver);
-        for (ItemConfig.PriorityTier tier : template.priority()) {
-            if (conditions.evaluate(tier.conditions(), resolver)) {
-                effective = effective.overlay(tier.fields());
-                break;
-            }
-        }
 
         int interval = -1;
         if (effective.animation() != null && !effective.animation().frames().isEmpty()) {

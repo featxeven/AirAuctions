@@ -53,7 +53,7 @@ public final class PlayerListener implements Listener {
             return;
         }
         player.sendMessage(MiniMessage.miniMessage().deserialize(
-                "<dark_gray>This server is using AirCore version <gray>" + Version.current())
+                "<dark_gray>This server is using AirAuctions version <gray>" + Version.current())
         );
     }
 

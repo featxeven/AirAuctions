@@ -2,9 +2,11 @@ package com.ftxeven.airauctions.core.gui.action;
 
 import com.ftxeven.airauctions.core.condition.ConditionEvaluator;
 import com.ftxeven.airauctions.core.gui.flag.FlagGate;
+import com.ftxeven.airauctions.util.Placeholders;
 import com.ftxeven.airauctions.util.Scheduler;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +31,19 @@ public final class ActionDispatcher {
     }
 
     public void run(List<String> lines, ActionContext context) {
-        Function<String, String> snapshot = snapshot(context.flagResolver());
+        Function<String, String> snapshot = snapshot(context);
+        List<Optional<String>> gates = new ArrayList<>(lines.size());
         for (String raw : lines) {
-            if (!runOne(raw, context, snapshot)) {
+            gates.add(flags.apply(raw, snapshot));
+        }
+        for (Optional<String> gated : gates) {
+            if (!runOne(gated, context)) {
                 return;
             }
         }
     }
 
-    private boolean runOne(String raw, ActionContext context, Function<String, String> flagSnapshot) {
-        Optional<String> gated = flags.apply(raw, flagSnapshot);
+    private boolean runOne(Optional<String> gated, ActionContext context) {
         if (gated.isEmpty()) {
             return true;
         }
@@ -95,11 +100,14 @@ public final class ActionDispatcher {
 
         String wrapped = args.substring(space + 1).trim();
 
-        Scheduler.runEntityLater(context.viewer(), () -> runOne(wrapped, context, snapshot(context.flagResolver())), Math.max(1, ticks));
+        Scheduler.runEntityLater(context.viewer(), () ->
+                runOne(flags.apply(wrapped, snapshot(context)), context), Math.max(1, ticks));
     }
 
-    private static Function<String, String> snapshot(Function<String, String> resolver) {
+    private static Function<String, String> snapshot(ActionContext context) {
+        Function<String, String> resolver = context.flagResolver();
         Map<String, String> cache = new HashMap<>();
-        return key -> cache.computeIfAbsent(key, resolver);
+        return key -> cache.computeIfAbsent(key,
+                k -> resolver.apply(Placeholders.apply(context.viewer(), k, context.placeholders())));
     }
 }
