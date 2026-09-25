@@ -1,6 +1,6 @@
 name: AirAuctions
 main: com.ftxeven.airauctions.AirAuctions
-version: 2.1.3
+version: 2.2.0
 api-version: '1.21'
 author: ftxeven
 description: A modern, highly-customizable Auction House GUI.
