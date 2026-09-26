@@ -8,7 +8,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
 public final class Placeholders {
 
     private static final Pattern TOKEN = Pattern.compile("%([a-zA-Z0-9_]+)%");
+    private static final Pattern NESTED = Pattern.compile("\\{([a-zA-Z0-9_]+)}");
     private static final Pattern HAS_PERMISSION_KEY = Pattern.compile("has_permission_(.+)", Pattern.CASE_INSENSITIVE);
 
     private static volatile ReferenceExpander references = ReferenceExpander.EMPTY;
@@ -32,7 +35,12 @@ public final class Placeholders {
     }
 
     public static String apply(CommandSender viewer, String line, Map<String, String> placeholders) {
+        return apply(viewer, line, placeholders, new HashSet<>());
+    }
+
+    private static String apply(CommandSender viewer, String line, Map<String, String> placeholders, Set<String> resolving) {
         String template = references.expand(line);
+        template = expandNested(viewer, template, placeholders, resolving);
         if (template.indexOf('%') < 0) {
             return template;
         }
@@ -59,6 +67,28 @@ public final class Placeholders {
             return expandPapi(papi, context, template);
         }
         return result.append(expandPapi(papi, context, template.substring(last))).toString();
+    }
+
+    private static String expandNested(CommandSender viewer, String template, Map<String, String> placeholders, Set<String> resolving) {
+        if (template.indexOf('{') < 0) {
+            return template;
+        }
+        Matcher matcher = NESTED.matcher(template);
+        StringBuilder result = new StringBuilder(template.length());
+        int last = 0;
+        while (matcher.find()) {
+            String key = matcher.group(1);
+            String resolved;
+            if (!resolving.add(key)) {
+                resolved = "";
+            } else {
+                resolved = apply(viewer, "%" + key + "%", placeholders, resolving);
+                resolving.remove(key);
+            }
+            result.append(template, last, matcher.start()).append(resolved);
+            last = matcher.end();
+        }
+        return result.append(template.substring(last)).toString();
     }
 
     public static Function<String, String> resolver(CommandSender viewer, Map<String, String> placeholders) {
