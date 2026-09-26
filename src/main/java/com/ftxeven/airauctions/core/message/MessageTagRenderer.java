@@ -149,7 +149,7 @@ public final class MessageTagRenderer {
 
     private Component deserialize(String text) {
         try {
-            return MiniText.parse(text);
+            return MiniText.parseDynamic(text);
         } catch (Exception e) {
             logger.warning("Could not parse MiniMessage text '" + text + "': " + e.getMessage());
             return Component.text(text);

@@ -1,6 +1,7 @@
 package com.ftxeven.airauctions.service.listing;
 
 import com.ftxeven.airauctions.config.ConfigManager;
+import com.ftxeven.airauctions.core.cache.WriteBehind;
 import com.ftxeven.airauctions.database.DatabaseManager;
 import com.ftxeven.airauctions.database.cache.CacheManager;
 import com.ftxeven.airauctions.database.cache.ListingCache;
@@ -28,7 +29,6 @@ import java.time.Instant;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.logging.Logger;
 
 public final class ListingService {
 
@@ -39,10 +39,9 @@ public final class ListingService {
     private final ListingMetadataService metadata;
     private final PlayerService players;
     private final Messenger messenger;
-    private final Logger logger;
 
     public ListingService(DatabaseManager database, CacheManager cache, ConfigManager configs, EconomyService economy,
-                          ListingMetadataService metadata, PlayerService players, Messenger messenger, Logger logger) {
+                          ListingMetadataService metadata, PlayerService players, Messenger messenger) {
         this.database = database;
         this.cache = cache;
         this.configs = configs;
@@ -50,7 +49,6 @@ public final class ListingService {
         this.metadata = metadata;
         this.players = players;
         this.messenger = messenger;
-        this.logger = logger;
     }
 
     // Lookup
@@ -369,12 +367,12 @@ public final class ListingService {
         return removed;
     }
 
-    private void persistAsync(Runnable task, String description) {
-        Scheduler.runAsync(() -> {
+    private void persistAsync(WriteBehind.Write write, String description) {
+        cache.writes().append(() -> {
             try {
-                task.run();
+                write.execute();
             } catch (Exception e) {
-                logger.warning("Could not persist " + description + " (in-memory state is unaffected): " + e.getMessage());
+                throw new Exception("Could not persist " + description + " (in-memory state is unaffected)", e);
             }
         });
     }

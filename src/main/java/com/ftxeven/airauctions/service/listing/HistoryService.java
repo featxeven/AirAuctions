@@ -1,6 +1,7 @@
 package com.ftxeven.airauctions.service.listing;
 
 import com.ftxeven.airauctions.config.ConfigManager;
+import com.ftxeven.airauctions.core.cache.WriteBehind;
 import com.ftxeven.airauctions.database.DatabaseManager;
 import com.ftxeven.airauctions.database.cache.CacheManager;
 import com.ftxeven.airauctions.database.cache.HistoryCache;
@@ -22,11 +23,13 @@ public final class HistoryService {
 
     private final DatabaseManager database;
     private final HistoryCache cache;
+    private final WriteBehind writes;
     private final ConfigManager configs;
 
-    public HistoryService(DatabaseManager database, CacheManager cache, ConfigManager configs) {
+    public HistoryService(DatabaseManager database, CacheManager cacheManager, ConfigManager configs) {
         this.database = database;
-        this.cache = cache.history();
+        this.cache = cacheManager.history();
+        this.writes = cacheManager.writes();
         this.configs = configs;
     }
 
@@ -43,19 +46,23 @@ public final class HistoryService {
     }
 
     public void record(HistoryEntry entry) {
-        database.history().append(entry);
-        cache.invalidateAll();
-
         int maxHistory = configs.main().listings().maxHistory();
-        if (maxHistory <= 0) {
-            return;
-        }
-
         HistoryEntry.Info info = entry.info();
-        database.history().trim(info.seller(), maxHistory);
-        if (!info.buyer().equals(info.seller())) {
-            database.history().trim(info.buyer(), maxHistory);
-        }
+
+        writes.append(() -> {
+            try {
+                database.history().append(entry);
+                if (maxHistory > 0) {
+                    database.history().trim(info.seller(), maxHistory);
+                    if (!info.buyer().equals(info.seller())) {
+                        database.history().trim(info.buyer(), maxHistory);
+                    }
+                }
+            } catch (Exception e) {
+                throw new Exception("Could not record history entry for listing " + info.id(), e);
+            }
+            cache.invalidateAll();
+        });
     }
 
     public Map<String, Double> spent(UUID player, @Nullable Instant since) {

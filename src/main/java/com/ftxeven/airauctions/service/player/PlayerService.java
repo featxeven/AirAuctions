@@ -106,22 +106,41 @@ public final class PlayerService {
         if (deposited) {
             return;
         }
-        if (isRefund) {
-            database.players().addPendingRefunds(recipient, economyId, amount);
-        } else {
-            database.players().addPendingEarnings(recipient, economyId, amount);
-        }
-        cache.players().invalidate(recipient);
+        cache.writes().append(() -> {
+            try {
+                if (isRefund) {
+                    database.players().addPendingRefunds(recipient, economyId, amount);
+                } else {
+                    database.players().addPendingEarnings(recipient, economyId, amount);
+                }
+            } catch (Exception e) {
+                throw new Exception("Could not record pending " + (isRefund ? "refund" : "earnings")
+                        + " of " + amount + " " + economyId + " for " + recipient, e);
+            }
+            cache.players().invalidate(recipient);
+        });
     }
 
     public void clearPendingEarnings(UUID uuid) {
-        database.players().clearPendingEarnings(uuid);
-        cache.players().invalidate(uuid);
+        cache.writes().append(() -> {
+            try {
+                database.players().clearPendingEarnings(uuid);
+            } catch (Exception e) {
+                throw new Exception("Could not clear pending earnings for " + uuid, e);
+            }
+            cache.players().invalidate(uuid);
+        });
     }
 
     public void clearPendingRefunds(UUID uuid) {
-        database.players().clearPendingRefunds(uuid);
-        cache.players().invalidate(uuid);
+        cache.writes().append(() -> {
+            try {
+                database.players().clearPendingRefunds(uuid);
+            } catch (Exception e) {
+                throw new Exception("Could not clear pending refunds for " + uuid, e);
+            }
+            cache.players().invalidate(uuid);
+        });
     }
 
     // Result

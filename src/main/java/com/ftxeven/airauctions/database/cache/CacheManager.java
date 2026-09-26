@@ -2,6 +2,7 @@ package com.ftxeven.airauctions.database.cache;
 
 import com.ftxeven.airauctions.config.ConfigManager;
 import com.ftxeven.airauctions.config.StorageConfig;
+import com.ftxeven.airauctions.core.cache.WriteBehind;
 import com.ftxeven.airauctions.database.DatabaseManager;
 import com.ftxeven.airauctions.database.cache.sync.CacheSync;
 import com.ftxeven.airauctions.database.cache.sync.RedisCacheSync;
@@ -22,12 +23,15 @@ import java.util.UUID;
 
 public final class CacheManager {
 
+    private final WriteBehind writes;
     private final ListingCache listings;
     private final PlayerCache players;
     private final HistoryCache history;
     private final CacheSync sync;
 
     public CacheManager(JavaPlugin plugin, ConfigManager configs, DatabaseManager database) {
+        writes = new WriteBehind("airauctions-writeback", plugin.getLogger());
+
         StorageConfig.Redis redis = configs.storage().redis();
         String serverId = resolveServerId(plugin, configs.storage());
 
@@ -47,6 +51,10 @@ public final class CacheManager {
         }
     }
 
+    public WriteBehind writes() {
+        return writes;
+    }
+
     public ListingCache listings() {
         return listings;
     }
@@ -60,6 +68,7 @@ public final class CacheManager {
     }
 
     public void close() {
+        writes.close();
         sync.close();
     }
 

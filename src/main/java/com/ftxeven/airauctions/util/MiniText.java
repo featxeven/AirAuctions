@@ -32,11 +32,15 @@ public final class MiniText {
         return parsed;
     }
 
+    public static Component parseDynamic(String miniMessageText) {
+        return MINI.deserialize(miniMessageText);
+    }
+
     public static String plain(Component component) {
         return component != null ? PlainTextComponentSerializer.plainText().serialize(component) : "";
     }
 
     public static String plain(String miniMessageText) {
-        return plain(parse(miniMessageText));
+        return plain(parseDynamic(miniMessageText));
     }
 }
