@@ -27,16 +27,16 @@ public record ItemConfig(
             "cooldown", "cooldown-message", "actions", "animation"
     );
 
-    public record Template(Fields fields, List<PriorityTier> priority) {
+    public record Template(Fields fields, List<List<PriorityTier>> priority) {
         public Template {
-            priority = List.copyOf(priority);
+            priority = priority.stream().map(List::copyOf).toList();
         }
     }
 
-    public record PriorityTier(List<String> conditions, Fields fields, List<PriorityTier> priority) {
+    public record PriorityTier(List<String> conditions, Fields fields, List<List<PriorityTier>> priority) {
         public PriorityTier {
             conditions = List.copyOf(conditions);
-            priority = List.copyOf(priority);
+            priority = priority.stream().map(List::copyOf).toList();
         }
     }
 

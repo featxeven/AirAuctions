@@ -53,7 +53,7 @@ public final class ItemConfigReader {
 
     public ItemConfig.Template readTemplate(ConfigurationSection sec, AliasExpander expander, String context) {
         ItemConfig.Fields fields = readFields(sec, expander, context);
-        List<ItemConfig.PriorityTier> priority = readPriority(sec, null, expander, context);
+        List<List<ItemConfig.PriorityTier>> priority = readPriority(sec, null, expander, context);
         return new ItemConfig.Template(fields, priority);
     }
 
@@ -62,11 +62,15 @@ public final class ItemConfigReader {
         ItemConfig.Template template = resolveTemplate(sec.getString("template", null), context, shared);
 
         ItemConfig.Fields fields = template != null ? template.fields().overlay(direct) : direct;
-        List<ItemConfig.PriorityTier> priority = sec.isList("priority")
+        List<List<ItemConfig.PriorityTier>> priority = hasPriority(sec)
                 ? readPriority(sec, shared, expander, context)
                 : (template != null ? template.priority() : List.of());
 
         return new ItemConfig.Template(fields, priority);
+    }
+
+    private boolean hasPriority(ConfigurationSection sec) {
+        return sec.isList("priority") || sec.isConfigurationSection("priority");
     }
 
     // raw keys read here (material/display-name/lore/...) must match ItemConfig.FIELD_KEYS
@@ -118,11 +122,38 @@ public final class ItemConfigReader {
         return template != null ? template.fields().overlay(direct) : direct;
     }
 
-    private List<ItemConfig.PriorityTier> readPriority(ConfigurationSection sec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
-        if (!sec.isList("priority")) {
-            return List.of();
+    private List<List<ItemConfig.PriorityTier>> readPriority(ConfigurationSection sec, @Nullable SharedConfig shared, AliasExpander expander, String context) {
+        if (sec.isList("priority")) {
+            List<ItemConfig.PriorityTier> chain = readChain(sec.getMapList("priority"), shared, expander, context);
+            return chain.isEmpty() ? List.of() : List.of(chain);
         }
-        return readNumberedEntries(sec.getMapList("priority"), (entry, index) -> {
+
+        if (sec.isConfigurationSection("priority")) {
+            ConfigurationSection groupsSec = sec.getConfigurationSection("priority");
+            List<List<ItemConfig.PriorityTier>> groups = new ArrayList<>();
+            for (String groupName : groupsSec.getKeys(false)) {
+                String groupContext = context + " priority group '" + groupName + "'";
+                if (!groupsSec.isList(groupName)) {
+                    logger.warning("Priority group '" + groupName + "' in " + context + " must be a list of tiers, skipping");
+                    continue;
+                }
+                List<ItemConfig.PriorityTier> chain = readChain(groupsSec.getMapList(groupName), shared, expander, groupContext);
+                if (!chain.isEmpty()) {
+                    groups.add(chain);
+                }
+            }
+            return groups;
+        }
+
+        if (sec.isSet("priority")) {
+            logger.warning("'priority' in " + context + " must be a list of tiers or a map of named tier groups, ignoring");
+        }
+        return List.of();
+    }
+
+    // parses one if/elseif chain (a single group's tier list)
+    private List<ItemConfig.PriorityTier> readChain(List<Map<?, ?>> raw, @Nullable SharedConfig shared, AliasExpander expander, String context) {
+        return readNumberedEntries(raw, (entry, index) -> {
             List<String> conditions = entry.getStringList("conditions");
             if (conditions.isEmpty()) {
                 logger.warning("Priority tier #" + index + " in " + context + " has no conditions, skipping");
@@ -130,7 +161,7 @@ public final class ItemConfigReader {
             }
             String tierContext = context + " priority tier #" + index;
             ItemConfig.Fields fields = readFieldsWithTemplate(entry, shared, expander, tierContext);
-            List<ItemConfig.PriorityTier> nested = readPriority(entry, shared, expander, tierContext);
+            List<List<ItemConfig.PriorityTier>> nested = readPriority(entry, shared, expander, tierContext);
             return new ItemConfig.PriorityTier(conditions, fields, nested);
         });
     }
@@ -148,7 +179,7 @@ public final class ItemConfigReader {
         return new ItemConfig.Fields.Animation(interval, loop, frames);
     }
 
-    // shared shape behind both priority tiers and animation frames
+    // shared shape behind priority chains and animation frames
     private <T> List<T> readNumberedEntries(List<Map<?, ?>> raw, BiFunction<ConfigurationSection, Integer, T> parser) {
         List<T> results = new ArrayList<>(raw.size());
         int index = 0;
