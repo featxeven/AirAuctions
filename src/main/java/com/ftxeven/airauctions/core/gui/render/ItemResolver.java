@@ -46,7 +46,15 @@ public final class ItemResolver {
         return new ResolvedFields(effective, flagResolver, interval < 0 ? null : interval);
     }
 
-    private ItemConfig.Fields resolvePriority(ItemConfig.Fields base, List<ItemConfig.PriorityTier> tiers, Function<String, String> resolver) {
+    private ItemConfig.Fields resolvePriority(ItemConfig.Fields base, List<List<ItemConfig.PriorityTier>> groups, Function<String, String> resolver) {
+        ItemConfig.Fields result = base;
+        for (List<ItemConfig.PriorityTier> chain : groups) {
+            result = resolveChain(result, chain, resolver);
+        }
+        return result;
+    }
+
+    private ItemConfig.Fields resolveChain(ItemConfig.Fields base, List<ItemConfig.PriorityTier> tiers, Function<String, String> resolver) {
         for (ItemConfig.PriorityTier tier : tiers) {
             if (conditions.evaluate(tier.conditions(), resolver)) {
                 ItemConfig.Fields overlaid = base.overlay(tier.fields());
