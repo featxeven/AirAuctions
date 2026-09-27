@@ -3,14 +3,12 @@ package com.ftxeven.airauctions.command.admin;
 import com.ftxeven.airauctions.AirAuctions;
 import com.ftxeven.airauctions.command.CommandDispatcher;
 import com.ftxeven.airauctions.core.command.CommandRegistry;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import io.papermc.paper.command.brigadier.BasicCommand;
+import io.papermc.paper.command.brigadier.CommandSourceStack;
 
 import java.util.List;
 
-public final class AdminCommand implements CommandExecutor, TabCompleter {
+public final class AdminCommand implements BasicCommand {
 
     private final CommandRegistry registry;
     private final CommandDispatcher dispatcher;
@@ -28,17 +26,21 @@ public final class AdminCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        dispatcher.dispatch(registry, sender, label, args, () -> sendUsage(sender));
-        return true;
+    public void execute(CommandSourceStack commandSourceStack, String[] args) {
+        dispatcher.dispatch(registry, commandSourceStack.getSender(), "airauctions", args, () -> sendUsage(commandSourceStack.getSender()));
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        return dispatcher.tabComplete(registry, sender, args);
+    public List<String> suggest(CommandSourceStack commandSourceStack, String[] args) {
+        return dispatcher.tabComplete(registry, commandSourceStack.getSender(), args);
     }
 
-    private void sendUsage(CommandSender sender) {
+    @Override
+    public String permission() {
+        return "airauctions.admin";
+    }
+
+    private void sendUsage(org.bukkit.command.CommandSender sender) {
         plugin.messenger().send(sender, plugin.configs().lang().get("general.commands.usage"));
     }
 }

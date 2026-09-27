@@ -2,25 +2,40 @@ name: AirAuctions
 main: com.ftxeven.airauctions.AirAuctions
 version: 2.2.0
 api-version: '1.21'
-author: ftxeven
+authors: [ftxeven]
 description: A modern, highly-customizable Auction House GUI.
 folia-supported: true
 
-softdepend:
-  - Vault
-  - PlaceholderAPI
-  - Nexo
-  - ItemsAdder
-  - CraftEngine
-  - PlayerPoints
-  - ExcellentEconomy
-
-commands:
-  airauctions:
-    description: Plugin management command.
-    aliases: []
-    usage: /airauctions reload|open|version|simulate
-    permission: airauctions.admin
+dependencies:
+  server:
+    Vault:
+      required: false
+      load: BEFORE
+      join-classpath: true
+    PlaceholderAPI:
+      required: false
+      load: BEFORE
+      join-classpath: true
+    Nexo:
+      required: false
+      load: BEFORE
+      join-classpath: true
+    ItemsAdder:
+      required: false
+      load: BEFORE
+      join-classpath: true
+    CraftEngine:
+      required: false
+      load: BEFORE
+      join-classpath: true
+    PlayerPoints:
+      required: false
+      load: BEFORE
+      join-classpath: true
+    ExcellentEconomy:
+      required: false
+      load: BEFORE
+      join-classpath: true
 
 permissions:
   airauctions.admin:

@@ -12,7 +12,6 @@ import com.ftxeven.airauctions.core.command.tabcomplete.TabCompleteEngine;
 import com.ftxeven.airauctions.core.command.tabcomplete.TabSourceRegistry;
 import com.ftxeven.airauctions.core.condition.ConditionEvaluator;
 import org.bukkit.Bukkit;
-import org.bukkit.command.PluginCommand;
 
 public final class CommandManager {
 
@@ -30,11 +29,8 @@ public final class CommandManager {
     }
 
     private void registerAdminCommand() {
-        PluginCommand command = plugin.getCommand("airauctions");
-
         AdminCommand executor = new AdminCommand(plugin);
-        command.setExecutor(executor);
-        command.setTabCompleter(executor);
+        plugin.registerCommand("airauctions", "Plugin management command.", executor);
     }
 
     private void registerPlayerCommand() {
