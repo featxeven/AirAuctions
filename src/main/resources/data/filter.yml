@@ -13,6 +13,62 @@ all:
 # 'match-rules' supports the same strategies as restrictions.blacklist in config.yml.
 
 # -------------------------------
+# MINERALS
+# -------------------------------
+minerals:
+  display-name: "Minerals"
+  match-rules:
+    materials:
+      # Ores (natural form)
+      - coal_ore
+      - deepslate_coal_ore
+      - iron_ore
+      - deepslate_iron_ore
+      - copper_ore
+      - deepslate_copper_ore
+      - gold_ore
+      - deepslate_gold_ore
+      - redstone_ore
+      - deepslate_redstone_ore
+      - lapis_ore
+      - deepslate_lapis_ore
+      - diamond_ore
+      - deepslate_diamond_ore
+      - emerald_ore
+      - deepslate_emerald_ore
+      - nether_quartz_ore
+      - nether_gold_ore
+      - ancient_debris
+      # Mineral blocks
+      - gold_block
+      - emerald_block
+      - netherite_block
+      - lapis_block
+      - diamond_block
+      - iron_block
+      - coal_block
+      # Ingots, nuggets & raw materials
+      - coal
+      - copper_ingot
+      - iron_ingot
+      - gold_ingot
+      - netherite_ingot
+      - netherite_scrap
+      - raw_copper
+      - raw_iron
+      - raw_gold
+      - copper_nugget
+      - iron_nugget
+      - gold_nugget
+      # Gems
+      - diamond
+      - emerald
+      - lapis_lazuli
+      - amethyst_shard
+      - prismarine_shard
+      - prismarine_crystals
+
+# -------------------------------
 # GEAR
 # -------------------------------
 gear:
@@ -248,10 +304,10 @@ gear:
       - music_disc_ward
 
 # -------------------------------
-# FOODS
+# FOOD
 # -------------------------------
-foods:
-  display-name: "Foods"
+food:
+  display-name: "Food"
   match-rules:
     materials:
       # Raw foods
@@ -529,26 +585,6 @@ blocks:
       - pale_moss_block
       - pale_moss_carpet
       - pale_hanging_moss
-      - # Ores (natural form)
-      - coal_ore
-      - deepslate_coal_ore
-      - iron_ore
-      - deepslate_iron_ore
-      - copper_ore
-      - deepslate_copper_ore
-      - gold_ore
-      - deepslate_gold_ore
-      - redstone_ore
-      - deepslate_redstone_ore
-      - lapis_ore
-      - deepslate_lapis_ore
-      - diamond_ore
-      - deepslate_diamond_ore
-      - emerald_ore
-      - deepslate_emerald_ore
-      - nether_quartz_ore
-      - nether_gold_ore
-      - ancient_debris
       - # Logs & Wood
       - oak_log
       - spruce_log
@@ -1251,14 +1287,6 @@ blocks:
       - crying_obsidian
       - packed_mud
       - mud_bricks
-      # Mineral blocks
-      - gold_block
-      - emerald_block
-      - netherite_block
-      - lapis_block
-      - diamond_block
-      - iron_block
-      - coal_block
       # Sulfur family
       - sulfur_bricks
       - polished_sulfur
@@ -1311,27 +1339,6 @@ misc:
       - heavy_core
       - trial_key
       - ominous_trial_key
-      # Ores & ingots
-      - coal
-      - copper_ingot
-      - iron_ingot
-      - gold_ingot
-      - netherite_ingot
-      - netherite_scrap
-      - raw_copper
-      - raw_iron
-      - raw_gold
-      - resin_brick
-      - copper_nugget
-      - iron_nugget
-      - gold_nugget
-      # Gems & rare items
-      - diamond
-      - emerald
-      - lapis_lazuli
-      - amethyst_shard
-      - prismarine_shard
-      - prismarine_crystals
       - echo_shard
       - heart_of_the_sea
       - nether_star
@@ -1378,6 +1385,7 @@ misc:
       - clay_ball
       - brick
       - nether_brick
+      - resin_brick
       - resin_clump
       - amethyst_cluster
       - large_amethyst_bud
