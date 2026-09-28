@@ -8,7 +8,6 @@ import com.ftxeven.airauctions.core.gui.GuiManager;
 import com.ftxeven.airauctions.core.gui.OpenOptions;
 import com.ftxeven.airauctions.gui.impl.ConfirmGui;
 import com.ftxeven.airauctions.model.Listing;
-import com.ftxeven.airauctions.model.ListingScope;
 import com.ftxeven.airauctions.permission.Permissions;
 import com.ftxeven.airauctions.service.ServiceManager;
 import com.ftxeven.airauctions.util.ItemDisplay;
@@ -55,9 +54,6 @@ public final class SubDelete implements SubCommand {
 
     @Override
     public String permission() { return Permissions.command(KEY); }
-
-    @Override
-    public boolean playerOnly() { return false; }
 
     @Override
     public int minArgs() { return 1; }
@@ -108,14 +104,6 @@ public final class SubDelete implements SubCommand {
     private void openConfirmGui(Player player, Listing listing) {
         Map<String, Object> attributes = Map.of(ConfirmGui.ATTR_LISTING_ID, listing.info().id());
         guis.open(player, ConfirmGui.DELETE, new HashMap<>(), OpenOptions.entry(attributes, List.of()));
-    }
-
-    private List<String> ancestorChainFor(ListingScope scope) {
-        return switch (scope) {
-            case ACTIVE -> List.of("target/active");
-            case EXPIRED -> List.of("target/expired");
-            case STORAGE -> List.of("target/storage");
-        };
     }
 
     private void requestChatConfirmation(Player player, String[] args, Listing listing) {

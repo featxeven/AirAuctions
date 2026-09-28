@@ -21,7 +21,19 @@ layout:
 
   # How the targeted listing is rendered inside listing-slots.
   listing:
-    template: card-active
+    lore:
+      - "%item_lore%"
+      - "=has:airauctions.command.delete <dark_gray>#%id% (Listed @ %date% %time%)"
+      - " "
+      - "=is:auction <dark_gray>Auction Information"
+      - "=is:bid <dark_gray>Bid Information"
+      - "<dark_gray> - <gray>Seller: <white>%seller%"
+      - "=is:auction <dark_gray> - <gray>Price: %price% (%economy%)"
+      - "=is:bid <dark_gray> - <gray>Starting price: %price% (%economy%)"
+      - "<dark_gray> - <gray>Amount: <white>x%amount%"
+      - "<dark_gray> - <gray>Category: <white>%category%"
+    item-flags:
+      - HIDE_ATTRIBUTES
 
 # --------------------------------------------------
 # ITEMS (base - used when no context overrides items)
@@ -81,11 +93,17 @@ contexts:
     settings:
       title: "<gradient:#5AD1F2:#736EFE><bold>Confirm Delete</bold></gradient> <dark_gray>- <white>%seller%'s Listing"
 
+    listing:
+      template: card-active
+
     # The rest is inherited from the base config above unless overridden here.
 
   target/active|browsing/search:
     settings:
       title: "<gradient:#5AD1F2:#736EFE><bold>Confirm Delete</bold></gradient> <dark_gray>- <white>%seller%'s Listing <dark_gray>- <white>\"%query%\""
+
+    listing:
+      template: card-active
 
   target/expired:
     settings:
@@ -123,9 +141,15 @@ contexts:
     settings:
       title: "<gradient:#5AD1F2:#736EFE><bold>Confirm Delete</bold></gradient> <dark_gray>- <white>Your Listing"
 
+    listing:
+      template: card-active
+
   player/active|browsing/search:
     settings:
       title: "<gradient:#5AD1F2:#736EFE><bold>Confirm Delete</bold></gradient> <dark_gray>- <white>Your Listing <dark_gray>- <white>\"%query%\""
+
+    listing:
+      template: card-active
 
   player/expired:
     settings:
@@ -162,3 +186,6 @@ contexts:
   browsing/search:
     settings:
       title: "<gradient:#5AD1F2:#736EFE><bold>Confirm Delete</bold></gradient> <dark_gray>- <white>\"%query%\""
+
+    listing:
+      template: card-active
