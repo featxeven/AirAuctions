@@ -263,6 +263,7 @@ gear:
       - mangrove_boat
       - cherry_boat
       - pale_oak_boat
+      - poplar_boat
       - bamboo_raft
       # Minecarts
       - minecart
@@ -280,6 +281,7 @@ gear:
       - mangrove_chest_boat
       - cherry_chest_boat
       - pale_oak_chest_boat
+      - poplar_chest_boat
       - bamboo_chest_raft
       # Music discs
       - music_disc_5
@@ -466,6 +468,7 @@ blocks:
       - mangrove_sign
       - cherry_sign
       - pale_oak_sign
+      - poplar_sign
       - bamboo_sign
       - crimson_sign
       - warped_sign
@@ -479,6 +482,7 @@ blocks:
       - mangrove_hanging_sign
       - cherry_hanging_sign
       - pale_oak_hanging_sign
+      - poplar_hanging_sign
       - bamboo_hanging_sign
       - crimson_hanging_sign
       - warped_hanging_sign
@@ -513,6 +517,7 @@ blocks:
       - mangrove_shelf
       - cherry_shelf
       - pale_oak_shelf
+      - poplar_shelf
       - bamboo_shelf
       - crimson_shelf
       - warped_shelf
@@ -595,6 +600,7 @@ blocks:
       - mangrove_log
       - cherry_log
       - pale_oak_log
+      - poplar_log
       - crimson_stem
       - warped_stem
       - bamboo_block
@@ -610,6 +616,9 @@ blocks:
       - mangrove_leaves
       - cherry_leaves
       - pale_oak_leaves
+      - red_poplar_leaves
+      - orange_poplar_leaves
+      - yellow_poplar_leaves
       - azalea_leaves
       - flowering_azalea_leaves
       - # Plants & Nature
@@ -632,8 +641,10 @@ blocks:
       - closed_eyeblossom
       - firefly_bush
       - bush
+      - red_shrub
       - brown_mushroom
       - red_mushroom
+      - shelf_mushroom
       - mushroom_stem
       - red_mushroom_block
       - brown_mushroom_block
@@ -666,6 +677,7 @@ blocks:
       - acacia_sapling
       - dark_oak_sapling
       - cherry_sapling
+      - poplar_sapling
       - mangrove_propagule
       - bamboo
       - # Coral & Sea Life
@@ -754,6 +766,40 @@ blocks:
       - green_wool
       - red_wool
       - black_wool
+      # Wool Stairs
+      - white_wool_stairs
+      - orange_wool_stairs
+      - magenta_wool_stairs
+      - light_blue_wool_stairs
+      - yellow_wool_stairs
+      - lime_wool_stairs
+      - pink_wool_stairs
+      - gray_wool_stairs
+      - light_gray_wool_stairs
+      - cyan_wool_stairs
+      - purple_wool_stairs
+      - blue_wool_stairs
+      - brown_wool_stairs
+      - green_wool_stairs
+      - red_wool_stairs
+      - black_wool_stairs
+      # Wool Slabs
+      - white_wool_slab
+      - orange_wool_slab
+      - magenta_wool_slab
+      - light_blue_wool_slab
+      - yellow_wool_slab
+      - lime_wool_slab
+      - pink_wool_slab
+      - gray_wool_slab
+      - light_gray_wool_slab
+      - cyan_wool_slab
+      - purple_wool_slab
+      - blue_wool_slab
+      - brown_wool_slab
+      - green_wool_slab
+      - red_wool_slab
+      - black_wool_slab
       # Terracotta
       - terracotta
       - white_terracotta
@@ -806,6 +852,40 @@ blocks:
       - green_concrete
       - red_concrete
       - black_concrete
+      # Concrete Stairs
+      - white_concrete_stairs
+      - orange_concrete_stairs
+      - magenta_concrete_stairs
+      - light_blue_concrete_stairs
+      - yellow_concrete_stairs
+      - lime_concrete_stairs
+      - pink_concrete_stairs
+      - gray_concrete_stairs
+      - light_gray_concrete_stairs
+      - cyan_concrete_stairs
+      - purple_concrete_stairs
+      - blue_concrete_stairs
+      - brown_concrete_stairs
+      - green_concrete_stairs
+      - red_concrete_stairs
+      - black_concrete_stairs
+      # Concrete Slabs
+      - white_concrete_slab
+      - orange_concrete_slab
+      - magenta_concrete_slab
+      - light_blue_concrete_slab
+      - yellow_concrete_slab
+      - lime_concrete_slab
+      - pink_concrete_slab
+      - gray_concrete_slab
+      - light_gray_concrete_slab
+      - cyan_concrete_slab
+      - purple_concrete_slab
+      - blue_concrete_slab
+      - brown_concrete_slab
+      - green_concrete_slab
+      - red_concrete_slab
+      - black_concrete_slab
       # Concrete Powder
       - white_concrete_powder
       - orange_concrete_powder
@@ -892,6 +972,24 @@ blocks:
       - green_bed
       - red_bed
       - black_bed
+      - straw_bed
+      # Cushions
+      - white_cushion
+      - orange_cushion
+      - magenta_cushion
+      - light_blue_cushion
+      - yellow_cushion
+      - lime_cushion
+      - pink_cushion
+      - gray_cushion
+      - light_gray_cushion
+      - cyan_cushion
+      - purple_cushion
+      - blue_cushion
+      - brown_cushion
+      - green_cushion
+      - red_cushion
+      - black_cushion
       # Banners
       - white_banner
       - orange_banner
@@ -1039,6 +1137,18 @@ blocks:
       - pale_oak_pressure_plate
       - stripped_pale_oak_log
       - stripped_pale_oak_wood
+      - poplar_wood
+      - poplar_planks
+      - poplar_stairs
+      - poplar_slab
+      - poplar_fence
+      - poplar_fence_gate
+      - poplar_trapdoor
+      - poplar_door
+      - poplar_button
+      - poplar_pressure_plate
+      - stripped_poplar_log
+      - stripped_poplar_wood
       - bamboo_planks
       - stripped_bamboo_block
       - bamboo_mosaic
