@@ -106,9 +106,8 @@ public final class SubDelete implements SubCommand {
     }
 
     private void openConfirmGui(Player player, Listing listing) {
-        ListingScope scope = services.listings().resolveScope(listing).orElse(ListingScope.ACTIVE);
         Map<String, Object> attributes = Map.of(ConfirmGui.ATTR_LISTING_ID, listing.info().id());
-        guis.open(player, ConfirmGui.DELETE, new HashMap<>(), OpenOptions.entry(attributes, ancestorChainFor(scope)));
+        guis.open(player, ConfirmGui.DELETE, new HashMap<>(), OpenOptions.entry(attributes, List.of()));
     }
 
     private List<String> ancestorChainFor(ListingScope scope) {
