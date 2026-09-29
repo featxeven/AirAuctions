@@ -6,27 +6,46 @@ import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public final class AirAuctionsExpansion extends PlaceholderExpansion {
 
-    private static final String GUI_PREFIX = "gui_";
-    private static final String GLOBAL_LISTINGS_PREFIX = "global_listings_";
-    private static final String LISTINGS_PREFIX = "listings_";
-    private static final String SPENT_PREFIX = "spent_";
-    private static final String EARNED_PREFIX = "earned_";
-    private static final String VOLUME_PREFIX = "volume_";
+    @FunctionalInterface
+    private interface Section {
+        @Nullable String resolve(@Nullable OfflinePlayer viewer, String key);
+    }
 
     private final AirAuctions plugin;
-    private final GuiPlaceholders gui;
-    private final ListingPlaceholders listingStats;
-    private final EconomyPlaceholders economyStats;
+    private final Map<String, Section> sections;
 
     public AirAuctionsExpansion(AirAuctions plugin) {
         this.plugin = plugin;
-        this.gui = new GuiPlaceholders(plugin.guis(), plugin.configs(), plugin.services().players());
-        this.listingStats = new ListingPlaceholders(plugin.services());
-        this.economyStats = new EconomyPlaceholders(plugin.services(), plugin.configs());
+        this.sections = buildSections(plugin);
+    }
+
+    private static Map<String, Section> buildSections(AirAuctions plugin) {
+        ListingPlaceholders listings = new ListingPlaceholders(plugin.services());
+        EconomyPlaceholders economy = new EconomyPlaceholders(plugin.services(), plugin.configs());
+        GuiPlaceholders gui = new GuiPlaceholders(plugin.guis(), plugin.configs(), plugin.services().players());
+
+        Map<String, Section> sections = new LinkedHashMap<>();
+        sections.put("max_listings", listings::maxListings);
+        sections.put("available_slots", listings::availableSlots);
+        sections.put("listings_", listings::perPlayer);
+        sections.put("global_listings_", listings::global);
+        sections.put("spent_", economy::spent);
+        sections.put("earned_", economy::earned);
+        sections.put("volume_", economy::volume);
+        sections.put("gui_", (viewer, key) -> {
+            if (viewer == null) {
+                return null;
+            }
+            return viewer.isOnline() ? gui.resolve(viewer.getPlayer(), key) : "";
+        });
+
+        return Map.copyOf(sections);
     }
 
     @Override
@@ -56,36 +75,13 @@ public final class AirAuctionsExpansion extends PlaceholderExpansion {
 
     @Override
     public @Nullable String onRequest(OfflinePlayer player, @NotNull String params) {
-        if (player == null) {
-            return null;
-        }
         String lower = params.toLowerCase(Locale.ROOT);
-
-        if (lower.startsWith(GUI_PREFIX)) {
-            return player.isOnline() ? gui.resolve(player.getPlayer(), lower.substring(GUI_PREFIX.length())) : "";
+        for (Map.Entry<String, Section> section : sections.entrySet()) {
+            String prefix = section.getKey();
+            if (lower.startsWith(prefix)) {
+                return section.getValue().resolve(player, params.substring(prefix.length()));
+            }
         }
-        if (lower.equals("max_listings")) {
-            return listingStats.maxListings(player.getUniqueId());
-        }
-        if (lower.equals("available_slots")) {
-            return listingStats.availableSlots(player.getUniqueId());
-        }
-        if (lower.startsWith(GLOBAL_LISTINGS_PREFIX)) {
-            return listingStats.global(lower.substring(GLOBAL_LISTINGS_PREFIX.length()));
-        }
-        if (lower.startsWith(LISTINGS_PREFIX)) {
-            return listingStats.perPlayer(player.getUniqueId(), lower.substring(LISTINGS_PREFIX.length()));
-        }
-        if (lower.startsWith(SPENT_PREFIX)) {
-            return economyStats.spent(player.getUniqueId(), params.substring(SPENT_PREFIX.length()).split("_"));
-        }
-        if (lower.startsWith(EARNED_PREFIX)) {
-            return economyStats.earned(player.getUniqueId(), params.substring(EARNED_PREFIX.length()).split("_"));
-        }
-        if (lower.startsWith(VOLUME_PREFIX)) {
-            return economyStats.volume(params.substring(VOLUME_PREFIX.length()).split("_"));
-        }
-
         return null;
     }
 }

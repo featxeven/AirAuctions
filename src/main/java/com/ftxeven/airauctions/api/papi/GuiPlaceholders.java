@@ -10,10 +10,16 @@ import com.ftxeven.airauctions.service.player.PlayerService;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 
 final class GuiPlaceholders {
+
+    private static final String FILTER_PREFIX = "filter_";
+    private static final String SORT_PREFIX = "sort_";
+    private static final String ID_SUFFIX = "_id";
 
     private final GuiManager guis;
     private final ConfigManager configs;
@@ -30,8 +36,9 @@ final class GuiPlaceholders {
         if (session == null) {
             return "";
         }
+        String lower = key.toLowerCase(Locale.ROOT);
 
-        return switch (key) {
+        return switch (lower) {
             case "id" -> session.definition().id();
             case "previous_id" -> previousId(session);
             case "page" -> String.valueOf(session.page());
@@ -43,19 +50,7 @@ final class GuiPlaceholders {
             case "target_name" -> targetName(session);
             case "search" -> attribute(session, BaseGui.ATTR_SEARCH_QUERY);
             case "sort_dimension" -> attribute(session, BaseGui.ATTR_SORT_DIMENSION);
-            case "filter_category" -> filterName(session, BaseGui.ATTR_FILTER_CATEGORY, FilterOptions.category(configs));
-            case "filter_category_id" -> attribute(session, BaseGui.ATTR_FILTER_CATEGORY);
-            case "filter_type" -> filterName(session, BaseGui.ATTR_FILTER_TYPE, FilterOptions.type(configs));
-            case "filter_type_id" -> attribute(session, BaseGui.ATTR_FILTER_TYPE);
-            case "filter_economy" -> filterName(session, BaseGui.ATTR_FILTER_ECONOMY, FilterOptions.economy(configs, true));
-            case "filter_economy_id" -> attribute(session, BaseGui.ATTR_FILTER_ECONOMY);
-            case "sort_active" -> sortName(session, "active");
-            case "sort_active_id" -> attribute(session, BaseGui.sortAttribute("active"));
-            case "sort_unclaimed" -> sortName(session, "unclaimed");
-            case "sort_unclaimed_id" -> attribute(session, BaseGui.sortAttribute("unclaimed"));
-            case "sort_history" -> sortName(session, "history");
-            case "sort_history_id" -> attribute(session, BaseGui.sortAttribute("history"));
-            default -> null;
+            default -> cycler(session, lower);
         };
     }
 
@@ -79,16 +74,67 @@ final class GuiPlaceholders {
         return value != null ? value : "";
     }
 
-    private String filterName(GuiSession session, String attributeKey, Map<String, String> options) {
-        String id = session.attribute(attributeKey, String.class);
-        return id != null ? options.getOrDefault(id, id) : "";
+    // filter_<dimension>[_id] and sort_<dimension>[_id]
+    private @Nullable String cycler(GuiSession session, String key) {
+        if (key.startsWith(FILTER_PREFIX)) {
+            return cyclerValue(session, key.substring(FILTER_PREFIX.length()),
+                    GuiPlaceholders::filterAttribute, this::filterOptions);
+        }
+        if (key.startsWith(SORT_PREFIX)) {
+            return cyclerValue(session, key.substring(SORT_PREFIX.length()),
+                    GuiPlaceholders::sortAttribute, this::sortOptions);
+        }
+        return null;
     }
 
-    private String sortName(GuiSession session, String dimension) {
-        String id = session.attribute(BaseGui.sortAttribute(dimension), String.class);
-        if (id == null) {
+    private @Nullable String cyclerValue(GuiSession session, String rest, Function<String, String> attributeOf,
+                                         Function<String, Map<String, String>> optionsOf) {
+        boolean idOnly = rest.endsWith(ID_SUFFIX);
+        String dimension = idOnly ? rest.substring(0, rest.length() - ID_SUFFIX.length()) : rest;
+
+        String attributeKey = attributeOf.apply(dimension);
+        if (attributeKey == null) {
+            return null; // not a recognized dimension
+        }
+        String selected = session.attribute(attributeKey, String.class);
+        if (selected == null) {
             return "";
         }
-        return configs.main().listings().sort().options(dimension).getOrDefault(id, id);
+        if (idOnly) {
+            return selected;
+        }
+        Map<String, String> options = optionsOf.apply(dimension);
+        return options != null ? options.getOrDefault(selected, selected) : selected;
+    }
+
+    // Cycler dimensions
+
+    private static @Nullable String filterAttribute(String dimension) {
+        return switch (dimension) {
+            case "category" -> BaseGui.ATTR_FILTER_CATEGORY;
+            case "type" -> BaseGui.ATTR_FILTER_TYPE;
+            case "economy" -> BaseGui.ATTR_FILTER_ECONOMY;
+            default -> null;
+        };
+    }
+
+    private @Nullable Map<String, String> filterOptions(String dimension) {
+        return switch (dimension) {
+            case "category" -> FilterOptions.category(configs);
+            case "type" -> FilterOptions.type(configs);
+            case "economy" -> FilterOptions.economy(configs, true);
+            default -> null;
+        };
+    }
+
+    private static @Nullable String sortAttribute(String dimension) {
+        return switch (dimension) {
+            case "active", "unclaimed", "history" -> BaseGui.sortAttribute(dimension);
+            default -> null;
+        };
+    }
+
+    private Map<String, String> sortOptions(String dimension) {
+        return configs.main().listings().sort().options(dimension);
     }
 }

@@ -3,6 +3,7 @@ package com.ftxeven.airauctions.api.papi;
 import com.ftxeven.airauctions.config.ConfigManager;
 import com.ftxeven.airauctions.service.ServiceManager;
 import com.ftxeven.airauctions.util.MiniText;
+import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Instant;
@@ -20,16 +21,19 @@ final class EconomyPlaceholders {
         this.configs = configs;
     }
 
-    @Nullable String spent(UUID player, String[] tokens) {
-        return perPlayer(player, tokens, false);
+    // %spent_<period>[_economy][_plain]%
+    @Nullable String spent(@Nullable OfflinePlayer viewer, String key) {
+        return viewer != null ? perPlayer(viewer.getUniqueId(), key, false) : null;
     }
 
-    @Nullable String earned(UUID player, String[] tokens) {
-        return perPlayer(player, tokens, true);
+    // %earned_<period>[_economy][_plain]%
+    @Nullable String earned(@Nullable OfflinePlayer viewer, String key) {
+        return viewer != null ? perPlayer(viewer.getUniqueId(), key, true) : null;
     }
 
-    @Nullable String volume(String[] tokens) {
-        Parsed parsed = parse(tokens);
+    // %volume_<period>[_economy][_plain]% - server-wide, so no viewer needed
+    @Nullable String volume(@Nullable OfflinePlayer viewer, String key) {
+        Parsed parsed = parse(key);
         if (parsed == null) {
             return null;
         }
@@ -37,8 +41,8 @@ final class EconomyPlaceholders {
         return format(parsed.economyId(), totals.getOrDefault(parsed.economyId(), 0.0), parsed.plain());
     }
 
-    private @Nullable String perPlayer(UUID player, String[] tokens, boolean earned) {
-        Parsed parsed = parse(tokens);
+    private @Nullable String perPlayer(UUID player, String key, boolean earned) {
+        Parsed parsed = parse(key);
         if (parsed == null) {
             return null;
         }
@@ -48,7 +52,8 @@ final class EconomyPlaceholders {
         return format(parsed.economyId(), totals.getOrDefault(parsed.economyId(), 0.0), parsed.plain());
     }
 
-    private @Nullable Parsed parse(String[] tokens) {
+    private @Nullable Parsed parse(String key) {
+        String[] tokens = key.split("_");
         if (tokens.length == 0) {
             return null;
         }
