@@ -13,11 +13,9 @@ import com.ftxeven.airauctions.gui.config.LayoutConfig;
 import com.ftxeven.airauctions.gui.render.FilterOptions;
 import com.ftxeven.airauctions.model.ListingType;
 import com.ftxeven.airauctions.service.ServiceManager;
-import com.ftxeven.airauctions.service.economy.EconomyService;
 import com.ftxeven.airauctions.util.Messenger;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +57,6 @@ public final class DraftGui extends BaseGui {
 
         Map<String, String> placeholders = session.placeholders();
         placeholders.putAll(guis.placeholders().forDraft(viewer, draft, provider));
-        placeholders.putAll(priceValidityPlaceholders(viewer, draft, provider));
         writeCycler(session, "filter_ECONOMY", "economy", layout(session).filters(), economyOptions, economyId, null, LayoutConfig.Cycler.Format.FILTER_DEFAULT);
 
         session.flagResolver(guis.flags().forDraft(viewer, draft.toFlagDraft(provider)));
@@ -101,24 +98,6 @@ public final class DraftGui extends BaseGui {
         session.attribute(ATTR_FILTER_ECONOMY, value);
         draft.economyId(value);
         return value;
-    }
-
-    // Price validity
-
-    private Map<String, String> priceValidityPlaceholders(Player viewer, ListingDraft draft, EconomyProvider provider) {
-        EconomyService economy = services.economy();
-
-        Map<String, String> map = new HashMap<>();
-        map.put("valid_min_price", String.valueOf(economy.meetsMinPrice(draft.price())));
-        map.put("valid_max_price", String.valueOf(economy.meetsMaxPrice(draft.price())));
-        economy.formatInto(map, "min_price", provider.id(), economy.minPrice());
-        economy.formatInto(map, "max_price", provider.id(), economy.maxPrice());
-
-        EconomyService.ChargeResult fee = economy.fee(viewer, provider, draft.price());
-        economy.formatInto(map, "fee", provider.id(), fee);
-        map.put("can_afford_fee", String.valueOf(economy.eligibleForFee(viewer, provider, fee).ok()));
-
-        return map;
     }
 
     private static String inputContextFor(ListingType type) {

@@ -75,7 +75,8 @@ public final class EconomyService {
 
     // Writes the same 4 placeholders for a fee/tax charge
     public void formatInto(Map<String, String> placeholders, String key, String economyId, ChargeResult charge) {
-        formatInto(placeholders, key, economyId, charge.amount(), charge.kind());
+        OptionalDouble present = charge.applies() ? OptionalDouble.of(charge.amount()) : OptionalDouble.empty();
+        formatInto(placeholders, key, economyId, present, charge.kind().emptyPlaceholderKey());
     }
 
     // Writes the same 4 placeholders for a fee/tax amount recomputed outside a ChargeResult
@@ -239,6 +240,10 @@ public final class EconomyService {
     public record ChargeResult(ChargeKind kind, double amount, double rate, boolean waived) {
         public static ChargeResult waived(ChargeKind kind) {
             return new ChargeResult(kind, 0, -1, true);
+        }
+
+        public boolean applies() {
+            return amount > 0;
         }
     }
 }

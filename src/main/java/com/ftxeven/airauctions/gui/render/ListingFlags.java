@@ -92,8 +92,9 @@ public final class ListingFlags {
         }
         return switch (flag.namespace()) {
             case "has" -> seller.hasPermission(flag.value());
+            case "is" -> flag.value().equals("fee") && draftFee(seller, draft).applies();
             case "can" -> flag.value().equals("list") && canList(seller, draft);
-            default -> false; // is:* has nothing to evaluate before a listing is persisted
+            default -> false;
         };
     }
 
@@ -201,7 +202,11 @@ public final class ListingFlags {
         };
     }
 
-    // can:list
+    // can:list / is:fee
+
+    private EconomyService.ChargeResult draftFee(Player seller, CreationDraft draft) {
+        return services.economy().fee(seller, draft.provider(), draft.price());
+    }
 
     private boolean canList(Player seller, CreationDraft draft) {
         ListingValidator validator = services.validator();
@@ -225,7 +230,7 @@ public final class ListingFlags {
             return false;
         }
 
-        EconomyService.ChargeResult fee = economy.fee(seller, draft.provider(), draft.price());
+        EconomyService.ChargeResult fee = draftFee(seller, draft);
         return economy.eligibleForFee(seller, draft.provider(), fee).ok();
     }
 

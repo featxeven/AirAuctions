@@ -6,6 +6,7 @@ import com.ftxeven.airauctions.economy.EconomyProvider;
 import com.ftxeven.airauctions.gui.impl.ListingDraft;
 import com.ftxeven.airauctions.model.*;
 import com.ftxeven.airauctions.service.ServiceManager;
+import com.ftxeven.airauctions.service.economy.EconomyService;
 import com.ftxeven.airauctions.service.listing.workflow.AuctionService;
 import com.ftxeven.airauctions.service.listing.workflow.BidService;
 import com.ftxeven.airauctions.util.MiniText;
@@ -173,6 +174,7 @@ public final class ListingPlaceholders {
 
         services.economy().formatInto(map, "price", provider.id(), draft.price());
         services.economy().formatEconomy(map, provider);
+        putPriceRules(map, seller, draft, provider);
 
         if (draft.type() == ListingType.AUCTION) {
             map.put("expires", services.auctions().previewExpires(seller));
@@ -180,6 +182,19 @@ public final class ListingPlaceholders {
             map.put("duration", TimeFormatter.duration(Duration.ofSeconds(draft.bidDurationSeconds()), configs.main().formatting(), configs.lang()));
         }
         return map;
+    }
+
+    private void putPriceRules(Map<String, String> map, Player seller, ListingDraft draft, EconomyProvider provider) {
+        EconomyService economy = services.economy();
+
+        map.put("valid_min_price", String.valueOf(economy.meetsMinPrice(draft.price())));
+        map.put("valid_max_price", String.valueOf(economy.meetsMaxPrice(draft.price())));
+        economy.formatInto(map, "min_price", provider.id(), economy.minPrice());
+        economy.formatInto(map, "max_price", provider.id(), economy.maxPrice());
+
+        EconomyService.ChargeResult fee = economy.fee(seller, provider, draft.price());
+        economy.formatInto(map, "fee", provider.id(), fee);
+        map.put("can_afford_fee", String.valueOf(economy.eligibleForFee(seller, provider, fee).ok()));
     }
 
     // History
