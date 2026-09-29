@@ -290,7 +290,6 @@ bids:
   create:
     errors:
       invalid-duration: "<ref:prefix> <red>Invalid duration. Enter a duration between <white>%min%</white> and <white>%max%</white>."
-      invalid-increment: "<ref:prefix> <red>Invalid increment. Must be a positive number."
 
     # Confirmation prompt used when the confirmation GUI is disabled.
     confirmation:

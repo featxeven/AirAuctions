@@ -372,11 +372,20 @@ public final class GuiManager {
         return players.resolve(name);
     }
 
+    // Redrawing
+
     public void refresh(Player viewer) {
         GuiSession session = sessions.get(viewer.getUniqueId());
         if (session != null) {
             reopenOrRedraw(viewer, session, false);
         }
+    }
+
+    public void redrawIfCurrent(Player viewer, GuiSession session) {
+        if (sessions.get(viewer.getUniqueId()) != session || session.awaitingInput()) {
+            return;
+        }
+        reopenOrRedraw(viewer, session, false);
     }
 
     private void reopenOrRedraw(Player viewer, GuiSession session, boolean reshow) {
@@ -489,6 +498,7 @@ public final class GuiManager {
         if (clickActions != null && !clickActions.isEmpty()) {
             Map<String, String> placeholders = dynamic != null ? dynamic.placeholders() : session.placeholders();
             dispatcher.run(clickActions, context(viewer, session, key, placeholders, resolved.flagResolver()));
+            redrawIfCurrent(viewer, session);
         }
     }
 

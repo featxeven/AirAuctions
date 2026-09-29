@@ -100,8 +100,10 @@ public final class ActionDispatcher {
 
         String wrapped = args.substring(space + 1).trim();
 
-        Scheduler.runEntityLater(context.viewer(), () ->
-                runOne(flags.apply(wrapped, snapshot(context)), context), Math.max(1, ticks));
+        Scheduler.runEntityLater(context.viewer(), () -> {
+            runOne(flags.apply(wrapped, snapshot(context)), context);
+            context.manager().redrawIfCurrent(context.viewer(), context.session());
+        }, Math.max(1, ticks));
     }
 
     private static Function<String, String> snapshot(ActionContext context) {
