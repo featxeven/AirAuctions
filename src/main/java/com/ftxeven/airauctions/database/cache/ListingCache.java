@@ -7,6 +7,7 @@ import com.ftxeven.airauctions.database.query.ListingSort;
 import com.ftxeven.airauctions.database.query.PageResult;
 import com.ftxeven.airauctions.database.repository.ListingMetadataResolver;
 import com.ftxeven.airauctions.database.repository.ListingRepository;
+import com.ftxeven.airauctions.model.BidEntry;
 import com.ftxeven.airauctions.model.Listing;
 import com.ftxeven.airauctions.model.ListingScope;
 import com.ftxeven.airauctions.model.ListingStatus;
@@ -34,9 +35,7 @@ public final class ListingCache {
     // seller -> every listing id owned by them, regardless of status
     private final Map<UUID, Set<String>> idsBySeller = new ConcurrentHashMap<>();
 
-    // per-listing set of bidders seen so far, used only to decide whether an incoming offer is
-    // from a brand-new bidder or a repeat one
-    private final Map<String, Set<UUID>> biddersSeen = new ConcurrentHashMap<>();
+    private final Map<String, Map<UUID, BidEntry>> ledgers = new ConcurrentHashMap<>();
 
     public ListingCache(ListingRepository repository, CacheSync sync) {
         this.repository = repository;
@@ -62,6 +61,7 @@ public final class ListingCache {
     public void loadAll() {
         for (ListingScope scope : ListingScope.values()) {
             for (Listing listing : repository.findAll(ListingQuery.builder(scope, 1).build())) {
+                seedLedger(listing);
                 applyIndex(listing);
             }
         }
@@ -72,7 +72,7 @@ public final class ListingCache {
         idsByScope.values().forEach(Set::clear);
         idsByOwner.values().forEach(Map::clear);
         idsBySeller.clear();
-        biddersSeen.clear();
+        ledgers.clear();
         versions.values().forEach(AtomicLong::incrementAndGet);
         loadAll();
     }
@@ -96,19 +96,21 @@ public final class ListingCache {
     }
 
     public PageResult<Listing> query(ListingQuery query) {
-        List<Listing> matches = matching(query);
-        long total = matches.size();
+        return paginate(matching(query), query.page(), query.pageSize());
+    }
+
+    private static <T> PageResult<T> paginate(List<T> sorted, int requestedPage, int pageSize) {
+        long total = sorted.size();
         if (total == 0) {
-            return PageResult.empty(query.page());
+            return PageResult.empty(requestedPage);
         }
 
-        int pageSize = query.pageSize();
         int totalPages = Math.max(1, (int) Math.ceil(total / (double) pageSize));
-        int page = Math.clamp(query.page(), 1, totalPages);
+        int page = Math.clamp(requestedPage, 1, totalPages);
         int from = (page - 1) * pageSize;
-        int to = Math.min(from + pageSize, matches.size());
+        int to = Math.min(from + pageSize, sorted.size());
 
-        return new PageResult<>(matches.subList(from, to), page, totalPages, total);
+        return new PageResult<>(sorted.subList(from, to), page, totalPages, total);
     }
 
     public FacetCounts facets(ListingQuery query) {
@@ -154,6 +156,19 @@ public final class ListingCache {
             }
         }
         return count;
+    }
+
+    public Optional<PageResult<BidEntry>> bidEntries(String id, int page, int pageSize) {
+        if (!(byId.get(id) instanceof Listing.Bid)) {
+            return Optional.empty();
+        }
+        Map<UUID, BidEntry> ledger = ledgers.get(id);
+        if (ledger == null) {
+            return Optional.of(PageResult.empty(page));
+        }
+        List<BidEntry> ranked = new ArrayList<>(ledger.values());
+        ranked.sort(Comparator.comparingDouble(BidEntry::offer).reversed());
+        return Optional.of(paginate(ranked, page, pageSize));
     }
 
     public int countBySeller(Collection<UUID> sellers) {
@@ -235,16 +250,16 @@ public final class ListingCache {
         return OptionalInt.empty();
     }
 
-    public OptionalInt tryPlaceBid(String id, UUID bidder, double offer, Instant newExpiresAt) {
+    public OptionalInt tryPlaceBid(Listing.Bid expected, UUID bidder, double offer, Instant newExpiresAt) {
+        String id = expected.info().id();
         int[] result = {-1};
         byId.computeIfPresent(id, (key, current) -> {
-            if (!(current instanceof Listing.Bid bid) || bid.info().status() != ListingStatus.ACTIVE
-                    || bid.currentPrice() >= offer) {
+            if (current != expected || expected.info().status() != ListingStatus.ACTIVE || !expected.accepts(offer)) {
                 return current;
             }
-            int totalBidders = registerBidder(id, bidder, bid.totalBidders());
-            Listing.Bid updated = new Listing.Bid(withExpiry(bid.info(), newExpiresAt), bid.startingPrice(), offer,
-                    bidder, totalBidders, bid.remindersShown());
+            int totalBidders = recordOffer(id, bidder, offer);
+            Listing.Bid updated = new Listing.Bid(withExpiry(expected.info(), newExpiresAt), expected.startingPrice(), offer,
+                    bidder, totalBidders, expected.remindersShown());
             result[0] = totalBidders;
             return updated;
         });
@@ -361,7 +376,7 @@ public final class ListingCache {
         if (sellerIds != null) {
             sellerIds.remove(id);
         }
-        biddersSeen.remove(id);
+        ledgers.remove(id);
         versions.get(scope).incrementAndGet();
     }
 
@@ -370,6 +385,7 @@ public final class ListingCache {
             try {
                 Optional<Listing> fresh = repository.find(id);
                 if (fresh.isPresent()) {
+                    seedLedger(fresh.get());
                     applyIndex(fresh.get());
                 } else {
                     applyRemove(id);
@@ -406,9 +422,22 @@ public final class ListingCache {
         };
     }
 
-    private int registerBidder(String listingId, UUID bidder, int currentTotal) {
-        Set<UUID> seen = biddersSeen.computeIfAbsent(listingId, k -> ConcurrentHashMap.newKeySet());
-        return seen.add(bidder) ? currentTotal + 1 : currentTotal;
+    private int recordOffer(String listingId, UUID bidder, double offer) {
+        Map<UUID, BidEntry> ledger = ledgers.computeIfAbsent(listingId, k -> new ConcurrentHashMap<>());
+        ledger.merge(bidder, new BidEntry(bidder, offer, 1),
+                (previous, first) -> new BidEntry(bidder, offer, previous.totalOffers() + 1));
+        return ledger.size();
+    }
+
+    private void seedLedger(Listing listing) {
+        if (!(listing instanceof Listing.Bid bid) || bid.totalBidders() <= 0) {
+            return;
+        }
+        Map<UUID, BidEntry> ledger = new ConcurrentHashMap<>();
+        for (BidEntry entry : repository.bidEntries(bid.info().id(), 1, bid.totalBidders()).items()) {
+            ledger.put(entry.bidder(), entry);
+        }
+        ledgers.put(bid.info().id(), ledger);
     }
 
     // Querying

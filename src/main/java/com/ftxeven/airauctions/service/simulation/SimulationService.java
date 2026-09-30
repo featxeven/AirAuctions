@@ -231,32 +231,43 @@ public final class SimulationService {
         }
 
         double startingPrice = charged.get().price();
-        Listing.Bid running = listings.create(new Listing.Bid(charged.get().info(), startingPrice, startingPrice, null, 0, 0));
-        String id = running.info().id();
+        Listing.Bid created = listings.create(new Listing.Bid(charged.get().info(), startingPrice, startingPrice, null, 0, 0));
+        String id = created.info().id();
 
         int rounds = random.nextInt(6);
         for (int i = 0; i < rounds; i++) {
+            Listing.Bid live = liveBid(id);
+            if (live == null || live.info().status() != ListingStatus.ACTIVE) {
+                break;
+            }
+
             UUID bidder = pool.get(random.nextInt(pool.size()));
-            if (bidder.equals(seller) || bidder.equals(running.currentBidder())) {
+            if (bidder.equals(seller) || bidder.equals(live.currentBidder())) {
                 continue;
             }
 
-            double offer = bids.nextOfferBounds(running).min();
+            double offer = bids.nextOfferBounds(live).min();
             if (!withdraw(bidder, provider, offer)) {
                 continue;
             }
 
-            OptionalInt totalBidders = listings.placeBid(id, bidder, offer, expiresAt);
+            OptionalInt totalBidders = listings.placeBid(live, bidder, offer, expiresAt);
             if (totalBidders.isEmpty()) {
-                players.payout(bidder, running.info().economy(), offer);
+                players.payout(bidder, live.info().economy(), offer);
                 continue;
             }
-            if (running.currentBidder() != null) {
-                players.payout(running.currentBidder(), running.info().economy(), running.currentPrice());
+            if (live.currentBidder() != null) {
+                players.payout(live.currentBidder(), live.info().economy(), live.currentPrice());
             }
-            running = new Listing.Bid(running.info(), startingPrice, offer, bidder, totalBidders.getAsInt(), 0);
         }
         return true;
+    }
+
+    private Listing.Bid liveBid(String id) {
+        return listings.find(id)
+                .filter(Listing.Bid.class::isInstance)
+                .map(Listing.Bid.class::cast)
+                .orElse(null);
     }
 
     private double randomPrice(Random random, EconomyProvider provider) {

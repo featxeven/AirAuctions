@@ -36,6 +36,10 @@ import java.util.UUID;
 
 public final class BidService {
 
+    // a commit only misses when another change to the same listing landed in between, so this
+    // is bounded by how many of those can realistically stack up within a single call
+    private static final int MAX_COMMIT_ATTEMPTS = 5;
+
     private final ConfigManager configs;
     private final HistoryService history;
     private final EconomyService economy;
@@ -107,10 +111,7 @@ public final class BidService {
 
     public NextOffer nextOfferBounds(Listing.Bid bid) {
         MainConfig.Bids bidsConfig = configs.main().bids();
-
-        double min = bid.currentBidder() == null
-                ? bid.currentPrice()
-                : bid.currentPrice() + bidsConfig.minIncrement();
+        double min = bid.hasLeader() ? bid.currentPrice() + bidsConfig.minIncrement() : bid.currentPrice();
         double max = bidsConfig.maxIncrement() < 0 ? -1 : bid.currentPrice() + bidsConfig.maxIncrement();
         return new NextOffer(min, max);
     }
@@ -130,7 +131,9 @@ public final class BidService {
         return Eligibility.eligible();
     }
 
-    public Eligibility eligibleToBid(Player bidder, Listing.Bid bid, double offer) {
+    // the offer itself against this listing state (status, ownership, increment bounds) - no
+    // wallet and no storage room, so it can be re-run after the payment has already been taken
+    private Eligibility eligibleOffer(Player bidder, Listing.Bid bid, double offer) {
         Eligibility prelim = eligiblePrelim(bidder, bid);
         if (!prelim.ok()) {
             return prelim;
@@ -148,7 +151,16 @@ public final class BidService {
             economy.formatInto(placeholders, "max_offer", info.economy(), bounds.max());
             return Eligibility.denied("bids.place.errors.above-maximum", placeholders);
         }
+        return Eligibility.eligible();
+    }
 
+    public Eligibility eligibleToBid(Player bidder, Listing.Bid bid, double offer) {
+        Eligibility offerCheck = eligibleOffer(bidder, bid, offer);
+        if (!offerCheck.ok()) {
+            return offerCheck;
+        }
+
+        Listing.Info info = bid.info();
         Optional<EconomyProvider> providerLookup = economy.get(info.economy());
         if (providerLookup.isEmpty()) {
             return Eligibility.denied("errors.item.unavailable");
@@ -201,34 +213,56 @@ public final class BidService {
         return Eligibility.denied("bids.place.errors.storage-limit", placeholders);
     }
 
-    public ActionResult<PlaceBidSuccess> placeBid(Player bidder, Listing.Bid bid, double offer) {
+    public ActionResult<PlaceBidSuccess> placeBid(Player bidder, Listing.Bid snapshot, double offer) {
+        String id = snapshot.info().id();
+
+        Listing.Bid bid = live(id).orElse(null);
+        if (bid == null) {
+            return ActionResult.denied("errors.item.unavailable");
+        }
+
         Eligibility eligibility = eligibleToBid(bidder, bid, offer);
         if (eligibility instanceof Eligibility.Denied denied) {
             return ActionResult.denied(denied);
         }
 
-        Listing.Info info = bid.info();
-        EconomyProvider provider = economy.get(info.economy()).orElseThrow();
+        String economyId = bid.info().economy();
+        EconomyProvider provider = economy.get(economyId).orElseThrow();
 
         if (!provider.withdraw(bidder, offer)) {
             return ActionResult.denied("auctions.purchase.errors.withdraw-failed");
         }
 
-        OptionalInt totalBidders = listings.placeBid(info.id(), bidder.getUniqueId(), offer, resolveSnipeExpiry(info));
-        if (totalBidders.isEmpty()) {
-            // outraced between the eligibility check above and the atomic price-accept just now -
-            // nothing was ever recorded, so just return the payment
-            players.payout(bidder.getUniqueId(), info.economy(), offer);
-            return ActionResult.denied("errors.item.unavailable");
+        for (int attempt = 0; attempt < MAX_COMMIT_ATTEMPTS; attempt++) {
+            OptionalInt totalBidders = listings.placeBid(bid, bidder.getUniqueId(), offer, resolveSnipeExpiry(bid.info()));
+            if (totalBidders.isPresent()) {
+                UUID previousBidder = bid.currentBidder();
+                if (previousBidder != null) {
+                    players.payout(previousBidder, economyId, bid.currentPrice());
+                }
+                announcePlaced(bid.info(), bidder, offer, previousBidder, totalBidders.getAsInt());
+                return ActionResult.success(new PlaceBidSuccess(offer, totalBidders.getAsInt()));
+            }
+
+            Listing.Bid fresh = live(id).orElse(null);
+            Eligibility recheck = fresh == null
+                    ? Eligibility.denied("errors.item.unavailable")
+                    : eligibleOffer(bidder, fresh, offer);
+            if (recheck instanceof Eligibility.Denied denied) {
+                players.payout(bidder.getUniqueId(), economyId, offer);
+                return ActionResult.denied(denied);
+            }
+            bid = fresh;
         }
 
-        UUID previousBidder = bid.currentBidder();
-        if (previousBidder != null) {
-            players.payout(previousBidder, info.economy(), bid.currentPrice());
-        }
+        players.payout(bidder.getUniqueId(), economyId, offer);
+        return ActionResult.denied("errors.item.unavailable");
+    }
 
-        announcePlaced(info, bidder, offer, previousBidder, totalBidders.getAsInt());
-        return ActionResult.success(new PlaceBidSuccess(offer, totalBidders.getAsInt()));
+    private Optional<Listing.Bid> live(String id) {
+        return listings.find(id)
+                .filter(Listing.Bid.class::isInstance)
+                .map(Listing.Bid.class::cast);
     }
 
     private Instant resolveSnipeExpiry(Listing.Info info) {

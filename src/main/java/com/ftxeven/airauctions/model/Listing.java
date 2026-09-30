@@ -80,5 +80,14 @@ public sealed interface Listing {
             @Nullable UUID currentBidder,
             int totalBidders,
             int remindersShown
-    ) implements Listing {}
+    ) implements Listing {
+
+        public boolean hasLeader() {
+            return currentBidder != null;
+        }
+
+        public boolean accepts(double offer) {
+            return hasLeader() ? offer > currentPrice : offer >= currentPrice;
+        }
+    }
 }

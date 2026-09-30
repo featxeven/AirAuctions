@@ -144,16 +144,18 @@ public final class ListingService {
     }
 
     // Bidding
-
-    public OptionalInt placeBid(String id, UUID bidder, double offer, Instant newExpiresAt) {
-        OptionalInt totalBidders = cache.listings().tryPlaceBid(id, bidder, offer, newExpiresAt);
+    
+    public OptionalInt placeBid(Listing.Bid expected, UUID bidder, double offer, Instant newExpiresAt) {
+        String id = expected.info().id();
+        OptionalInt totalBidders = cache.listings().tryPlaceBid(expected, bidder, offer, newExpiresAt);
         totalBidders.ifPresent(ignored -> persistAsync(
                 () -> database.listings().placeBid(id, bidder, offer, newExpiresAt), "bid on listing " + id));
         return totalBidders;
     }
 
     public PageResult<BidEntry> bidEntries(String listingId, int page, int pageSize) {
-        return database.listings().bidEntries(listingId, page, pageSize);
+        return cache.listings().bidEntries(listingId, page, pageSize)
+                .orElseGet(() -> database.listings().bidEntries(listingId, page, pageSize));
     }
 
     public void markBidReminderShown(String id) {
