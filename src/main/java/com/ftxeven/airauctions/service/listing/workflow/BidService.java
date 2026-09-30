@@ -107,7 +107,10 @@ public final class BidService {
 
     public NextOffer nextOfferBounds(Listing.Bid bid) {
         MainConfig.Bids bidsConfig = configs.main().bids();
-        double min = bid.currentPrice() + bidsConfig.minIncrement();
+
+        double min = bid.currentBidder() == null
+                ? bid.currentPrice()
+                : bid.currentPrice() + bidsConfig.minIncrement();
         double max = bidsConfig.maxIncrement() < 0 ? -1 : bid.currentPrice() + bidsConfig.maxIncrement();
         return new NextOffer(min, max);
     }
